@@ -1,6 +1,6 @@
 <template>
   <div>
-    Some shared layout content:
+    Auth
     <slot />
   </div>
 </template>
