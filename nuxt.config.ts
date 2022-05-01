@@ -8,8 +8,6 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss',
     // Doc: https://github.com/nuxt-community/color-mode-module
     '@nuxtjs/color-mode',
     // Doc: https://github.com/vueuse/vueuse
@@ -19,6 +17,7 @@ export default defineNuxtConfig({
     // Doc: https://github.com/nuxt-community/localforage-module
     '@pinia/nuxt',
   ],
+  buildModules: ['nuxt-windicss'],
   tailwindcss: {
     jit: true,
     // add '~tailwind.config` alias
