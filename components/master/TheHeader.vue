@@ -9,6 +9,7 @@
         </div>
         <div class="flex">
           <base-theme-switcher />
+          <base-avatar />
         </div>
       </div>
     </div>

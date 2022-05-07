@@ -1,20 +1,42 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <NuxtLayout name="dashboard">
-    <div className="grid grid-cols-12 gap-6">
-      <div class="test">
+    <div className="grid">
+        <div class="col-auto">
+          <base-welcome-item />
+        </div>
+    </div>
+    <div className="grid">
+        <div class="col-auto">
+
+
+          <BaseSection title="Activities" class="">
+            <template #default>
+              asdadaasd
+            </template>
+
+            <template #footer>
+              <p class="text-right"><em>footer note</em></p>
+            </template>
+          </BaseSection>
+
+        </div>
+
+         <div class="col-auto">
+          <BaseSection>
+            <template #default>
+              <BaseLoader />
+            </template>
+          </BaseSection>
+         </div>
+    </div>
+
+    <div className="grid grid-cols-12 mt-10">
         <NuxtLink to="/projects">
           <span class="text-black">Projects</span>
         </NuxtLink>
-      </div>
     </div>
   </NuxtLayout>
 </template>
 
-<style lang="scss">
-.test {
-  min-height: 1000px;
-}
-</style>
+<script setup lang="ts">
+</script>

@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
 export const useStore = defineStore({
-  id: 'lotti',
+  id: 'auth',
 
   state: () => ({
     isAuthenticated: false,
@@ -19,9 +19,6 @@ export const useStore = defineStore({
   },
 
   actions: {
-    hit() {
-      this.counter++
-    },
     // async loginHandle(email: string, password: string) {
     // const { login } = ( await cmsClient.mutate({
     //     mutation: LOGIN_MUTATION,
