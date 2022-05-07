@@ -13,7 +13,7 @@
     </div>
 
     <div class="mt-10">
-      <p class="p-3 text-xs uppercase text-gray-400">General</p>
+      <p class="px-4 pb-1 text-xs uppercase text-gray-400 hidden 2xl:block">General</p>
       <ul class="">
         <base-nav-item
           v-for="(item, key) in navGroup.common"
@@ -27,7 +27,7 @@
     </div>
 
     <div class="mt-6">
-      <p class="p-3 text-xs uppercase text-gray-400">Administrator</p>
+      <p class="px-4 pb-1 text-xs uppercase text-gray-400 hidden 2xl:block">Administrator</p>
       <ul class="">
         <base-nav-item
           v-for="(item, key) in navGroup.admin"
