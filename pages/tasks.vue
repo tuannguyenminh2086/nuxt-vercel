@@ -1,8 +1,6 @@
 <template>
   <NuxtLayout name="dashboard">
-    <h1>Contact page</h1>
-    Hello world!
-
+    <h1>Tasks</h1>
     <NuxtLink to="/"> Home </NuxtLink>
   </NuxtLayout>
 </template>
