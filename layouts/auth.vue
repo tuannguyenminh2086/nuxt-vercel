@@ -1,6 +1,5 @@
 <template>
-  <div>
-    Auth
+  <div class="auth">
     <slot />
   </div>
 </template>

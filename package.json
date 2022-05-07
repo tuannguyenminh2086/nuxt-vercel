@@ -13,39 +13,46 @@
   },
   "lint-staged": {
     "*.{js,ts,vue}": "eslint --cache",
-    "*.{css,scss,sass,html,vue}": "stylelint",
-    "*.**": "prettier --check --ignore-unknown"
+    "*.{css,scss,sass,html,vue}": "stylelint"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
     "@commitlint/config-conventional": "^16.2.4",
+    "@iconify/json": "^2.1.38",
+    "@nuxt/postcss8": "^1.1.3",
     "@nuxtjs/eslint-config-typescript": "^9.0.0",
     "@nuxtjs/eslint-module": "^3.1.0",
     "@nuxtjs/localforage": "^1.1.0",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/storybook": "^4.3.1",
     "@nuxtjs/stylelint-module": "^4.1.0",
+    "@nuxtjs/tailwindcss": "^5.0.3",
     "@vueuse/core": "^8.3.1",
     "@vueuse/nuxt": "^8.3.1",
-    "autoprefixer": "^10.4.5",
+    "autoprefixer": "^10.4.7",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "graphql": "^16.4.0",
+    "graphql-tag": "^2.12.6",
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1",
     "nuxt3": "latest",
-    "postcss": "^8.4.12",
+    "postcss": "^8.4.13",
     "postcss-html": "^1.4.1",
     "stylelint": "^14.8.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended-vue": "^1.4.0",
-    "stylelint-config-standard": "^25.0.0"
+    "stylelint-config-standard": "^25.0.0",
+    "tailwindcss": "^3.0.24",
+    "unplugin-icons": "^0.14.3"
   },
   "dependencies": {
     "@nuxtjs/color-mode": "^3.0.2",
-    "@nuxtjs/tailwindcss": "^5.0.3",
     "@pinia/nuxt": "^0.1.8",
-    "pinia": "^2.0.13"
+    "nuxt-graphql-client": "^0.0.22",
+    "pinia": "^2.0.13",
+    "sass": "^1.51.0"
   }
 }
