@@ -18,7 +18,6 @@ export default defineNuxtConfig({
     'nuxt-lodash',
     // Doc: https://github.com/formkit/formkit
     '@formkit/nuxt',
-    'nuxt-graphql-client'
   ],
   buildModules: [
     '@nuxtjs/tailwindcss',
@@ -29,14 +28,17 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  build: {
+    transpile: [
+      '@apollo/client',
+      'ts-invariant/process'
+    ],
+  },
   components: {
     global: true,
     dirs: ['~/components'],
   },
   css: ['~/assets/scss/app.scss'],
-  localforage: {
-    /* module options */
-  },
   vueuse: {
     ssrHandlers: true,
   },
@@ -56,10 +58,5 @@ export default defineNuxtConfig({
     PUSHER_APP_KEY: process.env.PUSHER_APP_KEY,
     PUSHER_APP_CLUSTER: process.env.PUSHER_APP_CLUSTER,
     GQL_HOST: process.env.GRAPHQL_URL,
-  },
-  runtimeConfig: {
-    public: {
-      GQL_HOST: 'https://api.spacex.land/graphql' // overwritten by process.env.GQL_HOST
-    }
   }
 })
