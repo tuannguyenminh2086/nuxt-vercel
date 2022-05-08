@@ -1,5 +1,5 @@
 <template>
-  <div class="local-time flex items-center">
+  <div class="local-time items-center hidden lg:flex">
     <div class="flex" :class="{'flex-row-reverse': state.isSwitch}">
       <div class="flex items-center">
           <img src="@/assets/imgs/vietnam.svg" class="w-5" />

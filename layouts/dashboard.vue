@@ -17,11 +17,7 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import TheSidebar from '../components/master/TheSidebar.vue'
 import TheHeader from '~~/components/master/TheHeader.vue'
-export default {
-  components: { TheHeader, TheSidebar },
-  middleware: 'auth',
-}
 </script>

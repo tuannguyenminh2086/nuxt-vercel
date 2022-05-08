@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
-export const useStore = defineStore({
+export const useAuthStore = defineStore({
   id: 'auth',
 
   state: () => ({
@@ -16,6 +16,7 @@ export const useStore = defineStore({
   getters: {
     getUser: (state) => state.me,
     getCount: (state) => state.counter,
+    getAuth: (state) => state.isAuthenticated
   },
 
   actions: {
@@ -47,5 +48,5 @@ export const useStore = defineStore({
 })
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot))
 }

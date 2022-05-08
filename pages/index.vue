@@ -11,7 +11,7 @@
 
           <BaseSection title="Activities" class="">
             <template #default>
-              asdadaasd
+              {{ text }}
             </template>
 
             <template #footer>
@@ -25,6 +25,13 @@
           <BaseSection>
             <template #default>
               <BaseLoader />
+
+              <p v-for="(entry, i) of data?.launches" :key="i">
+                {{ i + 1 }}. Mission Name: {{ entry!.mission_name }} ({{
+                  entry!.launch_year
+                }})
+              </p>
+
             </template>
           </BaseSection>
          </div>
@@ -39,4 +46,6 @@
 </template>
 
 <script setup lang="ts">
+  const text = useToUpper('it works!');
+  const { data } = await useAsyncData('starlink', () => GqlLaunches({ limit: 10 }));
 </script>

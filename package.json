@@ -38,6 +38,7 @@
     "graphql-tag": "^2.12.6",
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1",
+    "nuxt-lodash": "^2.2.0",
     "nuxt3": "latest",
     "postcss": "^8.4.13",
     "postcss-html": "^1.4.1",
@@ -49,6 +50,7 @@
     "unplugin-icons": "^0.14.3"
   },
   "dependencies": {
+    "@formkit/nuxt": "^1.0.0-beta.6",
     "@headlessui/vue": "^1.6.1",
     "@nuxtjs/color-mode": "^3.0.2",
     "@pinia/nuxt": "^0.1.8",

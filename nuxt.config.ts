@@ -14,7 +14,11 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     // Doc: https://github.com/nuxt-community/pwa-module
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/localforage-module
+    // Doc: https://github.com/cipami/nuxt-lodash#readme
+    'nuxt-lodash',
+    // Doc: https://github.com/formkit/formkit
+    '@formkit/nuxt',
+    'nuxt-graphql-client'
   ],
   buildModules: [
     '@nuxtjs/tailwindcss',
@@ -36,6 +40,15 @@ export default defineNuxtConfig({
   vueuse: {
     ssrHandlers: true,
   },
+  lodash: {
+    prefix: 'use',
+    prefixSkip: ['is'],
+    exclude: ['map'],
+    alias: [
+      ['camelCase', 'stringToCamelCase'], // => useStringToCamelCase
+      ['kebabCase', 'stringToKebabCase'], // => useStringToKebabCase
+    ]
+  },
   publicRuntimeConfig: {
     CMS_URL: process.env.CMS_URL,
     GRAPHQL_URL: process.env.GRAPHQL_URL,
@@ -44,4 +57,9 @@ export default defineNuxtConfig({
     PUSHER_APP_CLUSTER: process.env.PUSHER_APP_CLUSTER,
     GQL_HOST: process.env.GRAPHQL_URL,
   },
+  runtimeConfig: {
+    public: {
+      GQL_HOST: 'https://api.spacex.land/graphql' // overwritten by process.env.GQL_HOST
+    }
+  }
 })
