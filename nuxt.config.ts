@@ -18,15 +18,7 @@ export default defineNuxtConfig({
     'nuxt-lodash',
     // Doc: https://github.com/formkit/formkit
     '@formkit/nuxt',
-  ],
-  buildModules: [
     '@nuxtjs/tailwindcss',
-    [
-      'unplugin-icons/nuxt',
-      {
-        /* options */
-      },
-    ],
   ],
   build: {
     transpile: [
