@@ -17,7 +17,7 @@
             Sign in to your account
           </h2>
         </div>
-        <form class="mt-8 space-y-6" action="#" method="POST">
+        <form class="mt-8 space-y-6" @submit.prevent='onSubmit'>
           <input type="hidden" name="remember" value="true" />
           <div class="rounded-md shadow-sm -space-y-px">
             <div>
@@ -26,22 +26,27 @@
                 id="email-address"
                 name="email"
                 type="email"
+                v-model.trim="email"
                 autocomplete="email"
                 required
                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
+                
               />
             </div>
             <div>
               <label for="password" class="sr-only">Password</label>
               <input
+                
                 id="password"
                 name="password"
                 type="password"
+                v-model.trim='password'
                 autocomplete="current-password"
                 required
                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
+                
               />
             </div>
           </div>
@@ -98,3 +103,27 @@
     </div>
   </NuxtLayout>
 </template>
+
+<script setup lang="ts">
+  import { ref, reactive } from 'vue';
+  import { useAuthStore } from '~~/store/auth';
+
+  const state = reactive({
+    errorMessage: ''
+  });
+
+  const store = useAuthStore();
+  const email = ref('');
+  const password = ref('');
+
+  const onSubmit = () => {
+    store.loginHandle(email.value, password.value).then(res => {
+      if (res.isAuthenticated) {
+        state.errorMessage = '';
+        navigateTo('/')
+      }
+			state.errorMessage = res.message;
+    })
+  }
+
+</script>

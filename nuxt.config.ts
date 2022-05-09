@@ -14,27 +14,34 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     // Doc: https://github.com/nuxt-community/pwa-module
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/localforage-module
+    // Doc: https://github.com/cipami/nuxt-lodash#readme
+    'nuxt-lodash',
+    // Doc: https://github.com/formkit/formkit
+    '@formkit/nuxt',
+    '@nuxtjs/tailwindcss'
   ],
-  buildModules: [
-    '@nuxtjs/tailwindcss',
-    [
-      'unplugin-icons/nuxt',
-      {
-        /* options */
-      },
+  build: {
+    transpile: [
+      '@apollo/client',
+      'ts-invariant/process'
     ],
-  ],
+  },
   components: {
     global: true,
     dirs: ['~/components'],
   },
   css: ['~/assets/scss/app.scss'],
-  localforage: {
-    /* module options */
-  },
   vueuse: {
     ssrHandlers: true,
+  },
+  lodash: {
+    prefix: 'use',
+    prefixSkip: ['is'],
+    exclude: ['map'],
+    alias: [
+      ['camelCase', 'stringToCamelCase'], // => useStringToCamelCase
+      ['kebabCase', 'stringToKebabCase'], // => useStringToKebabCase
+    ]
   },
   publicRuntimeConfig: {
     CMS_URL: process.env.CMS_URL,
@@ -43,5 +50,5 @@ export default defineNuxtConfig({
     PUSHER_APP_KEY: process.env.PUSHER_APP_KEY,
     PUSHER_APP_CLUSTER: process.env.PUSHER_APP_CLUSTER,
     GQL_HOST: process.env.GRAPHQL_URL,
-  },
+  }
 })
