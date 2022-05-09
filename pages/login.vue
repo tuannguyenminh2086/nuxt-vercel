@@ -24,13 +24,11 @@
               <label for="email-address" class="sr-only">Email address</label>
               <input
                 id="email-address"
-               
                 name="email"
                 type="email"
-                autocomplete="email"
                 v-model.trim="email"
+                autocomplete="email"
                 required
-                 
                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
                 
@@ -43,10 +41,9 @@
                 id="password"
                 name="password"
                 type="password"
+                v-model.trim='password'
                 autocomplete="current-password"
-                 v-model.trim='password'
                 required
-               
                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
                 
@@ -108,15 +105,25 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, reactive } from 'vue';
   import { useAuthStore } from '~~/store/auth';
+
+  const state = reactive({
+    errorMessage: ''
+  });
 
   const store = useAuthStore();
   const email = ref('');
   const password = ref('');
 
   const onSubmit = () => {
-    store.loginHandle(email.value, password.value);
+    store.loginHandle(email.value, password.value).then(res => {
+      if (res.isAuthenticated) {
+        state.errorMessage = '';
+        navigateTo('/')
+      }
+			state.errorMessage = res.message;
+    })
   }
 
 </script>

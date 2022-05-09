@@ -1,19 +1,19 @@
 
-import {ApolloClient, ApolloLink, createHttpLink, InMemoryCache} from "@apollo/client/core";
-// import { setContext} from "@apollo/client/link/context";
+import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from "@apollo/client/core";
+import { setContext } from "@apollo/client/link/context";
+import { useAuthStore } from "~~/store/auth";
 
-
-// const authLink = setContext(async (_, {headers}) => {
-//     const store = useLottiStore();
-//     const token = await store.getAuthToken();
+const authLink = setContext((_, {headers}) => {
+    const store = useAuthStore();
+    const token = store.getAuthToken();
     
-//     return {
-//         headers: {
-//             ...headers,
-//             Authorization: token ? `Bearer ${token}` : null
-//         }
-//     }
-// })
+    return {
+        headers: {
+            ...headers,
+            Authorization: token ? `Bearer ${token}` : null
+        }
+    }
+})
 
 const httpLink = createHttpLink({
     uri: 'https://lottie-backend.absolutagentur.ch/graphql'
@@ -24,7 +24,7 @@ const cache = new InMemoryCache()
 
 // Create the apollo client
 const cmsClient = new ApolloClient({
-    link: ApolloLink.from([httpLink]),
+    link: ApolloLink.from([ authLink, httpLink ]),
     cache,
     defaultOptions: {
         watchQuery: {
