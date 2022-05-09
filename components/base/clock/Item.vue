@@ -11,7 +11,7 @@
       </div>
     </div>
     
-    <div class="ml-8 text-xs">{{ state.today }}</div>
+    <div class="ml-5 text-xs">{{ state.today }}</div>
   </div>
 </template>
 
@@ -39,7 +39,7 @@
   }
 
   const getToday = () => {
-    return moment().format("[Today is] dddd, DD MMM");
+    return moment().format("ddd, DD MMM");
   }
 
   state.vn_time = getTime('Asia/Ho_Chi_Minh','LT');

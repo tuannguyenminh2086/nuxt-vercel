@@ -40,5 +40,10 @@
 </template>
 
 <script setup lang="ts">
+  
+  definePageMeta({
+    middleware: 'auth'
+  })
+
   const text = useToUpper('it works!');
 </script>

@@ -11258,6 +11258,13 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pinia-plugin-persistedstate-2@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pinia-plugin-persistedstate-2/-/pinia-plugin-persistedstate-2-1.0.0.tgz#e368ac6bc5fdb3601809d3c7233940d397fe5c1e"
+  integrity sha512-ypsHZNbZ/A8dy4VzRsmW2u57M/Fxg1RFyAEoxK+/xfAhPwATsFQ/zYOqWHsCbxC4UCnqzg4rFpXH58OlZWq0EQ==
+  dependencies:
+    shvl "^2.0.3"
+
 pinia@^2.0.13:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.13.tgz#6656fc290dae120a9f0cb2f5c520df400d41b8c5"
@@ -13053,6 +13060,11 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
+shvl@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/shvl/-/shvl-2.0.3.tgz#eb4bd37644f5684bba1fc52c3010c96fb5e6afd1"
+  integrity sha512-V7C6S9Hlol6SzOJPnQ7qzOVEWUQImt3BNmmzh40wObhla3XOYMe4gGiYzLrJd5TFa+cI2f9LKIRJTTKZSTbWgw==
+
 side-channel@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
@@ -14210,6 +14222,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript-cookie@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/typescript-cookie/-/typescript-cookie-1.0.3.tgz#fa036aac4937ee528258035b7495a7813a7656d5"
+  integrity sha512-eGu8HYw2oI+NXV7JJ1QDFi02EWYTl8zENevq5kSI3JcAdCxtUvjW6Nj5Mjrej83/oK8O/5OyRDuivhSFU49GcA==
 
 typescript@^4.4.3:
   version "4.6.4"
