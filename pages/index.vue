@@ -11,7 +11,7 @@
 
           <BaseSection title="Activities" class="">
             <template #default>
-              asdadaasd
+              {{ text }}
             </template>
 
             <template #footer>
@@ -25,6 +25,7 @@
           <BaseSection>
             <template #default>
               <BaseLoader />
+
             </template>
           </BaseSection>
          </div>
@@ -39,4 +40,5 @@
 </template>
 
 <script setup lang="ts">
+  const text = useToUpper('it works!');
 </script>

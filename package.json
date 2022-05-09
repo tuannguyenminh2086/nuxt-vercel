@@ -38,6 +38,7 @@
     "graphql-tag": "^2.12.6",
     "husky": "^7.0.0",
     "lint-staged": "^12.4.1",
+    "nuxt-lodash": "^2.2.0",
     "nuxt3": "latest",
     "postcss": "^8.4.13",
     "postcss-html": "^1.4.1",
@@ -49,13 +50,16 @@
     "unplugin-icons": "^0.14.3"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.2",
+    "@formkit/nuxt": "^1.0.0-beta.6",
     "@headlessui/vue": "^1.6.1",
     "@nuxtjs/color-mode": "^3.0.2",
     "@pinia/nuxt": "^0.1.8",
+    "@vue/apollo-composable": "^4.0.0-alpha.17",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
-    "nuxt-graphql-client": "^0.0.22",
     "pinia": "^2.0.13",
-    "sass": "^1.51.0"
+    "sass": "^1.51.0",
+    "vue-apollo": "^3.1.0"
   }
 }
