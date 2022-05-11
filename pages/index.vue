@@ -1,49 +1,26 @@
 <template>
   <NuxtLayout name="dashboard">
-    <div className="grid">
-        <div class="col-auto">
-          <base-welcome-item />
-        </div>
+    <div class="grid">
+      <div class="col-auto">
+        <base-welcome-item />
+      </div>
     </div>
-    <div className="grid">
-        <div class="col-auto">
+    <div class="grid">
+      <div class="col-auto">
+        <activity />
+      </div>
 
-
-          <BaseSection title="Activities" class="">
-            <template #default>
-              {{ text }}
-            </template>
-
-            <template #footer>
-              <p class="text-right"><em>footer note</em></p>
-            </template>
-          </BaseSection>
-
-        </div>
-
-         <div class="col-auto">
-          <BaseSection>
-            <template #default>
-              <BaseLoader />
-
-            </template>
-          </BaseSection>
-         </div>
-    </div>
-
-    <div className="grid grid-cols-12 mt-10">
-        <NuxtLink to="/projects">
-          <span class="text-black">Projects</span>
-        </NuxtLink>
+      <div class="col-auto">
+        <working-projects />
+      </div>
     </div>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-  
+  import WorkingProjects from '~~/components/projects/WorkingProjects.vue';
   definePageMeta({
     middleware: 'auth'
   })
-
-  const text = useToUpper('it works!');
 </script>
+

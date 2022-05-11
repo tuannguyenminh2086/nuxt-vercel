@@ -8,7 +8,7 @@ interface IUser {
   email: any,
   enabled: boolean,
   id: string,
-  imagePath: string | null,
+  imagePath: string,
   name: string,
   username: string
 }
