@@ -42,13 +42,13 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia'
-  import { useProjectStore } from '../../store/projects.ts'
+  import { useProjectStore } from '../../store/projects'
 
   const projectsStore = useProjectStore();
   const { filteredList, loading } = storeToRefs(projectsStore)
 
-  onMounted(() => {
+  // onMounted(() => {
     projectsStore.fetchAllProjects()
-  })
+  // })
   
 </script>
