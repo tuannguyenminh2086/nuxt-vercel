@@ -1,51 +1,10 @@
 import gql from 'graphql-tag'
 
-export const GET_PROJECT_BY_ID = gql`
-    query getProjectById($path: ID!, $startDate: Time, $endDate: Time) {
-        project(fullPath: $path) {
-            id
-            issues(createdAfter: $startDate, createdBefore: $endDate) {
-                nodes {
-                    iid
-                    state
-                    title
-                    description
-                    totalTimeSpent
-                    timeEstimate
-                    createdAt
-                    updatedAt
-                    dueDate
-                    webUrl
-                    labels {
-                        nodes {
-                            color
-                            title
-                        }
-                    }
-                    milestone {
-                        id
-                        title
-                        description
-                        dueDate
-                        startDate
-                    }
-                    assignees {
-                        nodes {
-                            name
-                        }
-                    }
-                }
-            }
-        }
-    }
-`
-
 export const GET_ALL_PROJECTS_FULL = gql`
 query {
     projects {
       name
       id
-      project_id
       mapped_status {
         name
       }
@@ -61,11 +20,9 @@ query {
       status
       created_at
       updated_at
-      members {
+      leader {
         name
         image_path
-        image_name
-        id
       }
     }
 }
@@ -105,13 +62,9 @@ query {
         path
         status
         state
-        members {
-            id
-            name
-            avatar
-            pivot {
-                is_leader
-            }
+        leader {
+          name
+          image_path
         }
         issues {
             name

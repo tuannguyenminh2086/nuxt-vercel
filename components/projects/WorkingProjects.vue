@@ -11,8 +11,9 @@
                 <thead>
                   <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
                     <th class="py-3 px-4 font-bold text-left">Project Name</th>
+                    <th class="py-3 px-4 font-bold text-left">Leader</th>
                     <th class="py-3 px-4 font-bold text-left">Priority</th>
-                    <th class="py-3 px-4 font-bold text-left">Total Spent</th>
+                    <th class="py-3 px-4 font-bold text-left">Spent</th>
                   </tr>
                 </thead>
 
@@ -25,8 +26,9 @@
                   >
 
                     <td class="py-3 px-4"><NuxtLink :to="`/projects/${project.id}`">{{ project.name }}</NuxtLink></td>
+                    <td class="py-3 px-4">{{ project.leader? project.leader.name : 'N/A' }}</td>
                     <td class="py-3 px-4 "> <base-priority v-if="project.mapped_priority" :text="project.mapped_priority.toLowerCase()" /> </td>
-                    <td class="py-3 px-4 "><span class="font-bold">{{ project.total_spent  }}</span></td>
+                    <td class="py-3 px-4 "><base-hours :hours="project.total_spent" variant="duration" /></td>
                   </tr>
                 
                 </tbody>
@@ -54,7 +56,7 @@
   const isLoading: Ref<boolean> = ref(true)
 
   const { data, loading } = await cmsClient.query({
-        query: GET_CURRENT_PROJECT
+    query: GET_CURRENT_PROJECT
   });
 
   if ( data && data.tracking_projects) {

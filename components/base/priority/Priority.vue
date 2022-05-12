@@ -1,7 +1,7 @@
 <template>
-  <div class="font-bold px-4 inline-block text-white uppercase" :class="styleRender">
+  <span class="font-bold px-4 inline-block text-white" :class="styleRender">
     {{ text }}
-  </div>
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -17,15 +17,23 @@
 
   switch (props.text) {
     case 'critical':
-    case 'urgent':
       styleRender.value = 'bg-red-500'
+      break;
+    case 'urgent':
+      styleRender.value = 'bg-orange-700'
       break;
      case 'low':
        styleRender.value = 'bg-lime-600'
       break;
+     case 'medium':
+       styleRender.value = 'bg-cyan-500'
+      break;
+     case 'high':
+       styleRender.value = 'bg-yellow-500'
+      break;
   
     default:
-      styleRender.value = ''
+      styleRender.value = 'bg-slate-100'
       break;
   }
 

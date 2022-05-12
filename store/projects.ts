@@ -11,6 +11,11 @@ interface IStatus {
   name: string
 }
 
+interface IUser {
+  name: string,
+  image_path: string | null
+}
+
 interface IProject {
   client?: string | null;
   created_at?: string | null;
@@ -18,13 +23,12 @@ interface IProject {
   issues: IIssues[];
   mapped_priority: string;
   mapped_status?: IStatus;
-  // members: []
   name: string;
-  project_id: string | null;
   state: number;
   status: string;
   total_spent: number;
   updated_at: string;
+  leader: IUser
 }
 
 interface IProjectsState {
@@ -32,8 +36,7 @@ interface IProjectsState {
   filteredList: IProject[],
   loading: boolean,
   error: any,
-  sort: '',
-  projects: IProject[]
+  sort: ''
 }
 
 export const useProjectStore = defineStore({
@@ -44,13 +47,11 @@ export const useProjectStore = defineStore({
       filteredList: [],
       loading: false,
       error: '',
-      sort: '',
-      projects: []
+      sort: ''
     }
   },
   actions: {
     async fetchAllProjects () {
-
       try {
         this.loading = true
         const { projects } = (await cmsClient.query({
@@ -68,6 +69,15 @@ export const useProjectStore = defineStore({
         this.loading = false
       }
     },
+
+    searchProject (keyword:string) {
+      if (keyword === '') {
+        this.filteredList = this.list
+      } else {
+        this.filteredList = this.list.filter(p => p.name.toLowerCase().includes(keyword.toLowerCase()))
+      }
+    },
+
   },
 
   getters: {
