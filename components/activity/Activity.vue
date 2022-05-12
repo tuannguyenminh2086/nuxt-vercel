@@ -2,7 +2,14 @@
   <BaseSection title="Activities" class="">
     <template #default>
       <div class="p-4">
-        {{ text }}
+        <div v-if="listing.length < 1">
+          <base-iddle title="No activities" />
+        </div>
+
+        <div v-else>
+
+            sdad
+        </div>
       </div>
     </template>
 
@@ -13,5 +20,11 @@
 </template>
 
 <script setup lang="ts">
-    const text = useToUpper('it works!');
+  import { storeToRefs } from 'pinia'
+  import { useActivitiesStore } from '@/store/activities'
+  const activitiesStore = useActivitiesStore()
+  await activitiesStore.fetchActivities()
+
+   const { listing } = storeToRefs(activitiesStore)
+
 </script>
