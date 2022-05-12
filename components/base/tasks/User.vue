@@ -1,0 +1,108 @@
+<template>
+  <base-section :title="props.title">
+    <template #default>
+      <div v-if="isLoading" class="p-4">
+        <base-loader />
+      </div>
+      <div v-else class="p-4">
+          <div v-if="listing.length > 0">
+            <table class="table-auto border-collapse w-full">
+              <thead>
+                <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
+                  <th class="py-3 px-4 font-bold text-left w-20">ID</th>
+                  <th class="py-3 px-4 font-bold text-left w-2/6 pr-6">Name</th>
+                  <th class="py-3 px-4 font-bold text-left w-3/12">Project</th>
+                  <th class="py-3 px-4 font-bold text-left w-1/12 ">Spent</th>
+                  <th class="py-3 px-4 font-bold text-left w-2/12">Priority</th>
+                  <th class="py-3 px-4 font-bold text-left w-2/12">Created at</th>
+                  <th class="py-3 px-4 font-bold"></th>
+                  
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr  
+                  v-for="(issue, index) in listing"
+                  :key="index" 
+                  class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
+                  :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
+                >
+
+                  <td class="py-3 px-4 w-20">{{ issue.id }}</td>
+                  <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`">{{ issue.name }}</NuxtLink></td>
+                  <td class="py-3 px-4 w-3/12">{{ issue.project.name }}</td>
+                  <td class="py-3 px-4 w-1/12">0</td>
+                  <td class="py-3 px-4 w-2/12"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
+                  <td class="py-3 px-4 w-2/12">{{ issue.created_at }}</td>
+                  <td class="py-3 px-4 ">
+                    <button>Start</button>
+                    <button>Stop</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else>
+            <base-iddle title="Nothing here" />
+          </div>
+         
+      </div>
+    </template>
+  </base-section>
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import type { Ref } from 'vue'
+  import cmsClient from '~~/apollo/cmsClient';
+  import { GET_ISSUES_BY_STATUS } from '~~/graphql/queries/tasksQuery';
+
+  interface Props {
+    title?: string
+    issueType: number
+  }
+
+  interface ITimeTracking {
+    end_time?: string
+    spent: number
+    start_time: string
+  }
+
+  interface IIssue {
+    created_at: string
+    current_user_spent: number
+    id: string
+    mapped_priority: string
+    mapped_status: { 
+      key: string
+      name: string
+    }
+    name: string
+    project: {
+      id: string
+      name: string
+    }
+    state: number
+    status: number
+    time_tracking?: ITimeTracking[]
+  }
+
+  const props = defineProps<Props>()
+
+  const isLoading: Ref<boolean> = ref(true)
+  const listing: Ref<IIssue[]> = ref([])
+
+  const res = await cmsClient.query({
+    query: GET_ISSUES_BY_STATUS,
+    variables: {
+      status: props.issueType
+    }
+  })
+
+
+ if ( res ) {
+   isLoading.value = res.loading
+   listing.value = res.data.list_todo
+ }
+  
+</script>
