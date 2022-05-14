@@ -112,9 +112,14 @@ export const useTimerStore = defineStore({
           }
 
           try {
-            await useFetch(`https://lottie-backend.absolutagentur.ch/api/issues/${tid}/tracking`, {
+            const { data } = await useFetch(`https://lottie-backend.absolutagentur.ch/api/issues/${tid}/tracking`, {
               headers
-            }).post(requestBody)
+            }).post(requestBody).json()
+
+            if (data.value) {
+              const { message } = data.value
+              alert (message[0])
+            }
 
           } catch (_error) {
            
