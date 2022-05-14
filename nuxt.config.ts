@@ -43,6 +43,9 @@ export default defineNuxtConfig({
       ['kebabCase', 'stringToKebabCase'], // => useStringToKebabCase
     ]
   },
+  router: {
+    middleware: [ 'auth' ]
+  },
   publicRuntimeConfig: {
     CMS_URL: process.env.CMS_URL,
     GRAPHQL_URL: process.env.GRAPHQL_URL,

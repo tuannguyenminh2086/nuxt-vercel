@@ -9,11 +9,13 @@
       <the-header />
 
       <main>
-        <div class="px-4 sm:px-6 py-8 w-full max-w-9xl mx-auto">
+        <div class="px-4 sm:px-6 py-8 w-full max-w-9xl mx-auto pb-32">
           <slot />
         </div>
       </main>
     </div>
+
+    <base-timer-issue-tracking/>
   </div>
 </template>
 

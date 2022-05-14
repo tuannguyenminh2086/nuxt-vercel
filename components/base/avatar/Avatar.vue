@@ -1,9 +1,9 @@
 <template>
     <Menu as="div" class="relative">
         <MenuButton class="flex items-center justify-center grow-0 shrink-0 px-4 h-full">
-          <div class="rounded-full border bg-slate-500 cursor-pointer w-8 h-8 overflow-hidden">
+          <div v-if="me" class="rounded-full border bg-slate-500 cursor-pointer w-8 h-8 overflow-hidden">
             <img
-              :src="me ? me?.imagePath : 'https://avatars.dicebear.com/api/avataaars/Hope-Howe.svg' "
+              :src="me.imagePath ? me.imagePath : 'https://avatars.dicebear.com/api/avataaars/Hope-Howe.svg' "
               :alt="me?.name" />
           </div>
       </MenuButton>
@@ -22,6 +22,9 @@
   import { useAuthStore } from '~~/store/auth';
 
   const authStore = useAuthStore()
+
+  authStore.setCurrentUser()
+
   const { me } = storeToRefs(authStore)
 
   const SignOutHandle = () => {

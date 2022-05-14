@@ -7,7 +7,12 @@
 </template>
 
 <script setup lang="ts">
+import { useProjectStore } from '~~/store/projects';
 definePageMeta({
-  middleware: 'auth'
+  middleware: ['auth']
 })
+
+const projectStore = useProjectStore()
+projectStore.fetchAllProjects()
+
 </script>

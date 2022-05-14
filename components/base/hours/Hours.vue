@@ -7,34 +7,44 @@
 <script setup lang="ts">
   // import { ref } from 'vue';
   // import type { Ref } from 'vue';
-  // import moment from 'moment';
+  import { computed } from 'vue';
 
   interface IProps {
-    hours: number,
+    hours?: number,
+    date?: string
     variant: string
   }
 
   const props = withDefaults(defineProps<IProps>(),{
     hours: 0,
+    date: '',
     variant: 'duration'
   });
 
   // const display: Ref<string> = ref('');
 
   const renderDisplay = computed(() => {
-
+    let result = ''
     switch (props.variant) {
       case 'duration':
           if ( props.hours > 0 ) {
             const _hours = props.hours / 3600;
-            return _hours.toFixed(2);
+            result = _hours.toFixed(2);
           } else {
-            return '0'
+            result = '0'
           }
-
-      default:
+        break;
+        
+      case 'datetime':
+          if ( props.date !== '') {
+            result = new Date(props.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' } )
+          } else {
+            result = '0'
+          }
         break;
     }
+
+    return result
   })
 
 </script>

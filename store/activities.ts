@@ -35,8 +35,10 @@ export const useActivitiesStore = defineStore({
       }).json()
 
       if (data.value) {
-        this.listing = data.value?.data
         this.loading = isFetching.value
+         // if empty 
+         this.listing = data.value.data
+         // not
       }
       
     }

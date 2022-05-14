@@ -59,7 +59,7 @@
     query: GET_CURRENT_PROJECT
   });
 
-  if ( data && data.tracking_projects) {
+  if ( data && data.tracking_projects ) {
      projects.value = data.tracking_projects
      isLoading.value = loading
   }
