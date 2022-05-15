@@ -27,7 +27,7 @@ const markdownit = new Mdit({
           return '<pre class="hljs"><code>' +
                  hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
                  '</code></pre>';
-        } catch (error) {console.log(error)}
+        } catch (_error) {}
       }
   
       return '<pre class="hljs"><code>' + mdit.utils.escapeHtml(str) + '</code></pre>';
