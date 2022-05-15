@@ -2,7 +2,6 @@ import { useFetch } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { useAuthStore } from './auth';
 
-
 interface IActivity {
   loading: boolean
   error: any
@@ -17,8 +16,8 @@ export const useActivitiesStore = defineStore({
     return {
       loading: false,
       error: null,
-      listing: [1],
-      message: [2]
+      listing: [],
+      message: []
     }
   },
   actions: {
@@ -35,8 +34,10 @@ export const useActivitiesStore = defineStore({
       }).json()
 
       if (data.value) {
-        this.listing = data.value?.data
         this.loading = isFetching.value
+         // if empty 
+         this.listing = data.value.data
+         // not
       }
       
     }

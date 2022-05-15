@@ -15,7 +15,7 @@
   const props = defineProps<IProps>()
   const styleRender: Ref<string> = ref('');
 
-  switch (props.text) {
+  switch (props.text.toLowerCase()) {
     case 'critical':
       styleRender.value = 'bg-red-500'
       break;

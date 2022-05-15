@@ -1,6 +1,6 @@
 import { useAuthStore } from "~~/store/auth";
 
-export default async function() {
+export default function() {
 
   if (process.client) {
   const authStore = useAuthStore()
@@ -8,9 +8,6 @@ export default async function() {
 
     if (!_token) {
       return navigateTo('/login')
-    } else {
-      await authStore.setCurrentUser()
-      authStore.setAuthToken()
     }
   }
 }

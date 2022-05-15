@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
+    '@nuxtjs/tailwindcss',
     // Doc: https://github.com/nuxt-community/color-mode-module
     '@nuxtjs/color-mode',
     // Doc: https://github.com/vueuse/vueuse
@@ -18,7 +19,6 @@ export default defineNuxtConfig({
     'nuxt-lodash',
     // Doc: https://github.com/formkit/formkit
     '@formkit/nuxt',
-    '@nuxtjs/tailwindcss'
   ],
   build: {
     transpile: [
@@ -43,12 +43,14 @@ export default defineNuxtConfig({
       ['kebabCase', 'stringToKebabCase'], // => useStringToKebabCase
     ]
   },
+  router: {
+    middleware: [ 'auth' ]
+  },
   publicRuntimeConfig: {
-    CMS_URL: process.env.CMS_URL,
-    GRAPHQL_URL: process.env.GRAPHQL_URL,
-    API_URL: process.env.API_URL,
-    PUSHER_APP_KEY: process.env.PUSHER_APP_KEY,
-    PUSHER_APP_CLUSTER: process.env.PUSHER_APP_CLUSTER,
-    GQL_HOST: process.env.GRAPHQL_URL,
+    CMS_URL: process.env.NUXT_API_CMS_URL,
+    GRAPHQL_URL: process.env.NUXT_API_GRAPHQL_URL,
+    API_URL: process.env.NUXT_API_URL,
+    PUSHER_APP_KEY: process.env.NUXT_API_PUSHER_APP_KEY,
+    PUSHER_APP_CLUSTER: process.env.NUXT_API_PUSHER_APP_CLUSTER
   }
 })

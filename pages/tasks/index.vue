@@ -1,8 +1,6 @@
 <template>
   <div class="mt-8">
     <div class="grid gap-4 mt-2">
-      
-
       <div class="col-auto">
         <base-tasks-user :issue-type="2" title="Doing" />
       </div>
