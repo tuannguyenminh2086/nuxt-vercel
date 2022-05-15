@@ -6,11 +6,11 @@ import { useAuthStore } from "~~/store/auth";
 const authLink = setContext((_, {headers}) => {
     const store = useAuthStore();
     const token = store.getAuthToken();
-    
+
     return {
         headers: {
             ...headers,
-            Authorization: token ? `Bearer ${token}` : null
+            Authorization: `Bearer ${token}`
         }
     }
 })
@@ -20,7 +20,9 @@ const httpLink = createHttpLink({
   });
 
 // Cache implementation
-const cache = new InMemoryCache()
+const cache = new InMemoryCache({
+    addTypename: false,
+  })
 
 // Create the apollo client
 const cmsClient = new ApolloClient({

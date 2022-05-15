@@ -7,7 +7,11 @@
 
 <script setup lang="ts">
   import { computed } from "vue";
-  // import { useLottiStore } from "@/store/lotti";
+  import { storeToRefs } from 'pinia'
+  import { useAuthStore } from "~~/store/auth";
+
+  const authStore = useAuthStore()
+  const { me } = storeToRefs( authStore )
   
    const welcomeText = computed(() => {
       const today = new Date();
@@ -22,8 +26,7 @@
     });
 
   const name = computed(() => {
-    // return lotti.me ? lotti.me.name : "";
-    return "TUAN"
+    return me ? me.value?.name : "";
   });
 
 </script>

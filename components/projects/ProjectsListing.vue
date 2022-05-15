@@ -48,7 +48,7 @@
   const { filteredList, loading } = storeToRefs(projectsStore)
 
   // onMounted(() => {
-    projectsStore.fetchAllProjects()
+    // projectsStore.fetchAllProjects()
   // })
   
 </script>

@@ -5,7 +5,7 @@
         <base-loader />
       </div>
       <div v-else class="p-4">
-          <div v-if="listing.length > 0">
+          <div v-if="listing">
             <table class="table-auto border-collapse w-full">
               <thead>
                 <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
@@ -20,7 +20,8 @@
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody v-if="listing.length > 0">
+
                 <tr  
                   v-for="(issue, index) in listing"
                   :key="index" 
@@ -29,23 +30,33 @@
                 >
 
                   <td class="py-3 px-4 w-20">{{ issue.id }}</td>
-                  <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`">{{ issue.name }}</NuxtLink></td>
+                  <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`"><span class="font-semibold">{{ issue.name }}</span></NuxtLink></td>
                   <td class="py-3 px-4 w-3/12">{{ issue.project.name }}</td>
-                  <td class="py-3 px-4 w-1/12">0</td>
+                  <td class="py-3 px-4 w-1/12">{{ issue.current_user_spent ?  issue.current_user_spent : 0}}</td>
                   <td class="py-3 px-4 w-2/12"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
                   <td class="py-3 px-4 w-2/12">{{ issue.created_at }}</td>
                   <td class="py-3 px-4 ">
-                    <button>Start</button>
-                    <button>Stop</button>
+                    <div class="flex items-center justify-center">
+                      <base-timer-issue-timer-actions
+                        :task-id="issue.id"
+                        :task-name="issue.name"
+                        :task-project-ame="issue.project.name" 
+                      />
+                    </div>
                   </td>
                 </tr>
               </tbody>
+
+              <tbody v-else>
+                <tr>
+                  <td colspan="6">
+                     <base-iddle title="Nothing here" />
+                  </td>
+                </tr>
+                
+              </tbody>
             </table>
           </div>
-          <div v-else>
-            <base-iddle title="Nothing here" />
-          </div>
-         
       </div>
     </template>
   </base-section>
@@ -92,17 +103,16 @@
   const isLoading: Ref<boolean> = ref(true)
   const listing: Ref<IIssue[]> = ref([])
 
-  const res = await cmsClient.query({
+  const { data, loading } = await cmsClient.query({
     query: GET_ISSUES_BY_STATUS,
     variables: {
       status: props.issueType
     }
   })
 
+  if ( data.list_todo ) {
+    isLoading.value = loading
+    listing.value = data.list_todo
+  }
 
- if ( res ) {
-   isLoading.value = res.loading
-   listing.value = res.data.list_todo
- }
-  
 </script>
