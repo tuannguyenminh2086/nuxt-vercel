@@ -37,7 +37,6 @@ export default defineNuxtPlugin(nuxtApp => {
     nuxtApp.vueApp.provide("pusherClient", pusher)
     nuxtApp.vueApp.provide("echoClient", echo)
 
-
 })
 
 

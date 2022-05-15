@@ -69,9 +69,8 @@
       // console.log(echo)
       if (process.client) {
         // console.log(nuxtApp.$echoClient)
-
-        nuxtApp.$echoClient.private("TaskInProcess").listen(".task-in-process", () => {
-          // console.log(e)
+        nuxtApp.$echoClient.channel("TaskInProcess").listen(".task-in-process", (e:any) => {
+          console.log(e)
         })
 
       }
