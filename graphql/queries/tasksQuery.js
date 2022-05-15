@@ -32,3 +32,36 @@ export const GET_ISSUES_BY_STATUS = gql`
         }
     }
 `
+
+export const GET_TASK_BY_ID = gql`
+    query TaskByID($id: ID!)  {
+        issue (id: $id) {
+          id
+          assignees {
+            name
+            id
+            image_path
+          }
+          name
+          description
+            current_user_spent
+          author_id
+            created_at
+            mapped_status {
+            name
+            key
+          }
+          mapped_priority
+          comments{
+            id
+            content
+            created_at
+          }
+            project {
+            name
+            id
+          }
+        }
+      
+    }
+`
