@@ -44,7 +44,7 @@
                 >
 
                   <td class="py-3 px-4 w-20">{{ issue.id }}</td>
-                  <td class="py-3 px-4 w-2/6 pr-6"><span class="font-semibold">{{ issue.name }}</span></td>
+                  <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`"><span class="font-semibold">{{ issue.name }}</span></NuxtLink></td>
                   <td class="py-3 px-4 w-2/12"><base-members :members="issue.assignees" :show-name="true" /></td>
                   <td class="py-3 px-4 w-1/12">0</td>
                   <td class="py-3 px-4 w-1/12">n/a</td>
@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+  import { ref, computed} from 'vue'
   import type { Ref } from 'vue'
 
   interface IIssue {
@@ -92,8 +92,9 @@
   }
 
   const props = defineProps<IProps>()
-  const issuesState = useState('project-issues', () => props.listing)
+  // const issuesState = useState('project-issues', () => props.listing)
   const keyword: Ref<''> = ref('')
+  const issuesState = ref(props.listing)
 
   const filteredListing = computed(() => {
     if (keyword.value === '') {

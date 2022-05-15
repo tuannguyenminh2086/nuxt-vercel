@@ -88,4 +88,8 @@
      isLoading.value = loading
   }
 
+  useHead({
+    title: 'Project Detail'
+  })
+
 </script>

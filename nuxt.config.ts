@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     // Doc: https://github.com/cipami/nuxt-lodash#readme
     'nuxt-lodash',
     // Doc: https://github.com/formkit/formkit
-    '@formkit/nuxt',
+    '@formkit/nuxt'
   ],
   build: {
     transpile: [
