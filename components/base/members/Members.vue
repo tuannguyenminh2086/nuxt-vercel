@@ -1,11 +1,11 @@
 <template>
-  <div v-if="members">
+  <div v-if="members" class="flex">
     <div
       v-for="(member, index) in members"
       :key="index"
       class="flex flex-col items-center"
     >
-        <div class="border rounded-full p-1 w-11 bg-slate-200 flex items-center justify-center overflow-hidden">
+        <div class="border rounded-full p-1 w-8 bg-slate-200 flex items-center justify-center overflow-hidden">
           <img :src="member.image_path ? member.image_path : randowAvatar " class="object-cover w-full" />
         </div>
         <span v-if="showName" class="text-sm font-semibold mt-2">{{ member.name ? member.name : 'n/a'}}</span>          
@@ -18,7 +18,7 @@
   interface IUser {
     name: string
     image_path: string | null
-    username: string
+    username?: string
   }
 
   interface IMember {

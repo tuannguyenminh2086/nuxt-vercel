@@ -69,22 +69,12 @@
       // console.log(echo)
       if (process.client) {
         // console.log(nuxtApp.$echoClient)
-        nuxtApp.$echoClient.channel("TaskInProcess").listen(".task-in-process", (e:any) => {
-          console.log(e)
+        nuxtApp.$echoClient.channel("TaskInProcess").listen(".task-in-process", (_e:any) => {
+          // console.log(e)
         })
 
       }
-      
-
-      // $echo.channel('TaskInProcess').listen('.task-in-process',(e:any)=> {
-      //   console.log(e)
-      // })
-
-      // if ( process.client) {
-      //    echo.private("TaskInProcess").listen(".task-in-process", (e:any) => {
-      //     console.log(e)
-      //   })
-      // }
+    
   })
 
 </script>
