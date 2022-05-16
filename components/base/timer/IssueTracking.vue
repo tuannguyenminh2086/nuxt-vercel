@@ -26,11 +26,11 @@
   // import { onMounted, onBeforeMount } from 'vue'
   import { storeToRefs } from 'pinia'
   import { useTimerStore } from '@/store/timer'
-  import { useActivitiesStore } from '@/store/activities'
+  // import { useActivitiesStore } from '@/store/activities'
   // import Timer from 'easytimer.js';
 
   const timerStore = useTimerStore()
-  const activitiesStore = useActivitiesStore();
+  // const activitiesStore = useActivitiesStore();
   const { isRunning, task } = storeToRefs(timerStore)
   // const counter = ref('00:00:00')
 
@@ -40,7 +40,6 @@
     // timer.reset()
     timerStore.stopTimer(task.value.issue_id);
     timerStore.$reset();
-    activitiesStore.fetchActivities()
   }
   
   // const startCounter = (startedAt: string) => {
@@ -81,6 +80,5 @@
   //   console.log('mounted')
   //   // startCounter(startedAt.value)
   // });
-
 
 </script>

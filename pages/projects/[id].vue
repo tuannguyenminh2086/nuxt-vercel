@@ -72,7 +72,6 @@
 
   // const project: Ref<IProject | null> = ref(null)
   const isLoading: Ref<boolean> = ref(true)
-
   // const isComponent: Ref<string> = ref('base-tasks-listing')
 
   if ( !route.params.id ) navigateTo('/projects')
@@ -87,5 +86,6 @@
   if ( project ) {
      isLoading.value = loading
   }
+
 
 </script>
