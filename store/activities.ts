@@ -25,8 +25,8 @@ export const useActivitiesStore = defineStore({
       this.loading = true;
       const auth = useAuthStore()
       const _token = auth.getAuthToken();
-    
-      const { isFetching, data } = await useFetch('https://lottie-backend.absolutagentur.ch/api/issues/working', {
+
+      const { isFetching, data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/api/issues/working`, {
         headers: {
           'Authorization': `Bearer ${_token}`,
           'Accept': 'application/json'
@@ -35,9 +35,7 @@ export const useActivitiesStore = defineStore({
 
       if (data.value) {
         this.loading = isFetching.value
-         // if empty 
-         this.listing = data.value.data
-         // not
+        this.listing = data.value.data
       }
       
     }
