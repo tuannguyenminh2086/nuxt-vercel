@@ -16,8 +16,10 @@ export default defineNuxtPlugin(nuxtApp => {
       cluster: `${config.PUSHER_APP_CLUSTER}`,
       authEndpoint: `${config.CMS_URL}/broadcasting/auth`,
       auth: {
-        Authorization: `Bearer ${token}`,
-        'Accept': 'application/json'
+        headers: {
+          Authorization: `Bearer ${token}`,
+         'Accept': 'application/json'
+        }
       },
       forceTLS: false
     };
