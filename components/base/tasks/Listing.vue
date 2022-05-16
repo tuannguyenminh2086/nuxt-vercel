@@ -94,14 +94,17 @@
   const props = defineProps<IProps>()
   // const issuesState = useState('project-issues', () => props.listing)
   const keyword: Ref<''> = ref('')
-  const issuesState = ref(props.listing)
+  // const issuesState = ref(props.listing)
 
   const filteredListing = computed(() => {
     if (keyword.value === '') {
-      return issuesState.value
+      return props.listing
     } else {
-      return issuesState.value.filter(p => p.name.toLowerCase().includes(keyword.value.toLowerCase()))
+      return props.listing.filter(p => p.name.toLowerCase().includes(keyword.value.toLowerCase()))
     }
   })
+
+
+
 
 </script>
