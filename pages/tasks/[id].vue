@@ -8,9 +8,9 @@
           <template #default>
             <div class="px-4 py-6">
 
-              <div class="grid grid-cols-4 auto-cols-max">
+              <div class="grid grid-cols-4 auto-cols-max gap-4">
 
-                <div class="col-span-2">
+                <div class="col-span-2 lg:mr-5">
                   <h6 class="mb-2 text-sm">ID: {{ issue.id }}</h6>
                   <h1 class="text-3xl font-bold mb-3">{{ issue.name }}</h1>
                   <p class="text-sm">Project: <NuxtLink :to="`/projects/${issue.project.id}`">{{ issue.project.name }}</NuxtLink> </p>
@@ -45,7 +45,11 @@
                 </div>
 
                 <div class="col-span-2">
-                   Comments is here
+                  <base-comments-task-comments
+                      :comments="issue.comments"
+                      :relatedId="issue.id"
+                      type="issue"
+                  />
                 </div>
                
 
