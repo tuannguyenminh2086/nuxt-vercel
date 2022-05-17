@@ -10,3 +10,4 @@ sw.*
 # Optional eslint cache
 .eslintcache
 .vercel
+.idea

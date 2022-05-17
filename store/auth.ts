@@ -1,7 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { LOGIN_MUTATION } from '~~/graphql/mutations/authMutation';
 import { GET_CURRENT_USER } from "~~/graphql/queries/userQuery";
-import cmsClient from '~~/apollo/cmsClient';
 
 interface IUser {
   dob: any,
@@ -22,6 +21,7 @@ interface IAuth {
   me: IUser | null,
 }
 
+
 export const useAuthStore = defineStore({
   id: 'auth',
 
@@ -36,8 +36,8 @@ export const useAuthStore = defineStore({
 
   actions: {
     async loginHandle(_email: string, _password: string) {
-
-      const { login } = ( await cmsClient.mutate({
+      const { $graphqlClient } = this.$nuxt.config.globalProperties;
+      const { login } = ( await $graphqlClient.mutate({
         mutation: LOGIN_MUTATION,
         variables: {
           email: _email,
@@ -45,11 +45,10 @@ export const useAuthStore = defineStore({
         }
       })
       ).data;
-
-      if ( login ) {
+      if ( login.user ) {
         this.isAuthenticated = true
         this.token = login.token
-        this.roles = login.roles 
+        this.roles = login.roles
         this.me = Object.assign(login.user)
 
         if (process.client) {
@@ -59,7 +58,7 @@ export const useAuthStore = defineStore({
         return  {
           isAuthenticated: true
         }
-        
+
       } else {
         return {
           isAuthenticated: false,
@@ -91,17 +90,18 @@ export const useAuthStore = defineStore({
     },
 
     async setCurrentUser () {
-      const { data: { me } } = await cmsClient.query({
+      const { $graphqlClient } = this.$nuxt.config.globalProperties;
+      const { data: { me } } = await $graphqlClient.query({
         query: GET_CURRENT_USER,
       });
-      
+
       if (me) {
         const { dob, email, enabled, id, name, roles, username, permissions } = me
         this.me = Object.assign({}, { dob, email, enabled, id, imagePath: me.image_path, name, username })
         this.roles = roles
         this.permissions = permissions
       }
-      
+
     },
     getAuthToken () {
       if (process.client) {

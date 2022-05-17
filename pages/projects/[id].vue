@@ -39,7 +39,7 @@
   import { ref } from 'vue'
   import type { Ref } from 'vue'
   import { GET_PROJECT_DETAIL } from '~~/graphql/queries/projectQuery';
-  import cmsClient from '~~/apollo/cmsClient';
+  // import cmsClient from '~~/apollo/cmsClient';
 
   const route = useRoute()
 
@@ -73,10 +73,9 @@
   // const project: Ref<IProject | null> = ref(null)
   const isLoading: Ref<boolean> = ref(true)
   // const isComponent: Ref<string> = ref('base-tasks-listing')
-
-  if ( !route.params.id ) navigateTo('/projects')
-
-  const { data: { project }, loading } = await cmsClient.query({
+  const { $graphqlClient } = useNuxtApp()
+  if ( !route.params.id ) navigateTo('/projects');
+  const { data: { project }, loading } = await $graphqlClient.query({
     query: GET_PROJECT_DETAIL,
     variables: {
       id: route.params.id

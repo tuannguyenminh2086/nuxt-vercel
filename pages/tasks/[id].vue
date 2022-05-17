@@ -67,14 +67,14 @@
   import { ref } from 'vue'
   import type { Ref } from 'vue'
   import { GET_TASK_BY_ID } from '~~/graphql/queries/tasksQuery';
-  import cmsClient from '~~/apollo/cmsClient';
+  // import cmsClient from '~~/apollo/cmsClient';
 
   const route = useRoute()
   if ( !route.params.id ) navigateTo('/projects')
 
    const isLoading: Ref<boolean> = ref(true)
-
-  const { data: { issue } , loading } = await cmsClient.query({
+  const { $graphqlClient } = useNuxtApp()
+  const { data: { issue } , loading } = await $graphqlClient.query({
     query: GET_TASK_BY_ID,
     variables: {
       id: route.params.id
