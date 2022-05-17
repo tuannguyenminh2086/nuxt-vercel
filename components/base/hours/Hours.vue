@@ -42,6 +42,10 @@
             result = '0'
           }
         break;
+      
+      case 'time':
+          
+        break;
     }
 
     return result
