@@ -62,24 +62,26 @@
   const { listing, loading } = storeToRefs(activitiesStore)
   const nuxtApp = useNuxtApp();
 
+ 
+  
+  if (process.client) {
+    nuxtApp.$echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
+      const { data: { action } } = _e;
+      // console.log(message)
+
+      switch (action) {
+        case "reload":
+          activitiesStore.fetchActivities();
+          break;
+      }
+
+    })
+  }
+
 
   onMounted(() => {
-      activitiesStore.fetchActivities()
-      
-      if (process.client) {
-        nuxtApp.$echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
-          const { data: { action } } = _e;
-          // console.log(message)
-
-          switch (action) {
-            case "reload":
-              activitiesStore.fetchActivities();
-              break;
-          }
-
-        })
-    }
-
+     activitiesStore.fetchActivities()
   })
+
 
 </script>

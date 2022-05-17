@@ -26,7 +26,7 @@ export const useActivitiesStore = defineStore({
       const auth = useAuthStore()
       const _token = auth.getAuthToken();
 
-      const { isFetching, data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/api/issues/working`, {
+      const { isFetching, data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/working`, {
         headers: {
           'Authorization': `Bearer ${_token}`,
           'Accept': 'application/json'
