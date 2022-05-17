@@ -8,7 +8,7 @@
   </Html>
 </template>
 <script setup lang="ts">
-  import { useTimerStore } from '@/store/timer'
-  const timerStore = useTimerStore()
-  timerStore.getCurrentTracking()
+  import { useTimerStore } from '@/store/timer';
+  const timerStore = useTimerStore();
+  timerStore.getCurrentTracking();
 </script>
