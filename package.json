@@ -60,6 +60,7 @@
     "@pinia/nuxt": "^0.1.8",
     "@urql/vue": "^0.6.2",
     "@vue/apollo-composable": "^4.0.0-alpha.17",
+    "@vuepic/vue-datepicker": "^3.2.1",
     "axios": "^0.27.2",
     "easytimer.js": "^4.5.3",
     "highlight.js": "^11.5.1",
