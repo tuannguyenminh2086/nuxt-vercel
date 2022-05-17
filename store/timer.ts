@@ -37,11 +37,10 @@ export const useTimerStore = defineStore({
   actions: {
     async getCurrentTracking() {
       // if (process.client) {
-
         const auth = useAuthStore();
         const _token = auth.getAuthToken()
 
-        const { data } = await useFetch('https://lottie-backend.absolutagentur.ch/api/activity/current-tracking', {
+        const { data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/activity/current-tracking`, {
           headers: {
             'Authorization': `Bearer ${_token}`,
             'Accept': 'application/json'
@@ -112,7 +111,7 @@ export const useTimerStore = defineStore({
           }
 
           try {
-            const { data } = await useFetch(`https://lottie-backend.absolutagentur.ch/api/issues/${tid}/tracking`, {
+            const { data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/${tid}/tracking`, {
               headers
             }).post(requestBody).json()
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard flex h-screen overflow-hidden ">
+  <div class="dashboard flex h-screen overflow-hidden">
     <the-sidebar />
 
     <!-- content -->

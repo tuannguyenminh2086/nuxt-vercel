@@ -11,7 +11,7 @@
       <div v-else>
         <base-section>
           <template #default>
-              <div class="grid grid-cols-3 py-6 px-4">
+              <div class="grid grid-cols-3 py-10 px-6">
                 <div class="col-span-2">
                   <h2 class="text-5xl font-bold mb-5">{{ project?.name }}</h2>
                   <h6 class="mb-2"><b>Client:</b> {{ project?.client ? project.client : 'n/a'}}</h6>

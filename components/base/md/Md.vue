@@ -1,18 +1,23 @@
 <template>
   <div class="p-4 bg-slate-100 md">
-    <div v-html="rendered"></div>
+    <client-only>
+      <div v-html="rendered"></div>
+    </client-only>
+
   </div>
 </template>
 
 <script setup lang="ts">
   interface IProps {
-    content: string
+    content: String
   }
   const props = defineProps<IProps>()
-  const rendered = ref("");
+  const rendered = ref("N/A");
 
-  function renderHtml(){
-    rendered.value = useNuxtApp().$mdit.render(props.content); 
+  function renderHtml() {      
+    if (props.content) {
+      rendered.value = useNuxtApp().$mdit.render(props.content); 
+    } 
   }
 
   onMounted(() => {
