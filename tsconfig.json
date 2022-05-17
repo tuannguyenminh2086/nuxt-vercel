@@ -1,5 +1,11 @@
 {
   // https://v3.nuxtjs.org/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
-  "types": ["@pinia/nuxt"]
+  "module": "commonjs",
+  "types": ["@pinia/nuxt"],
+  "paths": {
+    "@store/*": [
+      "./store/*"
+    ],
+  }
 }
