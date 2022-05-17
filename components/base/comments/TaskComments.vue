@@ -109,5 +109,4 @@
   //   comments.value = props.comments ? props.comments : []
   // })
     
-
 </script>
