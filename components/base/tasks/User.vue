@@ -20,7 +20,7 @@
                 </tr>
               </thead>
 
-              <tbody v-if="listing.length > 0">
+              <TransitionGroup v-if="listing.length > 0"  name="list" tag="tbody">
 
                 <tr  
                   v-for="(issue, index) in listing"
@@ -45,7 +45,8 @@
                     </div>
                   </td>
                 </tr>
-              </tbody>
+
+              </TransitionGroup>
 
               <tbody v-else>
                 <tr>
@@ -55,6 +56,7 @@
                 </tr>
                 
               </tbody>
+
             </table>
           </div>
       </div>
@@ -99,20 +101,43 @@
   }
 
   const props = defineProps<Props>()
-
+  const nuxtApp = useNuxtApp();
   const isLoading: Ref<boolean> = ref(true)
   const listing: Ref<IIssue[]> = ref([])
 
-  const { data, loading } = await cmsClient.query({
-    query: GET_ISSUES_BY_STATUS,
-    variables: {
-      status: props.issueType
-    }
-  })
 
-  if ( data.list_todo ) {
-    isLoading.value = loading
-    listing.value = data.list_todo
+  const fetchIssues = async () => {
+     const { data, loading } = await cmsClient.query({
+        query: GET_ISSUES_BY_STATUS,
+        variables: {
+          status: props.issueType
+        }
+      })
+
+      if ( data.list_todo ) {
+        isLoading.value = loading
+        listing.value = data.list_todo
+      }
   }
 
+  onMounted(() => {
+    fetchIssues()
+    nuxtApp.$bus.$on("refetch-issues", () => {
+      fetchIssues()
+    })
+  })
+
 </script>
+
+<style lang="scss">
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+</style>
