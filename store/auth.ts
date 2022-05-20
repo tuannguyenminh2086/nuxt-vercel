@@ -114,7 +114,8 @@ export const useAuthStore = defineStore({
 
   getters: {
     getUser: (state) => state.me,
-    getToken: (state) => state.token
+    getToken: (state) => state.token,
+    isAdmin: (state) => state.roles
   },
 
 })

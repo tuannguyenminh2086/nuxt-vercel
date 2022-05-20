@@ -18,6 +18,7 @@
                   <input
                     v-model="state.name"
                     type="text"
+                    :disabled="isFetching"
                     class="px-3 py-2 max-w-full w-full h-12 border-slate-200 rounded border bg-white focus:ring focus:outline-none dark:placeholder-gray-400 dark:bg-gray-800"
                   />
                 </div>
@@ -71,7 +72,8 @@
                   mb-3
                 "
                 type="button"
-                @click="submitIssue"
+                :disabled="isLoading"
+                 @click="submitIssue"
               >
                 <span class="px-2">Submit</span>
               </button>
@@ -99,12 +101,16 @@
                   mb-3
                 "
                 type="reset"
+
+                @click="reset"
               >
                 <span class="px-2">Reset</span>
               </button>
 
             </div>
           </div>
+
+          {{ error }}
         </form>
 </template>
 
@@ -113,8 +119,9 @@
   import { useAuthStore } from '@store/auth'
   const auth = useAuthStore();
   const _token = auth.getAuthToken();
-  const {$config} = useNuxtApp();
+  const nuxtApp = useNuxtApp();
   const route = useRoute()
+  const isLoading = ref(false)
 
   if (route.params.id ==='' || typeof route.params.id === 'undefined') navigateTo('/projects')
 
@@ -122,10 +129,17 @@
     name: string
     description: string
   }
+
   const state = reactive<TCreateIssue>({
     description: '',
     name: '',
   })
+
+
+  const reset = () => {
+    state.description = ''
+    state.name = ''
+  }
 
   const handleUploadImage = async (event:any, insertImage:any, files:any) => {
 
@@ -157,25 +171,55 @@
 
 
   const submitIssue = async () => {
-      const { data } = await useFetch(
-        `${$config.public.API_URL}/issues`,
-        {
-          headers: {
-            Authorization: `Bearer ${_token}`,
-            Accept: 'application/json',
-          },
-        }
-      )
-      .post({
-        project_id: route.params.id,
-        description: state.description,
-        name: state.name,
-      })
-      .json();
 
-      if (data) {
-        alert('Task Created!')
+      isLoading.value = true
+      const config = useRuntimeConfig()
+
+      const resp = await useFetch(
+            `${config.API_URL}/issues`,
+            {
+              headers: {
+                Authorization: `Bearer ${_token}`,
+                Accept: 'application/json',
+              },
+            }
+          )
+          .post({
+            project_id: route.params.id,
+            description: state.description,
+            name: state.name,
+            status: 6,
+            priority: 1
+          })
+          .json();
+
+        
+
+      switch (resp.statusCode.value) {
+        case 422:
+           nuxtApp.$notification({
+              type: 'warn',
+              title: 'Error',
+              text: resp.data.value.message
+            })
+          break;
+      
+        default:
+            nuxtApp.$notification({
+              type: 'success',
+              title: 'Success',
+              text: resp.data.value.message ?  resp.data.value.message.message : ''
+            })
+          break;
       }
+
+
+      setTimeout(() => {
+        isLoading.value = false
+        reset()
+      }, 2000);
+     
+    
   }
 </script>
 

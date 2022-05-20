@@ -21,14 +21,20 @@
             <path stroke-linecap="round" d="M11 1h12m-6 15v8m8 0h-8m0-23v4"></path>
           </g>
         </svg>
-
     </button>
 </template>
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia'
+  import { useFetch } from '@vueuse/core';
   import { useTimerStore } from '@/store/timer'
-  
+  import { useAuthStore } from '@store/auth'
+
+
+  const auth = useAuthStore();
+  const _token = auth.getAuthToken();
+  const config = useRuntimeConfig()
+
   interface IProps {
     taskId: string
     taskName: string
@@ -37,15 +43,34 @@
   const props = defineProps<IProps>()
   const timerStore = useTimerStore()
   const { task, isRunning } = storeToRefs(timerStore)
+  const nuxtApp = useNuxtApp();
 
   const isDisabled = computed(() => {
     return task.value.issue_id.toString() === props.taskId.toString()
   })
 
-  const toggleTimer = () => {
+  const toggleTimer = async () => {
     if (isDisabled.value) return
     if (!isRunning.value) {
       timerStore.startTimer(props.taskId, props.taskName)
+      
+      const { data }:any = await useFetch(`${config.API_URL}/issues/${props.taskId}/status`,
+        {
+          headers: {
+            Authorization: `Bearer ${_token}`,
+            Accept: 'application/json',
+          },
+        }
+      )
+      .put({
+        status: 2
+      })
+      .json();
+
+      if (data) {
+         nuxtApp.$bus.$emit('refetch-issues')
+      }
+
     } else {
       alert('You need to stop other task!')
     }
