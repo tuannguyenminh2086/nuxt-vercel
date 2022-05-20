@@ -23,62 +23,15 @@
 </template>
 
 <script setup lang="ts">
-  // import { onMounted, onBeforeMount } from 'vue'
   import { storeToRefs } from 'pinia'
   import { useTimerStore } from '@/store/timer'
-  // import { useActivitiesStore } from '@/store/activities'
-  // import Timer from 'easytimer.js';
 
   const timerStore = useTimerStore()
-  // const activitiesStore = useActivitiesStore();
   const { isRunning, task } = storeToRefs(timerStore)
-  // const counter = ref('00:00:00')
-
-  // const timer = new Timer();
   const stopTimerHandle = () => {
-    // timer.stop()
-    // timer.reset()
     timerStore.stopTimer(task.value.issue_id);
     timerStore.$reset();
   }
-  
-  // const startCounter = (startedAt: string) => {
 
-  //   if (startedAt === '') {
-  //      timer.start({ precision: 'seconds' })
-
-  //   } else {
-
-  //     // let seconds = moment(startedAt.value).format().toString();
-
-  //     // console.log(startedAt)
-  //     // console.log(seconds)
-  //     useSeconds(startedAt);
-
-  //     timer.start({
-  //       precision: 'seconds',
-  //       startValues: {
-  //         seconds: 0
-  //       }
-  //     })
-  //   }
-
-  //   timer.addEventListener('secondsUpdated', (e) => {
-  //     counter.value = timer.getTimeValues().toString()
-  //   })
-
-  // };
-
-  // console.log(timer)
-
-  // onBeforeMount (() => {
-  //   console.log('before mounted')
-  //   console.log(startedAt.value)
-  // });
-
-  // onMounted(() => {
-  //   console.log('mounted')
-  //   // startCounter(startedAt.value)
-  // });
 
 </script>
