@@ -3,12 +3,12 @@
     <div
       v-for="(member, index) in members"
       :key="index"
-      class="flex flex-col items-center"
+      class="flex flex-row items-center"
     >
-        <div class="border rounded-full p-1 w-8 bg-slate-200 flex items-center justify-center overflow-hidden">
+        <div class="border rounded-full p-1 w-8 bg-slate-200 flex items-center justify-center overflow-hidden mr-2">
           <img :src="member.image_path ? member.image_path : randowAvatar " class="object-cover w-full" />
         </div>
-        <span v-if="showName" class="text-sm font-semibold mt-2">{{ member.name ? member.name : 'n/a'}}</span>          
+        <span v-if="showName" class="text-sm font-semibold">{{ member.name ? member.name : 'n/a'}}</span>          
      </div>
   </div>
 </template>

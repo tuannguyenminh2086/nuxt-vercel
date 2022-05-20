@@ -62,16 +62,20 @@
   const { listing, loading } = storeToRefs(activitiesStore)
   const nuxtApp = useNuxtApp();
 
- 
-  
   if (process.client) {
     nuxtApp.$echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
-      const { data: { action } } = _e;
-      // console.log(message)
-
+      const { data: { action, message } } = _e;
+    
       switch (action) {
         case "reload":
           activitiesStore.fetchActivities();
+
+          nuxtApp.$notification({
+              type: 'warning',
+              title: 'Activity Tracking',
+              text: message
+            })
+
           break;
       }
 
