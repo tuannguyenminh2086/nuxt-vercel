@@ -22,22 +22,25 @@ export const useActivitiesStore = defineStore({
   },
   actions: {
     async fetchActivities () {
-      this.loading = true;
-      const auth = useAuthStore()
-      const _token = auth.getAuthToken();
 
-      const { isFetching, data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/working`, {
-        headers: {
-          'Authorization': `Bearer ${_token}`,
-          'Accept': 'application/json'
+      if ( process.client) {
+        this.loading = true;
+        const auth = useAuthStore()
+        const _token = auth.getAuthToken();
+  
+        const { isFetching, data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/working`, {
+          headers: {
+            'Authorization': `Bearer ${_token}`,
+            'Accept': 'application/json'
+          }
+        }).json()
+  
+        if (data.value) {
+          this.loading = isFetching.value
+          this.listing = data.value.data
         }
-      }).json()
-
-      if (data.value) {
-        this.loading = isFetching.value
-        this.listing = data.value.data
+        
       }
-      
     }
   },
 

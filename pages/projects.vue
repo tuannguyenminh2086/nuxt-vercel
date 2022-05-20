@@ -1,6 +1,5 @@
 <template>
   <NuxtLayout name="dashboard">
-   
     <nuxt-page />
   </NuxtLayout>
 </template>

@@ -11,7 +11,7 @@
 <template>
   <section class="section ">
     <div class="section__header px-6 sm:px-0 mb-4 flex items-center justify-between">
-      <h3 v-if="title" class="text-xl font-semibold">{{ title }}</h3>
+      <h3 v-if="title" class="text-xl font-semibold mb-4">{{ title }}</h3>
       <div class="ml-auto">
         <slot name="actions"></slot>
       </div>

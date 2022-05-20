@@ -68,6 +68,19 @@
 
       </div>
     </template>
+
+    <template #actions>
+
+       <NuxtLink
+          :to='createUrl'
+          class="inline-flex cursor-pointer justify-center items-center whitespace-nowrap px-5
+              focus:outline-none transition-colors 
+              focus:ring duration-150 border rounded ring-blue-700 p-2 bg-blue-600 text-white border-blue-700 
+              hover:bg-blue-700">
+          New Issue
+       </NuxtLink>
+
+    </template>
   </base-section>
 </template>
 
@@ -88,13 +101,19 @@
   }
 
   interface IProps {
-    listing: IIssue[]
+    listing: IIssue[],
+    pname: string,
+    pid: string
   }
 
   const props = defineProps<IProps>()
   // const issuesState = useState('project-issues', () => props.listing)
-  const keyword: Ref<''> = ref('')
+  const keyword: Ref<string> = ref('')
   // const issuesState = ref(props.listing)
+  const createUrl = computed(() => {
+    return `/projects/${props.pid}/create`
+  })
+
 
   const filteredListing = computed(() => {
     if (keyword.value === '') {
