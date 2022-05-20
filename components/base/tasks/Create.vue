@@ -114,7 +114,9 @@
   const auth = useAuthStore();
   const _token = auth.getAuthToken();
   const {$config} = useNuxtApp();
+  const route = useRoute()
 
+  if (route.params.id ==='' || typeof route.params.id === 'undefined') navigateTo('/projects')
 
   type TCreateIssue = {
     name: string
@@ -155,7 +157,6 @@
 
 
   const submitIssue = async () => {
-    const projectId = 61
       const { data } = await useFetch(
         `${$config.public.API_URL}/issues`,
         {
@@ -166,12 +167,15 @@
         }
       )
       .post({
-        project_id:projectId,
+        project_id: route.params.id,
         description: state.description,
         name: state.name,
       })
       .json();
-    return data;
+
+      if (data) {
+        alert('Task Created!')
+      }
   }
 </script>
 
