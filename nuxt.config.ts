@@ -1,4 +1,5 @@
-import { defineNuxtConfig } from 'nuxt3'
+import { resolve } from 'path'
+import { defineNuxtConfig } from 'nuxt3';
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
@@ -45,6 +46,9 @@ export default defineNuxtConfig({
   },
   router: {
     middleware: [ 'auth' ]
+  },
+  alias: {
+    '@store': resolve(__dirname,'./store')
   },
   publicRuntimeConfig: {
     CMS_URL: process.env.NUXT_API_CMS_URL,
