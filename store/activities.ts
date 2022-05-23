@@ -34,6 +34,8 @@ export const useActivitiesStore = defineStore({
             'Accept': 'application/json'
           }
         }).json()
+
+    
   
         if (data.value) {
           this.loading = isFetching.value

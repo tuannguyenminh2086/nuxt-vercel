@@ -8,7 +8,17 @@
   </Html>
 </template>
 <script setup lang="ts">
-  import { useTimerStore } from '@/store/timer';
-  const timerStore = useTimerStore();
-  timerStore.getCurrentTracking();
+  useHead({
+    titleTemplate: 'My App - %s',
+    // or, instead:
+    // titleTemplate: (title) => `My App - ${title}`,
+    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+    charset: 'utf-8',
+    meta: [
+      { name: 'description', content: 'My amazing site.' }
+    ],
+    bodyAttrs: {
+      class: 'test'
+    }
+  })
 </script>

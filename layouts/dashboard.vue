@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard flex h-screen overflow-hidden">
-    <client-only>
+
       <the-sidebar />
 
       <!-- content -->
@@ -17,7 +17,8 @@
       </div>
 
 
-      <base-timer-issue-tracking/>
+    <client-only>
+       <base-timer-issue-tracking/>
        <notifications position="top center" :duration="4000"  width="40%"></notifications>
     </client-only>
 
@@ -28,4 +29,9 @@
 <script setup lang="ts">
 import TheSidebar from '../components/master/TheSidebar.vue'
 import TheHeader from '~~/components/master/TheHeader.vue'
+import { useTimerStore } from '@/store/timer';
+
+const timerStore = useTimerStore();
+timerStore.getCurrentTracking();
+
 </script>

@@ -2,7 +2,7 @@
   <client-only>
     <BaseSection title="Activities" class="">
       <template #default>
-        <div class="p-4">
+        <div class="">
           <div v-if="loading">
             <base-loader />
           </div>
@@ -10,12 +10,12 @@
           <div v-else>
               <table class="table-auto border-collapse w-full">
                 <thead>
-                  <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
-                    <th class="py-3 px-4 font-bold text-left w-20">Assignee</th>
-                    <th class="py-3 px-4 font-bold text-left w-2/6 pr-6">Name</th>
-                    <th class="py-3 px-4 font-bold text-left w-3/12">Project</th>
-                    <th class="py-3 px-4 font-bold text-left w-2/12">Priority</th>
-                    <th class="py-3 px-4 font-bold text-left w-2/12">Created at</th>               
+                  <tr class="font-bold border-slate-100 bg-slate-50 text-slate-400 text-sm uppercase dark:bg-slate-900 dark:border-0">
+                    <th class="py-3 px-4 font-bold text-sm text-left w-20">Assignee</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left w-2/6 pr-6">Name</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left w-3/12">Project</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Priority</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Created at</th>               
                   </tr>
                 </thead>
 
@@ -62,29 +62,28 @@
   const { listing, loading } = storeToRefs(activitiesStore)
   const nuxtApp = useNuxtApp();
 
-  if (process.client) {
-    nuxtApp.$echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
+
+  onMounted(() => {
+     activitiesStore.fetchActivities()
+
+     nuxtApp.$echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
       const { data: { action, message } } = _e;
     
       switch (action) {
         case "reload":
-          activitiesStore.fetchActivities();
-
           nuxtApp.$notification({
               type: 'warning',
               title: 'Activity Tracking',
               text: message
-            })
+          })
 
           break;
       }
 
+      activitiesStore.fetchActivities();
+
     })
-  }
 
-
-  onMounted(() => {
-     activitiesStore.fetchActivities()
   })
 
 

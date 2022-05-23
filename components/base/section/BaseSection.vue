@@ -9,14 +9,15 @@
 </script>
 
 <template>
-  <section class="section ">
-    <div class="section__header px-6 sm:px-0 mb-4 flex items-center justify-between">
-      <h3 v-if="title" class="text-xl font-semibold mb-4">{{ title }}</h3>
+  <section class="section bg-white shadow-md rounded-sm  border-slate-500  dark:bg-slate-800 dark:border-slate-100">
+    <div class="section__header px-4 flex items-center justify-between py-4 border-b border-slate-100 dark:border-slate-600 ">
+      <h3 v-if="title" class="text-lg font-semibold">{{ title }}</h3>
       <div class="ml-auto">
         <slot name="actions"></slot>
       </div>
     </div>
-    <div class="section__body shadow overflow-hidden md:rounded border-gray-100 dark:bg-slate-800 bg-white border dark:border-gray-800 mb-4">
+
+    <div class="section__body overflow-hidden p-4 md:rounded dark:bg-slate-800 ">
       <slot></slot>
     </div>
     <div class="section__footer">

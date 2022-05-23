@@ -35,11 +35,12 @@ export const useTimerStore = defineStore({
   },
   actions: {
     async getCurrentTracking() {
-      // if (process.client) {
+
+      if (process.client) {
         const auth = useAuthStore();
         const _token = auth.getAuthToken()
 
-        const { data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/activity/current-tracking`, {
+        const resp = await useFetch(`${this.$nuxt.$config.public.API_URL}/activity/current-tracking`, {
           headers: {
             'Authorization': `Bearer ${_token}`,
             'Accept': 'application/json'
@@ -47,18 +48,24 @@ export const useTimerStore = defineStore({
         },{ 
           refetch: true
         }).json()
+        
+        if ( resp.statusCode.value === 401) {
+          navigateTo('/login')
+        } 
 
-       
-        if ( data.value && data.value.data ) {
-          const _received = data.value.data
+        if ( resp.data.value && resp.data.value.data ) {
+          const _received = resp.data.value.data
           this.task = { ..._received }
           this.isRunning = true
           this.startedAt = _received.start_time;
           return true
         }
+        
 
         return false
-      // }
+      }
+
+
     },
 
    async startTimer( tid:string, name: string ) {

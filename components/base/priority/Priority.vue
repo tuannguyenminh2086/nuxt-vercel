@@ -1,5 +1,5 @@
 <template>
-  <span class="font-bold px-4 py-2 inline-block text-white text-capitalize" :class="styleRender">
+  <span class="font-bold px-3 py-1 inline-block rounded text-white text-capitalize" :class="styleRender">
     {{ text }}
   </span>
 </template>
@@ -19,10 +19,15 @@
     case 'critical':
       styleRender.value = 'bg-red-500'
       break;
+
     case 'urgent':
       styleRender.value = 'bg-orange-700'
       break;
+
      case 'low':
+       styleRender.value = 'bg-lime-400'
+      break;
+      
      case 'doing':
        styleRender.value = 'bg-lime-600'
       break;
@@ -33,6 +38,14 @@
 
      case 'high':
        styleRender.value = 'bg-yellow-500'
+      break;
+
+     case 'done':
+       styleRender.value = 'bg-emerald-500'
+      break;
+
+     case 'normal':
+       styleRender.value = 'bg-sky-500'
       break;
   
     default:
