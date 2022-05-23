@@ -6,11 +6,11 @@
       </div>
     </div>
     <div class="grid">
-      <div class="col-auto mt-6">
+      <div class="col-auto mt-10">
         <activity />
       </div>
 
-      <div class="col-auto mt-6">
+      <div class="col-auto mt-10">
         <working-projects />
       </div>
     </div>

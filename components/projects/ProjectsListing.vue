@@ -1,5 +1,5 @@
 <template>
-  <base-section title="">
+  <base-section title="Listing">
     <template #default>
       <div v-if="loading">
         <base-loader />
@@ -7,7 +7,7 @@
       <div v-else>
         <table class="table-auto border-collapse w-full">
             <thead>
-              <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
+              <tr class="font-bold border-b bg-slate-50 dark:bg-slate-900 dark:border-0">
                 <th class="py-3 px-4 font-bold text-left">ID</th>
                 <th class="py-3 px-4 font-bold text-left">Project Name</th>
                 <th class="py-3 px-4 font-bold text-left">Leader</th>

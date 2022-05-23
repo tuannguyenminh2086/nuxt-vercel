@@ -1,7 +1,7 @@
 <template>
   <base-section title="Issues">
     <template #default>
-      <div class="p-4">
+      <div class="">
         <div class="grid grid-cols-4 mb-10 mt-4 gap-4">
             <!-- Search task  -->
             <div>
@@ -21,14 +21,14 @@
           <!-- Listing -->
           <table class="table-auto border-collapse w-full">
               <thead>
-                <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
-                  <th class="py-3 px-4 font-bold text-left w-20">ID</th>
-                  <th class="py-3 px-4 font-bold text-left w-2/6 pr-6">Name</th>
-                  <th class="py-3 px-4 font-bold text-left w-2/12">Assignees</th>
-                  <th class="py-3 px-4 font-bold text-left w-1/12 ">Spent</th>
-                  <th class="py-3 px-4 font-bold text-left w-1/12">Priority</th>
-                  <th class="py-3 px-4 font-bold text-left">Status</th>
-                  <th class="py-3 px-4 font-bold text-left w-2/12">Created at</th>
+                 <tr class="font-bold border-slate-100 bg-slate-50 text-slate-400 text-sm uppercase dark:bg-slate-900 dark:border-0">
+                  <th class="py-3 px-4 font-bold text-sm text-left w-20">ID</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left w-2/6 pr-6">Name</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Assignees</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left w-1/12 ">Spent</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left w-1/12">Priority</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left">Status</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Created at</th>
                   
                   
                 </tr>

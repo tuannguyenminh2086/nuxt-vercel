@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <div class="grid gap-4 mt-2">
+    <div class="grid gap-4 mt-10">
       <div class="col-auto">
         <projects-listing />
       </div>
@@ -17,5 +17,11 @@
 </template>
 
 <script setup lang="ts">
-
+  import { useProjectStore } from '~~/store/projects';
+  
+  const projectStore = useProjectStore()
+  
+  onMounted(() => {
+    projectStore.fetchAllProjects()
+  })
 </script>

@@ -103,6 +103,7 @@ export const useAuthStore = defineStore({
       }
 
     },
+
     getAuthToken () {
       if (process.client) {
         const value = localStorage.getItem('lottiAuthToken')
@@ -115,7 +116,9 @@ export const useAuthStore = defineStore({
   getters: {
     getUser: (state) => state.me,
     getToken: (state) => state.token,
-    isAdmin: (state) => state.roles
+    isAdmin: (state) => {
+      return state.roles.includes('admin')
+    }
   },
 
 })

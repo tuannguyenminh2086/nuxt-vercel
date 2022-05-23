@@ -7,11 +7,11 @@
       </div>
        <div class="flex ml-5 items-center">
           <img src="@/assets/imgs/switzerland.svg" class="w-4" />
-          <span class="pl-2 font-bold">{{ state.sw_time }}</span>
+          <span class="pl-2 font-bold ">{{ state.sw_time }}</span>
       </div>
     </div>
     
-    <div class="ml-5 text-xs">{{ state.today }}</div>
+    <div class="ml-5 font-bold ">{{ state.today }}</div>
   </div>
 </template>
 

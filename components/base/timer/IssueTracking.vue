@@ -6,7 +6,7 @@
     <div class="flex items-center">
       <div class="mr-10 flex-1 flex-grow">
         <h3 class="font-bold mb-2">{{ task.name ? task.name : 'n/a' }}</h3>
-        <h6 class="text-xs">Zima / Hev</h6>
+        <h6 class="text-xs">Project</h6>
         <!-- <div class="font-bold text-4xl mt-6">{{counter}}</div> -->
       </div>
 
@@ -28,6 +28,7 @@
 
   const timerStore = useTimerStore()
   const { isRunning, task } = storeToRefs(timerStore)
+  
   const stopTimerHandle = () => {
     timerStore.stopTimer(task.value.issue_id);
     timerStore.$reset();
