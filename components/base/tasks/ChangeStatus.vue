@@ -97,13 +97,14 @@
          
           const { statusCode, data } = resp
           if (statusCode.value === 200) {
-            nuxtApp.$bus.$emit('refetch-issue')
-            nuxtApp.$notification({
-              type: 'success',
-              title: 'Success',
-              text: data.value.message ?  data.value.message.message : ''
-            })
-
+            if (process.client) {
+                nuxtApp.$bus.$emit('refetch-issue')
+                nuxtApp.$notification({
+                  type: 'success',
+                  title: 'Success',
+                  text: data.value.message ?  data.value.message.message : ''
+                })
+            }
             
           }
 
