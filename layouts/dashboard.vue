@@ -29,9 +29,6 @@
 <script setup lang="ts">
 import TheSidebar from '../components/master/TheSidebar.vue'
 import TheHeader from '~~/components/master/TheHeader.vue'
-import { useTimerStore } from '@/store/timer';
 
-const timerStore = useTimerStore();
-timerStore.getCurrentTracking();
 
 </script>

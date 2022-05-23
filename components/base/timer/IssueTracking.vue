@@ -27,6 +27,9 @@
   import { useTimerStore } from '@/store/timer'
 
   const timerStore = useTimerStore()
+  timerStore.getCurrentTracking();
+
+
   const { isRunning, task } = storeToRefs(timerStore)
   
   const stopTimerHandle = () => {

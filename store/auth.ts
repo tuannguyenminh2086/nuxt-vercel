@@ -1,6 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { LOGIN_MUTATION } from '~~/graphql/mutations/authMutation';
 import { GET_CURRENT_USER } from "~~/graphql/queries/userQuery";
+import cmsClient from '~~/apollo/cmsClient';
 
 interface IUser {
   dob: any,
@@ -36,8 +37,18 @@ export const useAuthStore = defineStore({
 
   actions: {
     async loginHandle(_email: string, _password: string) {
-      const { $graphqlClient } = this.$nuxt.config.globalProperties;
-      const { login } = ( await $graphqlClient.mutate({
+
+      // const { $graphqlClient } = this.$nuxt.config.globalProperties;
+      // const { login } = ( await $graphqlClient.mutate({
+      //   mutation: LOGIN_MUTATION,
+      //   variables: {
+      //     email: _email,
+      //     password: _password
+      //   }
+      // })
+      // ).data;
+
+      const { login } = ( await cmsClient.mutate({
         mutation: LOGIN_MUTATION,
         variables: {
           email: _email,
@@ -45,6 +56,9 @@ export const useAuthStore = defineStore({
         }
       })
       ).data;
+
+
+      
       if ( login.user ) {
         this.isAuthenticated = true
         this.token = login.token
@@ -90,8 +104,12 @@ export const useAuthStore = defineStore({
     },
 
     async setCurrentUser () {
-      const { $graphqlClient } = this.$nuxt.config.globalProperties;
-      const { data: { me } } = await $graphqlClient.query({
+      // const { $graphqlClient } = this.$nuxt.config.globalProperties;
+      // const { data: { me } } = await $graphqlClient.query({
+      //   query: GET_CURRENT_USER,
+      // });
+
+      const { data: { me } } = await cmsClient.query({
         query: GET_CURRENT_USER,
       });
 

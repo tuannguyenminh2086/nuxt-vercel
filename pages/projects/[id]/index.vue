@@ -98,14 +98,16 @@
   import { ref } from 'vue'
   import type { Ref } from 'vue'
   import { GET_PROJECT_DETAIL } from '~~/graphql/queries/projectQuery';
+  import cmsClient from '~~/apollo/cmsClient';
 
   const route = useRoute()
   const isLoading: Ref<boolean> = ref(true)
 
 
-  const { $graphqlClient } = useNuxtApp()
+  // const { $graphqlClient } = useNuxtApp()
   if ( !route.params.id ) navigateTo('/projects');
-  const { data: { project }, loading } = await $graphqlClient.query({
+  
+  const { data: { project }, loading } = await cmsClient.query({
     query: GET_PROJECT_DETAIL,
     variables: {
       id: route.params.id

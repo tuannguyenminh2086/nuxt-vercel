@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { useFetch } from '@vueuse/core'
 import { useAuthStore } from '~~/store/auth';
-// import moment from "moment";
 
 interface ITask {
   name: string
@@ -35,40 +34,40 @@ export const useTimerStore = defineStore({
   },
   actions: {
     async getCurrentTracking() {
-
       if (process.client) {
         const auth = useAuthStore();
         const _token = auth.getAuthToken()
 
-        const resp = await useFetch(`${this.$nuxt.$config.public.API_URL}/activity/current-tracking`, {
-          headers: {
-            'Authorization': `Bearer ${_token}`,
-            'Accept': 'application/json'
-          }
-        },{ 
-          refetch: true
-        }).json()
-        
-        if ( resp.statusCode.value === 401) {
-          navigateTo('/login')
-        } 
+        if (this.$nuxt.$config) {
+          const url = this.$nuxt.$config.public.API_URL
 
-        if ( resp.data.value && resp.data.value.data ) {
-          const _received = resp.data.value.data
-          this.task = { ..._received }
-          this.isRunning = true
-          this.startedAt = _received.start_time;
-          return true
+          const resp = await useFetch(`${url}/activity/current-tracking`, {
+            headers: {
+              'Authorization': `Bearer ${_token}`,
+              'Accept': 'application/json'
+            }
+          },{ 
+            refetch: true
+          }).json()
+          
+          if ( resp.statusCode.value === 401) {
+            navigateTo('/login')
+          } 
+  
+          if ( resp.data.value && resp.data.value.data ) {
+            const _received = resp.data.value.data
+            this.task = { ..._received }
+            this.isRunning = true
+            this.startedAt = _received.start_time;
+            return true
+          }
         }
-        
 
         return false
       }
-
-
     },
 
-   async startTimer( tid:string, name: string ) {
+    async startTimer( tid:string, name: string ) {
       this.task.name = name
       this.task.issue_id = tid
       this.isRunning = true
