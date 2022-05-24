@@ -79,7 +79,7 @@
     if (task) {
       const _task:any = {...task}      
       if (!_task.name) {
-        res.name = _localTask.name
+        res.name = _localTask.name ? _localTask.name : ''
       }
     }
 
