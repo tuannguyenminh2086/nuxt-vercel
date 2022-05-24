@@ -10,7 +10,9 @@ export default defineNuxtPlugin(nuxtApp => {
       const token = authStore.getAuthToken()
       const config = useRuntimeConfig()
 
-      if (config && token) {
+      if (!token) return;
+
+      if (config) {
         const echoConfig = {
           broadcaster: 'pusher',
           key: config.public.PUSHER_APP_KEY,
