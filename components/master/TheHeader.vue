@@ -8,6 +8,7 @@
           <base-clock-item />
         </div>
         <div class="flex">
+          <base-events-marquee />
           <base-theme-switcher />
           <base-avatar />
         </div>
