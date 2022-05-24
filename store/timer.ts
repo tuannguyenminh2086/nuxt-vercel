@@ -54,6 +54,7 @@ export const useTimerStore = defineStore({
 
     async stopTimer (tid: string) {
       await this.submitTrackingActivity(tid, 'stop');
+      localStorage.removeItem('lotti-timer')
     },
 
     async submitTrackingActivity( tid:string, action:string, comment:string = "", isConfirmed:boolean = false) {
