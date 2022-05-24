@@ -31,8 +31,10 @@
 
                   <td class="py-3 px-4 w-20">{{ issue.id }}</td>
                   <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`"><span class="font-semibold">{{ issue.name }}</span></NuxtLink></td>
-                  <td class="py-3 px-4 w-3/12">{{ issue.project.name }}</td>
-                  <td class="py-3 px-4 w-1/12">{{ issue.current_user_spent ?  issue.current_user_spent : 0}}</td>
+                  <td class="py-3 px-4 w-3/12"><NuxtLink :to="`/projects/${issue.project.id}`">{{ issue.project.name }}</NuxtLink></td>
+                  <td class="py-3 px-4 w-1/12">
+                    <base-hours :hours="issue.current_user_spent" variant="duration" />
+                  </td>
                   <td class="py-3 px-4 w-2/12"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
                   <td class="py-3 px-4 w-2/12">{{ issue.created_at }}</td>
                   <td class="py-3 px-4 ">
