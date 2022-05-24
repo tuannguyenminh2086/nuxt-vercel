@@ -27,15 +27,14 @@
   import { useTimerStore } from '@/store/timer'
 
   const timerStore = useTimerStore()
-  timerStore.getCurrentTracking();
-
-
   const { isRunning, task } = storeToRefs(timerStore)
   
   const stopTimerHandle = () => {
     timerStore.stopTimer(task.value.issue_id);
     timerStore.$reset();
   }
+
+  timerStore.getCurrentTracking();
 
 
 </script>

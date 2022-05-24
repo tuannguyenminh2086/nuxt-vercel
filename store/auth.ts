@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { LOGIN_MUTATION } from '~~/graphql/mutations/authMutation';
+// import { LOGIN_MUTATION } from '~~/graphql/mutations/authMutation';
 import { GET_CURRENT_USER } from "~~/graphql/queries/userQuery";
 import cmsClient from '~~/apollo/cmsClient';
 
@@ -48,17 +48,41 @@ export const useAuthStore = defineStore({
       // })
       // ).data;
 
-      const { login } = ( await cmsClient.mutate({
-        mutation: LOGIN_MUTATION,
-        variables: {
-          email: _email,
-          password: _password
-        }
-      })
-      ).data;
+      // const { login } = ( await cmsClient.mutate({
+      //   mutation: LOGIN_MUTATION,
+      //   variables: {
+      //     email: _email,
+      //     password: _password
+      //   }
+      // })
+      // ).data;
 
 
       
+      // if ( login.user ) {
+      //   this.isAuthenticated = true
+      //   this.token = login.token
+      //   this.roles = login.roles
+      //   this.me = Object.assign(login.user)
+
+      //   if (process.client) {
+      //     localStorage.setItem('lottiAuthToken', login.token)
+      //   }
+
+      //   return  {
+      //     isAuthenticated: true
+      //   }
+
+      // } else {
+      //   return {
+      //     isAuthenticated: false,
+      //     message: login.message
+      //   }
+      // }
+
+    },
+
+    setAuth ( login:any ) {
       if ( login.user ) {
         this.isAuthenticated = true
         this.token = login.token

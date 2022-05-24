@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     ],
   },
   components: {
+    global: true,
     dirs: ['~/components'],
   },
   css: ['~/assets/scss/app.scss'],

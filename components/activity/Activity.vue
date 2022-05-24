@@ -90,19 +90,24 @@
     fetch();
 
     $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
-        const { data: { action, message } } = _e;
-      
-        switch (action) {
-          case "reload":
-            $notification({
-                type: 'warning',
-                title: 'Activity Tracking',
-                text: message
-            })
 
-            fetch();
-          break;
+        const { data: { action, message } } = _e;
+
+        if ( action) {
+          switch (action) {
+            case "reload":
+              $notification({
+                  type: 'warning',
+                  title: 'Activity Tracking',
+                  text: message
+              })
+
+              fetch();
+            break;
+          }
         }
+      
+        
 
     })
 
