@@ -4,11 +4,11 @@
       <div v-if="isLoading" class="p-4">
         <base-loader />
       </div>
-      <div v-else class="p-4">
+      <div v-else class="">
           <div v-if="listing">
             <table class="table-auto border-collapse w-full">
               <thead>
-                <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
+                <tr class="font-bold border-b bg-slate-50 dark:bg-slate-900 dark:border-0">
                   <th class="py-3 px-4 font-bold text-left w-20">ID</th>
                   <th class="py-3 px-4 font-bold text-left w-2/6 pr-6">Name</th>
                   <th class="py-3 px-4 font-bold text-left w-3/12">Project</th>
@@ -31,8 +31,10 @@
 
                   <td class="py-3 px-4 w-20">{{ issue.id }}</td>
                   <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`"><span class="font-semibold">{{ issue.name }}</span></NuxtLink></td>
-                  <td class="py-3 px-4 w-3/12">{{ issue.project.name }}</td>
-                  <td class="py-3 px-4 w-1/12">{{ issue.current_user_spent ?  issue.current_user_spent : 0}}</td>
+                  <td class="py-3 px-4 w-3/12"><NuxtLink :to="`/projects/${issue.project.id}`" class="text-blue-700 font-bold">{{ issue.project.name }}</NuxtLink></td>
+                  <td class="py-3 px-4 w-1/12">
+                    <base-hours :hours="issue.current_user_spent" variant="duration" class="text-teal-500 text-xl" />
+                  </td>
                   <td class="py-3 px-4 w-2/12"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
                   <td class="py-3 px-4 w-2/12">{{ issue.created_at }}</td>
                   <td class="py-3 px-4 ">
