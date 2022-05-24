@@ -26,7 +26,7 @@
       </ul>
     </div>
 
-    <div class="mt-6">
+    <div class="mt-6" v-if="auth.isAdmin">
       <p class="px-4 pb-1 text-xs uppercase text-gray-400 hidden 2xl:block">Administrator</p>
       <ul class="">
         <base-nav-item
@@ -44,6 +44,11 @@
 
 <script setup lang="ts">
 import { ICON } from '~~/assets/icons'
+import { useAuthStore } from '~~/store/auth';
+
+const auth = useAuthStore();
+
+
 
 const navGroup = {
   common: [

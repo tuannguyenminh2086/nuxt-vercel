@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { useFetch } from '@vueuse/core'
 import { useAuthStore } from '~~/store/auth';
-// import moment from "moment";
 
 interface ITask {
   name: string
@@ -34,34 +33,18 @@ export const useTimerStore = defineStore({
     }
   },
   actions: {
-    async getCurrentTracking() {
-      // if (process.client) {
-        const auth = useAuthStore();
-        const _token = auth.getAuthToken()
-
-        const { data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/activity/current-tracking`, {
-          headers: {
-            'Authorization': `Bearer ${_token}`,
-            'Accept': 'application/json'
-          }
-        },{ 
-          refetch: true
-        }).json()
-
-       
-        if ( data.value && data.value.data ) {
-          const _received = data.value.data
-          this.task = { ..._received }
-          this.isRunning = true
-          this.startedAt = _received.start_time;
-          return true
-        }
-
-        return false
-      // }
+   
+    setCurrentTracking (payload: any) {
+      
+      if ( payload ) {
+        this.task = { ...payload }
+        this.isRunning = true
+        this.startedAt = payload.start_time;
+      }
+     
     },
 
-   async startTimer( tid:string, name: string ) {
+    async startTimer( tid:string, name: string ) {
       this.task.name = name
       this.task.issue_id = tid
       this.isRunning = true

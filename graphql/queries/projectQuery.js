@@ -102,7 +102,8 @@ export const GET_PROJECT_DETAIL = gql`
             leader {
               name
             }
-            
+            total_issue
+            total_active_issue
             issues {
               id,
               name,

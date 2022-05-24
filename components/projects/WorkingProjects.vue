@@ -2,18 +2,20 @@
     <base-section title="Working Projects">
        <template #default>
 
-          <div class="py-4 px-4">
+          <div class="">
+
             <div v-if="isLoading">
                 <base-loader />
             </div>
+
             <div v-else>
               <table class="table-auto border-collapse w-full">
-                <thead>
-                  <tr class="font-bold border-b dark:bg-slate-900 dark:border-0">
-                    <th class="py-3 px-4 font-bold text-left">Project Name</th>
-                    <th class="py-3 px-4 font-bold text-left">Leader</th>
-                    <th class="py-3 px-4 font-bold text-left">Priority</th>
-                    <th class="py-3 px-4 font-bold text-left">Spent</th>
+                <thead class="">
+                  <tr class="border-slate-100 bg-slate-50 text-slate-400 text-sm uppercase dark:bg-slate-900 dark:border-0">
+                    <th class="py-3 px-4 font-bold text-sm text-left">Project Name</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left">Project Leader</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left">Priority</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left">Tracked</th>
                   </tr>
                 </thead>
 
@@ -21,7 +23,7 @@
                   <tr
                     v-for="(project, index) in projects"
                     :key="index" 
-                    class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
+                    class="dark:border-0   lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
                     :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
                   >
 
@@ -48,8 +50,12 @@
 
   interface IProject {
     name: string,
+    id: string,
     total_spent: number,
-    mapped_priority: string
+    mapped_priority: string,
+    leader?: {
+      name: string
+    }
   }
 
   const projects: Ref<IProject[] | null> = ref(null)

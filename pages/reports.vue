@@ -107,7 +107,9 @@ const submit = async (startDate: string, endDate: string) => {
 
 const transformDate = (date: string): string => {
   const dateInstance = new Date(date)
-  return `${dateInstance.getFullYear()}/${dateInstance.getMonth()}/${dateInstance.getDate()}`
+  const month = `${dateInstance.getMonth()}`;
+  const day = `${dateInstance.getDate()}`;
+  return `${dateInstance.getFullYear()}/${month.padStart(2,'0')}/${day.padStart(2,'0')}`
 }
 
 

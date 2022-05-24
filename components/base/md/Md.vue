@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-slate-100 md">
+  <div class="p-4 bg-slate-50 md">
     <client-only>
       <div v-html="rendered"></div>
     </client-only>
