@@ -79,11 +79,14 @@
       name: 'N/A'
     }
 
-    if (task) {
-      const _task:any = {...task}      
 
-      if (!_task.name && _localTask) {
-        res.name = _localTask.name ? _localTask.name : ''
+    if (task.value) {
+      const _task:any = {...task.value}   
+
+      if (_task.name) {
+        res.name = _task.name
+      } else {
+        res.name = _localTask ? _localTask.name : ''
       }
 
     }

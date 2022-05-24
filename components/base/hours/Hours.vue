@@ -5,9 +5,10 @@
 </template>
 
 <script setup lang="ts">
-  // import { ref } from 'vue';
-  // import type { Ref } from 'vue';
   import { computed } from 'vue';
+  import * as dayjs from 'dayjs';
+  
+  console.log(dayjs().format())
 
   interface IProps {
     hours?: number,
