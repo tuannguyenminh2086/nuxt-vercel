@@ -1,7 +1,7 @@
 
 import { defineStore } from 'pinia'
-import { GET_ALL_PROJECTS_FULL } from '~~/graphql/queries/projectQuery'
-import cmsClient from '~~/apollo/cmsClient';
+// import { GET_ALL_PROJECTS_FULL } from '~~/graphql/queries/projectQuery'
+// import cmsClient from '~~/apollo/cmsClient';
 
 interface IIssues {
   name: string
@@ -51,26 +51,26 @@ export const useProjectStore = defineStore({
     }
   },
   actions: {
-    async fetchAllProjects () {
-      try {
-        // const { $graphqlClient } = this.$nuxt.config.globalProperties;
+    // async fetchAllProjects () {
+    //   // try {
+    //   //   // const { $graphqlClient } = this.$nuxt.config.globalProperties;
 
-        this.loading = true
-        const { projects } = (await cmsClient.query({
-          query: GET_ALL_PROJECTS_FULL
-        })).data;
+    //   //   this.loading = true
+    //   //   const { projects } = (await cmsClient.query({
+    //   //     query: GET_ALL_PROJECTS_FULL
+    //   //   })).data;
 
-        if (projects) {
-          this.list = useOrderBy(projects, 'name','asc');
-          this.filteredList = this.list
-        }
+    //   //   if (projects) {
+    //   //     this.list = useOrderBy(projects, 'name','asc');
+    //   //     this.filteredList = this.list
+    //   //   }
 
-      } catch (_error) {
-        this.error = _error
-      } finally {
-        this.loading = false
-      }
-    },
+    //   // } catch (_error) {
+    //   //   this.error = _error
+    //   // } finally {
+    //   //   this.loading = false
+    //   // }
+    // },
 
     initProjects ( projects: IProject[] ) {
       this.list = useOrderBy(projects, 'name','asc');

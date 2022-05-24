@@ -54,6 +54,7 @@
     
     if (!isRunning.value) {
       timerStore.startTimer(props.taskId, props.taskName)
+      localStorage.setItem('lotti-timer',JSON.stringify({id: props.taskId, name: props.taskName}) )
       
       const { data }:any = await useFetch(`${config.API_URL}/issues/${props.taskId}/status`,
         {

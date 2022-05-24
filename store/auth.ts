@@ -36,52 +36,6 @@ export const useAuthStore = defineStore({
   }),
 
   actions: {
-    async loginHandle(_email: string, _password: string) {
-
-      // const { $graphqlClient } = this.$nuxt.config.globalProperties;
-      // const { login } = ( await $graphqlClient.mutate({
-      //   mutation: LOGIN_MUTATION,
-      //   variables: {
-      //     email: _email,
-      //     password: _password
-      //   }
-      // })
-      // ).data;
-
-      // const { login } = ( await cmsClient.mutate({
-      //   mutation: LOGIN_MUTATION,
-      //   variables: {
-      //     email: _email,
-      //     password: _password
-      //   }
-      // })
-      // ).data;
-
-
-      
-      // if ( login.user ) {
-      //   this.isAuthenticated = true
-      //   this.token = login.token
-      //   this.roles = login.roles
-      //   this.me = Object.assign(login.user)
-
-      //   if (process.client) {
-      //     localStorage.setItem('lottiAuthToken', login.token)
-      //   }
-
-      //   return  {
-      //     isAuthenticated: true
-      //   }
-
-      // } else {
-      //   return {
-      //     isAuthenticated: false,
-      //     message: login.message
-      //   }
-      // }
-
-    },
-
     setAuth ( login:any ) {
       if ( login.user ) {
         this.isAuthenticated = true
