@@ -109,7 +109,7 @@
   import { ref, reactive } from 'vue';
   import { useAuthStore } from '~~/store/auth';
   import { LOGIN_MUTATION } from '~~/graphql/mutations/authMutation';
-
+  import cmsClient from '~~/apollo/cmsClient';
   const state = reactive({
     errorMessage: ''
   });
@@ -117,17 +117,17 @@
   const store = useAuthStore();
   const email = ref('');
   const password = ref('');
-  const { $graphqlClient} = useNuxtApp()
+  // const { $graphqlClient} = useNuxtApp()
 
   const onSubmit = async () => {
 
-    const { login } = ( await $graphqlClient.mutate({
+    const { login } = ( await cmsClient.mutate({
       mutation: LOGIN_MUTATION,
-      variables: {
-        email: email.value,
-        password: password.value
-      }
-    })
+        variables: {
+          email: email.value,
+          password: password.value
+        }
+      })
     ).data;
 
     if (login.token) {
