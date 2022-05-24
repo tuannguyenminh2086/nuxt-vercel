@@ -24,13 +24,13 @@
   import { useAuthStore } from '~~/store/auth';
 
   const authStore = useAuthStore()
-
   authStore.setCurrentUser()
 
   const { me } = storeToRefs(authStore)
 
   const SignOutHandle = () => {
     authStore.logoutHandle()
+    authStore.$reset()
     navigateTo('/login')
   }
 

@@ -6,12 +6,11 @@ import { useAuthStore } from '~~/store/auth';
 
 export default defineNuxtPlugin(nuxtApp => {
 
-    if (process.client) {
       const authStore = useAuthStore()
       const token = authStore.getAuthToken()
       const config = useRuntimeConfig()
 
-      if (config) {
+      if (config && token) {
         const echoConfig = {
           broadcaster: 'pusher',
           key: config.public.PUSHER_APP_KEY,
@@ -42,8 +41,7 @@ export default defineNuxtPlugin(nuxtApp => {
         nuxtApp.vueApp.provide("echoClient", echo)
       }
   
-      
-    }
+    
   
 })
 
