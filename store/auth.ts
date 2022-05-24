@@ -72,13 +72,11 @@ export const useAuthStore = defineStore({
     },
 
     removeAuthToken () {
-      if (process.client) {
         localStorage.removeItem('lottiAuthToken');
         this.isAuthenticated = false
         this.token = ''
         this.roles = []
         this.me = null
-      }
     },
 
     async setCurrentUser () {

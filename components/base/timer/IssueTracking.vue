@@ -6,7 +6,10 @@
     <div class="flex items-center">
       <div class="mr-10 flex-1 flex-grow">
         <p class="text-sm">You're working on:</p>
-        <h3 class="font-bold mb-2 text-lg mt-2 lg:text-2xl">{{ task.name ? task.name : currentTracking.name }}</h3>
+
+        <h3 class="font-bold mb-2 text-lg mt-2 lg:text-2xl">
+          {{ currentTracking.name ? currentTracking.name : '' }}
+        </h3>
         <!-- <div class="font-bold text-4xl mt-6">{{counter}}</div> -->
       </div>
 
@@ -63,7 +66,6 @@
         headers: _headers
       }).json()
 
-
       if ( resp.data.value && resp.data.value.data ) {
           const _received = resp.data.value.data
           timerStore.setCurrentTracking(_received)
@@ -71,16 +73,19 @@
   }
 
   const currentTracking = computed(() => {
-    const _localTask = JSON.parse(localStorage.getItem('lotti-timer')!)
+    const _localTask = JSON.parse(localStorage.getItem('lottiTimer')!)
+
     const res = {
-      name: ''
+      name: 'N/A'
     }
 
     if (task) {
       const _task:any = {...task}      
-      if (!_task.name) {
+
+      if (!_task.name && _localTask) {
         res.name = _localTask.name ? _localTask.name : ''
       }
+
     }
 
     return res

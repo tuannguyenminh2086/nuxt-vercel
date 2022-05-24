@@ -6,10 +6,11 @@ import { useAuthStore } from '~~/store/auth';
 
 export default defineNuxtPlugin(nuxtApp => {
 
-    if (process.client) {
       const authStore = useAuthStore()
       const token = authStore.getAuthToken()
       const config = useRuntimeConfig()
+
+      if (!token) return;
 
       if (config) {
         const echoConfig = {
@@ -42,8 +43,7 @@ export default defineNuxtPlugin(nuxtApp => {
         nuxtApp.vueApp.provide("echoClient", echo)
       }
   
-      
-    }
+    
   
 })
 
