@@ -15,7 +15,9 @@
           
           >
             <div class="text-sm font-semibold"><base-hours :date="item.created_at.toString()" variant="datetime"/></div>
+            <!-- eslint-disable vue/no-v-html -->
             <div v-html="item.content"></div>
+            <!--eslint-enable-->
           </li>
         </ul>
       </div>
@@ -27,9 +29,9 @@
     <div class="py-6 mt-4">
       <div class="mb-4">
         <textarea
-          class="w-full border rounded p-4 resize-none bg-slate-100 dark:text-black"
-          rows="4" 
           v-model="comment"
+          class="w-full border rounded p-4 resize-none bg-slate-100 dark:text-black"
+          rows="4"
           :disabled="isProgress"
           :readonly="isProgress"
         >
@@ -104,9 +106,5 @@
       
     }
   }
-
-  // onMounted(() => {
-  //   comments.value = props.comments ? props.comments : []
-  // })
     
 </script>

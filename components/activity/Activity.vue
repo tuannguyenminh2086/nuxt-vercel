@@ -55,32 +55,59 @@
 </template>
 
 <script setup lang="ts">
-  import { storeToRefs } from 'pinia'
-  import { useActivitiesStore } from '@/store/activities'
+  import { ref } from 'vue'
+  import type { Ref } from 'vue'
+  import { useFetch } from '@vueuse/core';
+  import { useAuthStore } from '@store/auth';
 
-  const activitiesStore = useActivitiesStore()
-  const { listing, loading } = storeToRefs(activitiesStore)
-  const nuxtApp = useNuxtApp();
+  const listing = ref([])
+  const loading:Ref<boolean> = ref(false)
+  const { $echoClient, $notification } = useNuxtApp();
+  const auth = useAuthStore()
+  const _token = auth.getAuthToken();
+  const runtimeConfig = useRuntimeConfig()
+
+  const fetch = async () => {
+    loading.value = true
+
+    const url = runtimeConfig.public.API_URL + '/issues/working'
+    const { isFetching, data } = await useFetch( url, {
+      headers: {
+        'Authorization': `Bearer ${_token}`,
+        'Accept': 'application/json'
+      }
+    }).json()
+
+    if (data.value) {
+      listing.value = data.value.data
+      loading.value = isFetching.value
+    }
+  }
 
 
   onMounted(() => {
-     activitiesStore.fetchActivities()
 
-     nuxtApp.$echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
-      const { data: { action, message } } = _e;
-    
-      switch (action) {
-        case "reload":
-          nuxtApp.$notification({
-              type: 'warning',
-              title: 'Activity Tracking',
-              text: message
-          })
+    fetch();
 
-          break;
-      }
+    $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
 
-      activitiesStore.fetchActivities();
+        const { data: { action, message } } = _e;
+
+        if ( action) {
+          switch (action) {
+            case "reload":
+              $notification({
+                  type: 'warning',
+                  title: 'Activity Tracking',
+                  text: message
+              })
+
+              fetch();
+            break;
+          }
+        }
+      
+        
 
     })
 

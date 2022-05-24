@@ -19,6 +19,8 @@
 
 <script setup lang="ts">
   import WorkingProjects from '~~/components/projects/WorkingProjects.vue';
+  import Activity from '~~/components/activity/Activity.vue'
+  
   definePageMeta({
     middleware: 'auth'
   })

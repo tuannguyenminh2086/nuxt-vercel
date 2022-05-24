@@ -3,17 +3,19 @@
        <template #default>
 
           <div class="">
+
             <div v-if="isLoading">
                 <base-loader />
             </div>
+
             <div v-else>
               <table class="table-auto border-collapse w-full">
                 <thead class="">
                   <tr class="border-slate-100 bg-slate-50 text-slate-400 text-sm uppercase dark:bg-slate-900 dark:border-0">
                     <th class="py-3 px-4 font-bold text-sm text-left">Project Name</th>
-                    <th class="py-3 px-4 font-bold text-sm text-left">Leader</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left">Project Leader</th>
                     <th class="py-3 px-4 font-bold text-sm text-left">Priority</th>
-                    <th class="py-3 px-4 font-bold text-sm text-left">Spent</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left">Tracked</th>
                   </tr>
                 </thead>
 

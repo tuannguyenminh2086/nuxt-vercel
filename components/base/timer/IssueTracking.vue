@@ -34,5 +34,7 @@
     timerStore.$reset();
   }
 
+  timerStore.getCurrentTracking();
+
 
 </script>

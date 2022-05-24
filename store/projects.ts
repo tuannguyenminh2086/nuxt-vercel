@@ -1,5 +1,7 @@
+
 import { defineStore } from 'pinia'
 import { GET_ALL_PROJECTS_FULL } from '~~/graphql/queries/projectQuery'
+import cmsClient from '~~/apollo/cmsClient';
 
 interface IIssues {
   name: string
@@ -51,9 +53,10 @@ export const useProjectStore = defineStore({
   actions: {
     async fetchAllProjects () {
       try {
-        const { $graphqlClient } = this.$nuxt.config.globalProperties;
+        // const { $graphqlClient } = this.$nuxt.config.globalProperties;
+
         this.loading = true
-        const { projects } = (await $graphqlClient.query({
+        const { projects } = (await cmsClient.query({
           query: GET_ALL_PROJECTS_FULL
         })).data;
 
@@ -67,6 +70,11 @@ export const useProjectStore = defineStore({
       } finally {
         this.loading = false
       }
+    },
+
+    initProjects ( projects: IProject[] ) {
+      this.list = useOrderBy(projects, 'name','asc');
+      this.filteredList = projects
     },
 
     searchProject (keyword:string) {

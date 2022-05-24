@@ -101,7 +101,7 @@
   }
 
   const props = defineProps<Props>()
-  const nuxtApp = useNuxtApp();
+
   const isLoading: Ref<boolean> = ref(true)
   const listing: Ref<IIssue[]> = ref([])
 
@@ -121,10 +121,13 @@
   }
 
   onMounted(() => {
+    const nuxtApp = useNuxtApp();
+
     fetchIssues()
     nuxtApp.$bus.$on("refetch-issues", () => {
       fetchIssues()
     })
+    
   })
 
 </script>

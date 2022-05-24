@@ -1,9 +1,9 @@
 <template>
   <div v-if="status" class="px-4">
     <select
-      class="mr-2 outline-none font-bold border border-slate-200 py-2 px-4 rounded " 
       v-model="selected"
       :disabled="isProgress"
+      class="mr-2 outline-none font-bold border border-slate-200 py-2 px-4 rounded " 
     >
       <option value="">Choose a Status</option>
       <option 
@@ -18,8 +18,8 @@
 
     <button
       class="text-white bg-green-500 rounded px-4 py-2 hover:bg-green-600"
-      @click.prevent="handleChangeStatus"
       :disabled="isProgress"
+      @click.prevent="handleChangeStatus"
     >
       Change Status
     </button>
@@ -52,7 +52,7 @@
   const selected: Ref<string> = ref('')
   const auth = useAuthStore()
   const isProgress: Ref<boolean> = ref(false)
-  const nuxtApp = useNuxtApp();
+
 
   const fetch = async () => {
     const { data } = await cmsClient.query({
@@ -74,7 +74,8 @@
   }
 
   const handleChangeStatus = async () => {
-     const _token = auth.getAuthToken();
+    const _token = auth.getAuthToken();
+    const nuxtApp = useNuxtApp();
 
     if (_token) {
        isProgress.value = true
@@ -97,13 +98,14 @@
          
           const { statusCode, data } = resp
           if (statusCode.value === 200) {
-            nuxtApp.$bus.$emit('refetch-issue')
-            nuxtApp.$notification({
-              type: 'success',
-              title: 'Success',
-              text: data.value.message ?  data.value.message.message : ''
-            })
-
+            if (process.client) {
+                nuxtApp.$bus.$emit('refetch-issue')
+                nuxtApp.$notification({
+                  type: 'success',
+                  title: 'Success',
+                  text: data.value.message ?  data.value.message.message : ''
+                })
+            }
             
           }
 

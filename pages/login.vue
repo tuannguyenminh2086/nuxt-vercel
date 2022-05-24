@@ -108,6 +108,7 @@
 <script setup lang="ts">
   import { ref, reactive } from 'vue';
   import { useAuthStore } from '~~/store/auth';
+  import { LOGIN_MUTATION } from '~~/graphql/mutations/authMutation';
 
   const state = reactive({
     errorMessage: ''
@@ -116,15 +117,35 @@
   const store = useAuthStore();
   const email = ref('');
   const password = ref('');
+  const { $graphqlClient} = useNuxtApp()
 
-  const onSubmit = () => {
-    store.loginHandle(email.value, password.value).then(res => {
-      if (res.isAuthenticated) {
-        state.errorMessage = '';
-        navigateTo('/')
+  const onSubmit = async () => {
+
+    const { login } = ( await $graphqlClient.mutate({
+      mutation: LOGIN_MUTATION,
+      variables: {
+        email: email.value,
+        password: password.value
       }
-			state.errorMessage = res.message;
     })
+    ).data;
+
+    if (login.token) {
+       store.setAuth(login)
+       navigateTo('/')
+    } else {
+      state.errorMessage = 'There is an error';
+    }
+
+   
+
+    // store.loginHandle(email.value, password.value).then(res => {
+    //   if (res.isAuthenticated) {
+    //     state.errorMessage = '';
+    //     navigateTo('/')
+    //   }
+		// 	state.errorMessage = res.message;
+    // })
   }
 
 </script>

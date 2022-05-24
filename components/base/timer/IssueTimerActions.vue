@@ -51,6 +51,7 @@
 
   const toggleTimer = async () => {
     if (isDisabled.value) return
+    
     if (!isRunning.value) {
       timerStore.startTimer(props.taskId, props.taskName)
       
@@ -68,7 +69,7 @@
       .json();
 
       if (data) {
-         nuxtApp.$bus.$emit('refetch-issues')
+        nuxtApp.$bus.$emit('refetch-issues')
       }
 
     } else {
