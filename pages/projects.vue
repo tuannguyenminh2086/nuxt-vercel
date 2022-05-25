@@ -5,7 +5,9 @@
 </template>
 
 <script setup lang="ts">
+
 definePageMeta({
-  middleware: ['auth']
+  middleware: ['auth'],
+  key: route => route.fullPath
 })
 </script>

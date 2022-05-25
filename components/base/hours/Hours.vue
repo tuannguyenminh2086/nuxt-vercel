@@ -6,9 +6,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import * as dayjs from 'dayjs';
-  
-  console.log(dayjs().format())
+  // import * as dayjs from 'dayjs';
 
   interface IProps {
     hours?: number,
