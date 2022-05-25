@@ -5,48 +5,53 @@ import { useAuthStore } from '../store/auth'
 
 export default defineNuxtPlugin(nuxtApp => {
 
-  const authStore = useAuthStore();
-  const token = authStore.getAuthToken();
+  nuxtApp.hook('page:start', () => {
+      const authStore = useAuthStore();
+      const token = authStore.getAuthToken();
 
-  const config = useRuntimeConfig();
+      const config = useRuntimeConfig();
 
-  const authLink = setContext((_, {headers}) => {
-    return {
-      headers: {
-        ...headers,
-        Authorization: `Bearer ${token}`
-      }
-    }
+      console.log(config)
+
+      const authLink = setContext((_, {headers}) => {
+        return {
+          headers: {
+            ...headers,
+            Authorization: `Bearer ${token}`
+          }
+        }
+      })
+
+      const httpLink = createHttpLink({
+        uri: config.public.GRAPHQL_URL
+      });
+
+    // Cache implementation
+      const cache = new InMemoryCache({
+        addTypename: false,
+      })
+
+    // Create the apollo client
+      const cmsClient = new ApolloClient({
+        link: ApolloLink.from([ authLink, httpLink ]),
+        cache,
+        defaultOptions: {
+          watchQuery: {
+            fetchPolicy: 'cache-and-network',
+            errorPolicy: 'all',
+          },
+          query: {
+            fetchPolicy: 'network-only',
+            errorPolicy: 'all',
+          }
+        },
+        connectToDevTools: true,
+        resolvers: {},
+      })
+
+      nuxtApp.provide('graphqlClient',cmsClient);
+      
   })
-
-  const httpLink = createHttpLink({
-    uri: config.public.GRAPHQL_URL
-  });
-
-// Cache implementation
-  const cache = new InMemoryCache({
-    addTypename: false,
-  })
-
-// Create the apollo client
-  const cmsClient = new ApolloClient({
-    link: ApolloLink.from([ authLink, httpLink ]),
-    cache,
-    defaultOptions: {
-      watchQuery: {
-        fetchPolicy: 'cache-and-network',
-        errorPolicy: 'all',
-      },
-      query: {
-        fetchPolicy: 'network-only',
-        errorPolicy: 'all',
-      }
-    },
-    connectToDevTools: true,
-    resolvers: {},
-  })
-
-  nuxtApp.provide('graphqlClient',cmsClient);
 
 })
   
