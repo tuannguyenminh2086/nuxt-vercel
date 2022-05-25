@@ -69,6 +69,10 @@
   const fetch = async () => {
     loading.value = true
 
+    if (!_token) {
+      navigateTo('/login')
+    }
+
     const url = runtimeConfig.public.API_URL + '/issues/working'
     const { isFetching, data } = await useFetch( url, {
       headers: {
@@ -88,8 +92,8 @@
 
     fetch();
 
-    nextTick(() => {
-        $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
+
+    $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
 
         const { data: { action, message } } = _e;
 
@@ -107,8 +111,8 @@
           }
         }
     
-      })
     })
+    
 
   })
 
