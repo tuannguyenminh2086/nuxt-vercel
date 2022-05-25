@@ -108,6 +108,10 @@ export const useAuthStore = defineStore({
       }
     },
 
+    getCurrentUser () {
+      return this.me
+    }
+
   },
 
   getters: {
