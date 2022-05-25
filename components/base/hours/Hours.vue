@@ -1,12 +1,12 @@
 <template>
   <span class="font-bold">
-    {{ renderDisplay }} 
+    {{ renderDisplay }}
   </span>
 </template>
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  // import * as dayjs from 'dayjs';
+  import * as dayjs from 'dayjs';
 
   interface IProps {
     hours?: number,
@@ -36,14 +36,14 @@
         
       case 'datetime':
           if ( props.date !== '') {
-            result = new Date(props.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' } )
+            result = dayjs(props.date).format('DD MMM YYYY  | HH:mm:ss')
           } else {
             result = '0'
           }
         break;
       
       case 'time':
-          
+        result = props.date;
         break;
     }
 

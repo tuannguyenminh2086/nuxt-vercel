@@ -36,7 +36,9 @@
                     <base-hours :hours="issue.current_user_spent" variant="duration" class="text-teal-500 text-xl" />
                   </td>
                   <td class="py-3 px-4 w-2/12"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
-                  <td class="py-3 px-4 w-2/12">{{ issue.created_at }}</td>
+                  <td class="py-3 px-4 w-2/12">
+                    <base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" />
+                  </td>
                   <td class="py-3 px-4 ">
                     <div class="flex items-center justify-center">
                       <base-timer-issue-timer-actions

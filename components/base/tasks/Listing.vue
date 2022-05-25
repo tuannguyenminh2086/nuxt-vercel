@@ -49,7 +49,7 @@
                   <td class="py-3 px-4 w-1/12">0</td>
                   <td class="py-3 px-4 w-1/12">n/a</td>
                   <td class="py-3 px-4">n/a</td>
-                  <td class="py-3 px-4 w-2/12">{{ issue.created_at }}</td>
+                  <td class="py-3 px-4 w-2/12"><base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" /></td>
                   
                 </tr>
               </tbody>
