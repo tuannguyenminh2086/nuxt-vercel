@@ -1,8 +1,6 @@
 <template>
   <div class="flex flex-col">
     <div class="border-bt">
-      <h3 class="font-bold text-xl mb-6">Comments</h3>
-
       <div 
         v-if="listing.length > 0"
         class="h-96 overflow-hidden overflow-y-auto"

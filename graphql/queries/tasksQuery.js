@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+// import { TimeTrackingFragments } from '../fragments'
 
 export const GET_ISSUES_BY_STATUS = gql`
     query getIssues ($status: Int) {
@@ -44,7 +45,7 @@ export const GET_TASK_BY_ID = gql`
           }
           name
           description
-            current_user_spent
+          current_user_spent
           author_id
             created_at
             mapped_status {
@@ -52,18 +53,26 @@ export const GET_TASK_BY_ID = gql`
             key
           }
           mapped_priority
-          comments{
+          time_tracking {
+            spent
+            start_time
+            end_time
+            created_by
+            updated_at
+          }
+          comments {
             id
             content
             created_at
           }
-            project {
+          project {
             name
             id
           }
+          
         }
-      
-    }
+        
+      }
 `
 
 export const GET_TASK_STATUS = gql`
