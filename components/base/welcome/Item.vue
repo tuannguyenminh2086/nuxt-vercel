@@ -1,7 +1,9 @@
 <template>
   <div class="welcome mb-10">
-    <h1 class="text-4xl font-bold">{{ welcomeText }}, {{ name }}</h1>
-    <div class="subtitle is-6">Hope you have great day!</div>
+    <h1 class="text-4xl font-bold capitalize lg:text-5xl">{{ welcomeText }}, 
+      <span class="text-4xl font-bold inline-block lg:text-5xl">{{ name }}</span>
+    </h1>
+    <div class="subtitle is-6 text-lg font-semibold mt-3">Hope you have great day!</div>
   </div>
 </template>
 

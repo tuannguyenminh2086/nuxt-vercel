@@ -116,9 +116,11 @@
         }
       })
 
+      
+
       if ( data.list_todo ) {
         isLoading.value = loading
-        listing.value = data.list_todo
+        listing.value =  useOrderBy(data.list_todo, 'id','desc');
       }
   }
 

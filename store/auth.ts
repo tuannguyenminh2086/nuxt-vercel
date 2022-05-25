@@ -73,6 +73,9 @@ export const useAuthStore = defineStore({
 
     removeAuthToken () {
         localStorage.removeItem('lottiAuthToken');
+        localStorage.removeItem('lottiProjects');
+        localStorage.removeItem('lottiTimer');
+
         this.isAuthenticated = false
         this.token = ''
         this.roles = []

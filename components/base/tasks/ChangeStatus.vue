@@ -1,9 +1,9 @@
 <template>
-  <div v-if="status" class="px-4">
+  <div v-if="status" class="">
     <select
       v-model="selected"
       :disabled="isProgress"
-      class="mr-2 outline-none font-bold border border-slate-200 py-2 px-4 rounded " 
+      class="mr-2 outline-none font-bold border border-slate-200 py-2 px-4 rounded mb-2 lg:mb-0" 
     >
       <option value="">Choose a Status</option>
       <option 
