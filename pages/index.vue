@@ -22,7 +22,8 @@
   import Activity from '~~/components/activity/Activity.vue'
   
   definePageMeta({
-    middleware: 'auth'
+    middleware: 'auth',
+    key: route => route.fullPath
   })
 </script>
 

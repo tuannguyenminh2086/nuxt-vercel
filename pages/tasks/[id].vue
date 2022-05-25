@@ -40,7 +40,7 @@
 
                       <div class="">
                         <p class="text-xs font-semibold text-slate-400 uppercase mb-2">Tracked</p>
-                        <div class="font-bold text-2xl">{{ issue.current_user_spent }}</div>
+                        <div class="font-bold text-2xl"><base-hours :hours="issue.current_user_spent" variant="duration" class="font-bold text-2xl" /> </div>
                       </div>
 
                     </div>
@@ -72,13 +72,7 @@
             <div class="flex justify-between items-center">
 
                 <base-tasks-change-status :id="issue.id" :status="issue.mapped_status.name.toLowerCase()" />
-
-                <button class="button rounded btn bg-indigo-500 px-4 py-2 hover:bg-indigo-600 text-white flex items-center ml-2">
-                  <span class="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.5em" height="1.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path fill="currentColor" d="m13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z"/></svg>
-                  </span>
-                  <span>Mark complete</span>
-                </button>
+                <base-tasks-complete-task :id="issue.id" />
             </div>
 
           </template>

@@ -57,7 +57,8 @@ import { useFetch } from '@vueuse/core'
 import { useAuthStore } from '@store/auth'
 
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
+  key: route => route.fullPath
 })
 
 const state = reactive({

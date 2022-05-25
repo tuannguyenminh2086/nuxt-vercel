@@ -17,33 +17,12 @@
 </template>
 
 <script setup lang="ts">
-  import { useProjectStore } from '~~/store/projects';
-  import { GET_ALL_PROJECTS_FULL } from '~~/graphql/queries/projectQuery'
-
-  const projectStore = useProjectStore()
-  const { $graphqlClient} = useNuxtApp()
-
-
-  const fetch = async () => {
-    projectStore.loading = true
-
-    try {
-      const { projects } = (await $graphqlClient.query({
-        query: GET_ALL_PROJECTS_FULL
-      })).data;
-
-      if (projects) {
-        projectStore.initProjects(projects)
-      }
-
-    } catch (_error) {
-      projectStore.error = _error
-    } finally {
-      projectStore.loading = false
-    }
-  }
+  import { useProjects } from '../../composables/projects'
   
+  const { init } = useProjects()
+
   onMounted(() => {
-    fetch()
+    init()
   })
+  
 </script>

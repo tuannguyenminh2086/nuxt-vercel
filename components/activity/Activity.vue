@@ -19,7 +19,7 @@
                   </tr>
                 </thead>
 
-                <tbody v-if="listing.length > 0">
+                <tbody v-if="listing && listing.length > 0">
 
                   <tr  
                     v-for="(item, index) in listing"
@@ -31,7 +31,6 @@
                     <td class="py-3 px-4 w-20"><base-members :members="item.issue.assignees" :show-name="true" /></td>
                     <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${item.issue_id}`"><span class="font-semibold text-cyan-700">{{ item.issue.name }}</span></NuxtLink></td>
                     <td class="py-3 px-4 w-3/12"><span class="font-bold text-sm">{{ item.issue.project.name }}</span></td>
-                    <!-- <td class="py-3 px-4 w-1/12">{{ item.spent ?  item.spent : 0}}</td> -->
                     <td class="py-3 px-4 w-2/12"></td>
                     <td class="py-3 px-4 w-2/12"><base-hours variant="datetime" :date="item.created_at" class="font-normal text-sm" /></td>
                   </tr>
@@ -60,7 +59,7 @@
   import { useFetch } from '@vueuse/core';
   import { useAuthStore } from '@store/auth';
 
-  const listing = ref([])
+  const listing:Ref<any[]> = ref([])
   const loading:Ref<boolean> = ref(false)
   const { $echoClient, $notification } = useNuxtApp();
   const auth = useAuthStore()

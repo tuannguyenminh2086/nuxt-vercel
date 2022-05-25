@@ -12,15 +12,15 @@
     </div>
 
     <div class="grid gap-4 mt-10">
-      <div class="col-auto">
+      <div class="col-auto mb-10">
         <base-tasks-user :issue-type="2" title="Doing" />
       </div>
 
-      <div class="col-auto">
+      <div class="col-auto mb-10">
         <base-tasks-user :issue-type="6" title="To do" />
       </div>
       
-      <div class="col-auto">
+      <div class="col-auto mb-10">
         <base-tasks-user :issue-type="4"  title="Review"  />
       </div>
 
