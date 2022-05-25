@@ -115,6 +115,8 @@
   const { $graphqlClient, $bus } = useNuxtApp()
 
   const fetch = async() => {
+
+    
      const { data , loading } = await $graphqlClient.query({
         query: GET_TASK_BY_ID,
         variables: {
