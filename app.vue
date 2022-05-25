@@ -19,4 +19,8 @@
       class: ''
     }
   })
+
+  definePageMeta({
+    key: route => route.fullPath
+  })
 </script>

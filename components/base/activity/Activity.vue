@@ -1,6 +1,6 @@
 <template>
-  <client-only>
-    <BaseSection title="Activities" class="">
+  <div>
+    <base-section title="Activities" class="">
       <template #default>
         <div class="">
           <div v-if="loading">
@@ -49,8 +49,8 @@
           </div>
         </div>
       </template>
-    </BaseSection>
-  </client-only>
+    </base-section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -109,8 +109,6 @@
     
       })
     })
-
-  
 
   })
 

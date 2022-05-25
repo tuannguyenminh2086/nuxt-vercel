@@ -10,7 +10,11 @@ export default defineNuxtPlugin(nuxtApp => {
       const token = authStore.getAuthToken()
       const config = useRuntimeConfig()
 
-      if (!token) navigateTo('/login');
+      console.log(token)
+
+      if (!token) {
+        return;
+      }
 
       if (config) {
         const echoConfig = {

@@ -35,7 +35,7 @@
 
       </ul>
 
-      <div v-if="timeTracking">
+      <div v-else>
         <base-iddle title="No data"/>
       </div>
 

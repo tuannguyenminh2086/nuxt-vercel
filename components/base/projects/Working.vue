@@ -1,14 +1,15 @@
 <template>
+  <div>
     <base-section title="Working Projects">
        <template #default>
 
           <div class="">
-
             <div v-if="isLoading">
                 <base-loader />
             </div>
 
             <div v-else>
+            
               <table class="table-auto border-collapse w-full">
                 <thead class="">
                   <tr class="border-slate-100 bg-slate-50 text-slate-400 text-sm uppercase dark:bg-slate-900 dark:border-0">
@@ -40,6 +41,7 @@
           </div>
        </template>
     </base-section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -61,13 +63,18 @@
   const projects: Ref<IProject[] | null> = ref(null)
   const isLoading: Ref<boolean> = ref(true)
 
-  const { data, loading } = await cmsClient.query({
-    query: GET_CURRENT_PROJECT
-  });
+  const fetch = async () => {
+    const { data, loading } = await cmsClient.query({
+      query: GET_CURRENT_PROJECT
+    });
 
-  if ( data && data.tracking_projects ) {
-     projects.value = data.tracking_projects
-     isLoading.value = loading
+    if ( data && data.tracking_projects ) {
+      projects.value = data.tracking_projects
+      isLoading.value = loading
+    }
   }
 
+  onMounted(() => {
+    fetch()
+  })
 </script>
