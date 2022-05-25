@@ -1,9 +1,8 @@
 <template>
-  <div class="p-4 bg-slate-50 md">
+  <div class="py-4 md">
     <client-only>
       <div v-html="rendered"></div>
     </client-only>
-
   </div>
 </template>
 

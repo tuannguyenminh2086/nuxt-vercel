@@ -6,83 +6,97 @@
       </div>
 
       <div v-else>
-        <base-section title="Detail">
+        <!-- content -->
+
+        <base-section title="Detail" class="mb-0">
+
           <template #default>
-              <div class="grid grid-cols-1 gap-1 auto-cols-max lg:grid-cols-8 lg:gap-8">
+              <div class="lg:px-6">
 
-                <div class="lg:col-span-5 lg:pr-5">
 
-                  <div class="mb-10 mt-4">
+                  <div class="my-6">
                     <p class="text-sm"><NuxtLink :to="`/projects/${issue.project.id}`">{{ issue.project.name }}</NuxtLink> </p>
                     <h1 class="text-3xl font-bold mb-3 mt-3 lg:text-4xl">{{ issue.name }}</h1>
-                    <h6 class="mb-2 text-lg font-semibold text-rose-500">ID: {{ issue.id }}</h6>
+                    <h6 class="mb-2 text-lg font-semibold text-rose-500">#{{ issue.id }}</h6>
+                    <p><label class="text-sm pr-2">Created at: </label> <span class="text-sm">{{issue.created_at}}</span></p>
                   </div>
 
+                  <div class="my-6 border-y border-slate-100 py-6">
+                    <div class="grid grid-cols-12 gap-4">
+                      <base-section-block title="Priority">
+                        <template #content>
+                          <base-priority :text="issue.mapped_priority" />
+                        </template>
+                      </base-section-block>
 
-                  <div class="my-6 border-t border-slate-100 flex py-6 box-border w-full">
+                      <base-section-block title="Status">
+                        <template #content>
+                           <base-priority :text="issue.mapped_status.name.toLowerCase()" />
+                        </template>
+                      </base-section-block>
 
-                    <div class="grid grid-cols-6 gap-4 box-border w-full" >
+                      <base-section-block title="Tracked">
+                        <template #content>
+                           <base-hours :hours="issue.current_user_spent" variant="duration" class="font-bold text-2xl" />
+                        </template>
+                      </base-section-block>
 
-                      <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase mb-2">Assignee</p>
-                        <base-members :members="issue.assignees" :show-name="true" />
-                      </div>
+                      <base-section-block title="Assignee">
+                        <template #content>
+                           <base-members :members="issue.assignees" :show-name="true" />
+                        </template>
+                      </base-section-block>
+                    </div>
+                  </div>
 
-                       <div class="">
-                        <p class="text-xs font-semibold text-slate-400 uppercase mb-2">Priority</p>
-                        <base-priority :text="issue.mapped_priority" />
-                      </div>
+                  <div class="grid grid-cols-12 gap-6">
+                    <div class="flex flex-col col-span-full py-6 sm:col-span-6 ">
+                      <base-section-block title="Description">
+                        <template #content>
+                          <base-md :content="issue.description" />
+                        </template>
+                      </base-section-block>
 
-                      <div class="">
-                        <p class="text-xs font-semibold text-slate-400 uppercase mb-2">Status</p>
-                        <base-priority :text="issue.mapped_status.name.toLowerCase()" />
-                      </div>
+                      <base-section-block title="Time tracking" class="mt-10">
+                        <template #content>
+                          <base-tasks-tracking :time-tracking="issue.time_tracking" />
+                        </template>
+                      </base-section-block>
+                     
+                    </div>
 
-                      <div class="">
-                        <p class="text-xs font-semibold text-slate-400 uppercase mb-2">Tracked</p>
-                        <div class="font-bold text-2xl">{{ issue.current_user_spent }}</div>
-                      </div>
+                    <div class="flex flex-col col-span-full  py-6 sm:col-span-6 ">
+                    
+                       <base-section-block title="Comment">
+                          <template #content>
+                            <base-comments-task-comments
+                                :comments="issue.comments"
+                                :related-id="issue.id"
+                                type="issue"
+                            />
+                          </template>
+                      </base-section-block>
 
                     </div>
 
                   </div>
 
-                  <div class="py-6 border-t border-slate-100 mt-5">
-                    <h4 class="font-semibold text-slate-400 uppercase mb-4">Description</h4>
-                    <base-md :content="issue.description" />
-                  </div>
-
-                </div>
-
-
-
-                <div class="lg:col-span-3">
-                  <base-comments-task-comments
-                      :comments="issue.comments"
-                      :relatedId="issue.id"
-                      type="issue"
-                  />
-                </div>
-               
-
             </div>
           </template>
+
           <template #actions>
 
             <div class="flex justify-between items-center">
 
                 <base-tasks-change-status :id="issue.id" :status="issue.mapped_status.name.toLowerCase()" />
-
-                <button class="button rounded btn bg-indigo-500 px-4 py-2 hover:bg-indigo-600 text-white flex items-center ml-2">
-                  <span class="mr-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1.5em" height="1.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path fill="currentColor" d="m13 24l-9-9l1.414-1.414L13 21.171L26.586 7.586L28 9L13 24z"/></svg>
-                  </span>
-                  <span>Mark complete</span>
-                </button>
+                <base-tasks-complete-task :id="issue.id" />
             </div>
 
           </template>
         </base-section>
+
+
+         <!-- content -->
       </div>
   </div>
 </template>
@@ -101,6 +115,8 @@
   const { $graphqlClient, $bus } = useNuxtApp()
 
   const fetch = async() => {
+
+    
      const { data , loading } = await $graphqlClient.query({
         query: GET_TASK_BY_ID,
         variables: {
@@ -111,6 +127,10 @@
       if ( data.issue ) {
         isLoading.value = loading
         issue.value = {...data.issue}
+
+        useHead({
+          title: issue.value ?  '#' + issue.value.id + ' - '  + issue.value.name : ''
+        })
       }
   }
 
@@ -122,6 +142,9 @@
      $bus.$on('refetch-issue', () => {
        fetch()
      })
+
+    
+
   })
 
 </script>

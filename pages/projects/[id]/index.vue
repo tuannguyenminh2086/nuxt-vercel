@@ -1,10 +1,5 @@
 <template>
   <div class="project-detail">
-
-      <div class="mb-5">
-        <NuxtLink to="/projects">Go Back</NuxtLink>
-      </div>
-
       <div v-if="isLoading">
         <base-loader />
       </div>
@@ -15,7 +10,7 @@
         <div class="py-10">
 
           <div class="mb-4">
-            <h2 v-if="project.name" class="text-5xl font-bold mb-4 text-slate-800">{{ project.name }}</h2>
+            <h2 v-if="project.name" class="text-5xl font-bold mb-4 text-blue-900">{{ project.name }}</h2>
             <div class="">Description</div>
           </div>
 
@@ -91,7 +86,6 @@
        
       </div>
   </div>
-  
 </template>
 
 <script setup lang="ts">
@@ -124,7 +118,7 @@
 
   
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .loadingState {
     display: none;
   }

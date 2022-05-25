@@ -50,6 +50,11 @@ export default defineNuxtConfig({
   alias: {
     '@store': resolve(__dirname,'./store')
   },
+  runtimeConfig: {
+    cmsURL: process.env.NUXT_API_CMS_URL,
+    graphqlURL: process.env.NUXT_API_GRAPHQL_URL,
+    apiURL: process.env.NUXT_API_URL,
+  },
   publicRuntimeConfig: {
     CMS_URL: process.env.NUXT_API_CMS_URL,
     GRAPHQL_URL: process.env.NUXT_API_GRAPHQL_URL,

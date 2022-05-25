@@ -1,7 +1,7 @@
 <template>
   <Html class="scroll-smooth">
     <Body
-      class="antialiased duration-300 transition-all text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-900"
+      class="antialiased duration-300 transition-all text-gray-800 dark:text-gray-200 bg-slate-100 dark:bg-gray-900"
     >
       <NuxtPage />
     </Body>
@@ -9,16 +9,18 @@
 </template>
 <script setup lang="ts">
   useHead({
-    titleTemplate: 'My App - %s',
-    // or, instead:
-    // titleTemplate: (title) => `My App - ${title}`,
+    titleTemplate: '%s - Lotti',
     viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
     charset: 'utf-8',
     meta: [
-      { name: 'description', content: 'My amazing site.' }
+      { name: 'description', content: '' }
     ],
     bodyAttrs: {
-      class: 'test'
+      class: ''
     }
+  })
+
+  definePageMeta({
+    key: route => route.fullPath
   })
 </script>
