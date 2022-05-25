@@ -3,14 +3,13 @@
     <div
       class="h-96 overflow-hidden overflow-y-auto border-y border-slate-100 py-4 mt-6 pr-4"
     >
-      <ul v-if="timeTracking.length > 0" role="list" class="divide-y divide-slate-100">
+      <ul v-if="timeTracking.length > 0" role="list" class="divide-y divide-slate-100 ">
 
         <li
           v-for="(item, key) in timeTracking"
           :key="key"
-          class="flex flex-col p-4 transition-all hover:bg-slate-100"
+          class="flex flex-col p-4 transition-all hover:bg-slate-100 odd:bg-white even:bg-slate-50" 
         >
-
           <div class="font-bold" >User name</div>
           <div class="text-sm">
             <label class="mr-2 text-sm">Last updated:</label>
@@ -20,7 +19,7 @@
           <div class="grid grid-cols-3 mt-6">
             <div>
               <label class="mr-2 text-sm">Tracked:</label>
-              <base-hours :hours="item.spent" variant="duration" class="text-sky-700" />
+              <base-hours :hours="item.spent" variant="duration" class="text-sky-700" /><small class="pl-1">h</small>
             </div>
             <div>
               <label class="mr-2 text-sm">Start:</label>

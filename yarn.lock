@@ -6295,11 +6295,6 @@ markdown-it-emoji@^1.4.0:
   resolved "https://registry.yarnpkg.com/markdown-it-emoji/-/markdown-it-emoji-1.4.0.tgz#9bee0e9a990a963ba96df6980c4fddb05dfb4dcc"
   integrity sha1-m+4OmpkKljupbfaYDE/dsF37Tcw=
 
-markdown-it-emoji@^2.0.0:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/markdown-it-emoji/-/markdown-it-emoji-2.0.2.tgz#cd42421c2fda1537d9cc12b9923f5c8aeb9029c8"
-  integrity sha512-zLftSaNrKuYl0kR5zm4gxXjHaOI3FAOEaloKmRA5hijmJZvSjmxcokOLlzycb/HXlUFWzXqpIEoyEMCE4i9MvQ==
-
 markdown-it-footnote@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/markdown-it-footnote/-/markdown-it-footnote-3.0.3.tgz#e0e4c0d67390a4c5f0c75f73be605c7c190ca4d8"
@@ -9625,6 +9620,11 @@ vue-router@^4.0.14:
   integrity sha512-wAO6zF9zxA3u+7AkMPqw9LjoUCjSxfFvINQj3E/DceTt6uEz1XZLraDhdg2EYmvVwTBSGlLYsUw8bDmx0754Mw==
   dependencies:
     "@vue/devtools-api" "^6.0.0"
+
+vue-universal-modal@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/vue-universal-modal/-/vue-universal-modal-1.1.3.tgz#a0b148456e30768620cf0a65a92d77cccbdb5673"
+  integrity sha512-YDDe0TuxwnjH9Pw6jc4WRndSeSCUVNy0a3xIFdNMzbObvhwiOn28mH9ZoSqgdtuNCmmePds10ExP9/3B88L25w==
 
 vue3-marquee@^3.0.3:
   version "3.0.3"

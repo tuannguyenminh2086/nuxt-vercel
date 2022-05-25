@@ -1,9 +1,10 @@
 <template>
-  <Html class="scroll-smooth">
+  <Html class="scroll-smooth" lang="en">
     <Body
       class="antialiased duration-300 transition-all text-gray-800 dark:text-gray-200 bg-slate-100 dark:bg-gray-900"
     >
       <NuxtPage />
+      <div id="modals"></div>
     </Body>
   </Html>
 </template>

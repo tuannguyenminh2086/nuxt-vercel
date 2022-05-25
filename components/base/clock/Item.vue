@@ -2,11 +2,11 @@
   <div class="local-time items-center hidden lg:flex">
     <div class="flex" :class="{'flex-row-reverse': state.isSwitch}">
       <div class="flex items-center">
-          <img src="@/assets/imgs/vietnam.svg" class="w-5" />
+          <img src="@/assets/imgs/vietnam.svg" class="w-5" alt="" />
           <span class="pl-2 font-bold">{{ state.vn_time }}</span>
       </div>
        <div class="flex ml-5 items-center">
-          <img src="@/assets/imgs/switzerland.svg" class="w-4" />
+          <img src="@/assets/imgs/switzerland.svg" class="w-4" alt="" />
           <span class="pl-2 font-bold ">{{ state.sw_time }}</span>
       </div>
     </div>

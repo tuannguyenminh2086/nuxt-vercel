@@ -1,30 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div class="border-bt">
-      <div 
-        v-if="listing.length > 0"
-        class="h-96 overflow-hidden overflow-y-auto"
-      > 
-        <ul>
-          <li
-            v-for="(item, idx) in listing"
-            :key="idx"
-            class="my-4 border-b py-4 border-b-gray-100"
-          
-          >
-            <div class="text-sm font-semibold"><base-hours :date="item.created_at.toString()" variant="datetime"/></div>
-            <!-- eslint-disable vue/no-v-html -->
-            <div v-html="item.content"></div>
-            <!--eslint-enable-->
-          </li>
-        </ul>
-      </div>
-      <div v-else>
-        <base-iddle title="No Comments" />
-      </div>
-    </div>
-
-    <div class="py-6 mt-4">
+     <div class="pt-2 pb-6">
       <div class="mb-4">
         <textarea
           v-model="comment"
@@ -45,6 +21,34 @@
         Comment
       </button>
     </div>
+
+    <div class="border-y p-4 border-slate-100">
+      <div 
+        v-if="listing.length > 0"
+        class="h-96 overflow-hidden overflow-y-auto"
+      > 
+        <ul>
+          <li
+            v-for="(item, idx) in listing"
+            :key="idx"
+            class="my-4 border-b py-4 border-b-gray-100"
+          
+          >
+            <div class="text-sm font-semibold">
+              <base-hours :date="item.created_at.toString()" variant="datetime"/>
+            </div>
+            <!-- eslint-disable vue/no-v-html -->
+            <div v-html="item.content"></div>
+            <!--eslint-enable-->
+          </li>
+        </ul>
+      </div>
+      <div v-else>
+        <base-iddle title="No Comments" />
+      </div>
+    </div>
+
+   
     
   </div>
 </template>
@@ -73,7 +77,7 @@
   const listing:Ref<Comment[]> = ref([])
 
   const auth = useAuthStore()
-  listing.value = Object.assign([], props.comments)
+  listing.value = Object.assign([], useOrderBy(props.comments, 'created_at','desc'))
 
 
   const sendComment = async () => {

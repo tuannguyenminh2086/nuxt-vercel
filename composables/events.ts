@@ -15,19 +15,28 @@ export const useEvents = () => {
   const fetchEvents = async () => {
     loading.value = true
 
+    if (!_token) navigateTo('/login')
+    
     const url = runtimeConfig.public.API_URL + '/notification/announcement'
-    const { isFetching, data } = await useFetch( url, {
+    const resp = await useFetch( url, {
       headers: {
         'Authorization': `Bearer ${_token}`,
         'Accept': 'application/json'
       }
     }).json()
+    
+    if (resp) {
+      if (resp.statusCode.value === 401 ) {
+        navigateTo('/login')
+      }
+      
+      if (resp.data.value) {
+        listing.value = resp.data.value.announcements
+      }
 
-    if (data.value) {
-      listing.value = data.value.announcements
+      loading.value = resp.isFetching.value
     }
-
-    loading.value = isFetching.value
+    
 
   }
 
