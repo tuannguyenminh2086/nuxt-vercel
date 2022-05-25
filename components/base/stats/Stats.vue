@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white
-        p-6 shadow rounded flex flex-col col-span-full border border-slate-200 
+        p-6 rounded-lg flex flex-col col-span-full border border-slate-200 
           sm:col-span-6 xl:col-span-4 
         dark:bg-slate-800 dark:border-gray-800"
   >
@@ -9,7 +9,7 @@
     </h2>
 
     <div class="flex items-start">
-      <div class="text-5xl font-semibold text-slate-800 mr-2 dark:text-slate-200">
+      <div class="text-5xl font-semibold text-blue-800 mr-2 dark:text-slate-200">
       {{ number }}
       </div>
     </div>

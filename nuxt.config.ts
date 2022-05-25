@@ -61,5 +61,33 @@ export default defineNuxtConfig({
     API_URL: process.env.NUXT_API_URL,
     PUSHER_APP_KEY: process.env.NUXT_API_PUSHER_APP_KEY,
     PUSHER_APP_CLUSTER: process.env.NUXT_API_PUSHER_APP_CLUSTER
+  },
+  pwa: {
+    meta: {
+      title: 'Lotti PWA',
+      author: 'Me',
+    },
+    manifest: {
+      name: 'Lotti PWAs are so easy',
+      short_name: 'Lotti PWA',
+      lang: 'en',
+      display: 'standalone',
+    },
+    workbox: {
+      runtimeCaching: [
+        {
+          urlPattern: 'https://fonts.googleapis.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+        },
+        {
+          urlPattern: 'https://fonts.gstatic.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+        },
+      ]
+    }
   }
 })

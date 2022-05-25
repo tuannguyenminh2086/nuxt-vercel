@@ -2,8 +2,8 @@
   <div class="py-2 events-marquee mr-2 hidden lg:block">
     <div class="bg-gray-800 rounded-md text-white py-2 px-6">
         <vue3-marquee :pause-on-hover="true">
-          <span class="text-lg text-orange-400 border-r border-white px-4">Swiss National Day 2022 in Switzerland</span>
-          <span class="text-lg text-orange-400 border-r border-white px-4">Independence Day of Vietnam 2022</span>
+          <span class="text-lg text-orange-400 border-r border-slate-50 px-4">Swiss National Day 2022 - Monday, August 1</span>
+          <span class="text-lg text-orange-400 border-r border-slate-50 px-4">Independence Day of Vietnam 2022 - Friday, September 2</span>
       </vue3-marquee>
     </div>
     

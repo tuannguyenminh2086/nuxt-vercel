@@ -15,8 +15,8 @@
 
 
                   <div class="my-6">
-                    <p class="text-sm"><NuxtLink :to="`/projects/${issue.project.id}`">{{ issue.project.name }}</NuxtLink> </p>
-                    <h1 class="text-3xl font-bold mb-3 mt-3 lg:text-4xl">{{ issue.name }}</h1>
+                    <p class="text-sm">Project: <NuxtLink :to="`/projects/${issue.project.id}`">{{ issue.project.name }}</NuxtLink> </p>
+                    <h2 class="text-3xl font-bold mb-3 mt-3 lg:text-5xl">{{ issue.name }}</h2>
                     <h6 class="mb-2 text-lg font-semibold text-rose-500">#{{ issue.id }}</h6>
                     <p><label class="text-sm pr-2">Created at: </label> <span class="text-sm">{{issue.created_at}}</span></p>
                   </div>
@@ -50,7 +50,7 @@
                   </div>
 
                   <div class="grid grid-cols-12 gap-6">
-                    <div class="flex flex-col col-span-full py-6 sm:col-span-6 ">
+                    <div class="flex flex-col col-span-full py-6 border-slate-200 sm:col-span-6 lg:border-r lg:pr-10">
                       <base-section-block title="Description">
                         <template #content>
                           <base-md :content="issue.description" />
@@ -65,7 +65,7 @@
                      
                     </div>
 
-                    <div class="flex flex-col col-span-full  py-6 sm:col-span-6 ">
+                    <div class="flex flex-col col-span-full  py-6 sm:col-span-6 lg:pl-4">
                     
                        <base-section-block title="Comment">
                           <template #content>
