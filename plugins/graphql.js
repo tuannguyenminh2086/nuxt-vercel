@@ -8,7 +8,7 @@ export default defineNuxtPlugin(nuxtApp => {
       const token = authStore.getAuthToken();
 
       const config = useRuntimeConfig();
-
+      
       if (!token) return;
 
       if (config) {
@@ -22,7 +22,7 @@ export default defineNuxtPlugin(nuxtApp => {
           })
     
           const httpLink = createHttpLink({
-            uri: config.public.GRAPHQL_URL
+            uri: config.graphqlURL ? config.graphqlURL : 'https://lottie-backend.absolutagentur.ch/graphql'
           });
     
         // Cache implementation
