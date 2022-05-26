@@ -31,11 +31,12 @@
                     <td class="py-3 px-4"><NuxtLink :to="`/projects/${project.id}`">{{ project.name }}</NuxtLink></td>
                     <td class="py-3 px-4">{{ project.leader? project.leader.name : 'N/A' }}</td>
                     <td class="py-3 px-4 "> <base-priority v-if="project.mapped_priority" :text="project.mapped_priority.toLowerCase()" /> </td>
-                    <td class="py-3 px-4 "><base-hours :hours="project.total_spent" variant="duration" /></td>
+                    <td class="py-3 px-4 "><base-hours :hours="project.total_spent" variant="duration"  class="font-semibold text-blue-500" /></td>
                   </tr>
                 
                 </tbody>
               </table>
+              
             </div>
 
           </div>

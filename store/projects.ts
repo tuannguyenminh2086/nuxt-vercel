@@ -87,8 +87,6 @@ export const useProjectStore = defineStore({
 
   },
 
-  getters: {
-  
-  }
+  getters: {}
 })
 

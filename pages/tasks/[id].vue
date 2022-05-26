@@ -16,7 +16,10 @@
 
                   <div class="my-6">
                     <p class="text-sm">Project: <NuxtLink :to="`/projects/${issue.project.id}`">{{ issue.project.name }}</NuxtLink> </p>
-                    <h2 class="text-3xl font-bold mb-3 mt-3 lg:text-5xl">{{ issue.name }}</h2>
+                    <h2 class="text-3xl font-bold mb-3 mt-3 relative lg:text-5xl">
+                      {{ issue.name }}
+                      <spa v-if="issue.state === 0" class="inline-flex items-center absolute ml-3 last:mr-0 capitalize py-0.5 px-2 text-xs rounded-lg mr-1.5 bg-red-600 text-white border-red-700">Closed</spa>
+                    </h2>
                     <h6 class="mb-2 text-lg font-semibold text-rose-500">#{{ issue.id }}</h6>
                     <p><label class="text-sm pr-2">Created at: </label> <span class="text-sm">{{issue.created_at}}</span></p>
                   </div>
@@ -89,7 +92,7 @@
             <div class="flex justify-between items-center">
 
                 <base-tasks-change-status :id="issue.id" :status="issue.mapped_status.name.toLowerCase()" />
-                <base-tasks-complete-task :id="issue.id" />
+                <base-tasks-complete-task :id="issue.id" :disabled="issue.state === 0" />
             </div>
 
           </template>

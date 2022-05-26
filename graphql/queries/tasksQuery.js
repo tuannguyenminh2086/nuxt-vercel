@@ -52,6 +52,7 @@ export const GET_TASK_BY_ID = gql`
             name
             key
           }
+          state
           mapped_priority
           time_tracking {
             spent
