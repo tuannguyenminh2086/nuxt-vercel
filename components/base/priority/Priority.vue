@@ -1,5 +1,5 @@
 <template>
-  <span class="font-bold px-3 py-1 inline-block rounded text-white text-capitalize w-24 text-center" :class="styleRender">
+  <span class="font-bold text-sm px-2 py-1 inline-block rounded text-white text-capitalize w-20 text-center" :class="styleRender">
     {{ text }}
   </span>
 </template>

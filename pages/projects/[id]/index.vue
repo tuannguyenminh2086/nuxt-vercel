@@ -1,13 +1,12 @@
 <template>
   <div class="project-detail">
-      <div v-if="isLoading">
+
+      <div v-if="loading">
         <base-loader />
       </div>
 
       <div v-else>
-        <div class="hidden">loading</div>
-
-        <div class="py-10">
+        <div v-if="project" class="py-10">
 
           <div class="mb-4">
             <h2 v-if="project.name" class="text-5xl font-bold mb-4 text-blue-900">{{ project.name }}</h2>
@@ -16,55 +15,69 @@
 
           <div class="grid grid-cols-6 gap-6 mt-10">
     
-            <div v-if="project.client" class="mb-4">
-                <span class="block text-sm">Client</span>
-                <span class="block font-bold text-2xl">{{ project.client }}</span>
+            <div class="mb-4">
+              <base-section-block title="Client">
+                <template #content>
+                  <span class="block font-bold text-2xl">{{ project.client ? project.client : 'n/a'}}</span>
+                </template>
+              </base-section-block>
             </div>
 
             <div class="mb-4">
-              <span class="block text-sm">Project Leader</span> 
-              <span class="block font-bold text-2xl">{{ project?.leader ? project.leader.name : 'n/a'}}</span>
+              <span class="block text-sm"></span> 
+             
+
+              <base-section-block title="Project Leadert">
+                <template #content>
+                  <span class="block font-bold text-2xl">{{ project?.leader ? project.leader.name : 'n/a'}}</span>
+                </template>
+              </base-section-block>
+
             </div>
 
             <div class="mb-4">
-              <span class="block text-sm">Created date</span>
-              <span class="block font-bold text-2xl">{{ project?.created_at }}</span>
+               <base-section-block title="Date Created">
+                <template #content>
+                   <span class="block font-bold text-2xl">{{ project?.created_at }}</span>
+                </template>
+              </base-section-block>
             </div>
 
           </div>
 
           <div class="mt-4">
-            <div class="">
-              <span class="block text-sm mb-2">Priority</span> 
-              <base-priority v-if="project" :text="project.mapped_priority.toString()" />
-            </div>
+             <base-section-block title="Priority">
+                <template #content>
+                  <base-priority v-if="project" :text="project.mapped_priority.toString()" />
+                </template>
+              </base-section-block>
           </div>
         </div>
 
-        <div class="mt-4">
-          <div class="grid grid-cols-4 gap-4">
-            <div>
+        <div  v-if="project" class="mt-4">
+          <div class="grid grid-cols-12 gap-4">
+            <div class="md:col-span-2">
               <base-stats 
                 :number="project.total_issue" 
                 title="Total Issues" 
                 class="col-1"
               />
             </div>
-            <div>
+            <div class="md:col-span-2">
               <base-stats 
                 :number="project.total_active_issue" 
                 title="Total Active Issues" 
                 class="col-1"
               />
             </div>
-            <div>
+            <div class="md:col-span-2">
               <base-stats 
-                :number="110" 
+                :number="0" 
                 title="Tracked" 
                 class="col-1"
               />
             </div>
-            <div>
+            <div class="md:col-span-2">
               <base-stats 
                 :number="9" 
                 title="Members" 
@@ -76,11 +89,11 @@
           
         </div>
         
-        <div class="mt-20">
+        <div v-if="project" class="mt-20">
           <base-tasks-listing
-            :listing="project?.issues" 
+            :listing="filteredTasks" 
             :pid="route.params.id" 
-            :pname="project?.name" 
+            :pname="project.name" 
           />
         </div>
        
@@ -89,32 +102,21 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import type { Ref } from 'vue'
-  import { GET_PROJECT_DETAIL } from '~~/graphql/queries/projectQuery';
-  import cmsClient from '~~/apollo/cmsClient';
+
+  import { storeToRefs } from 'pinia'
+  import { useProject } from '../../../composables/project'
+  import { useProjectStore } from '~~/store/project';
 
   const route = useRoute()
-  const isLoading: Ref<boolean> = ref(true)
+  const projectStore = useProjectStore()
+  const { filteredTasks, project, loading } = storeToRefs(projectStore)
 
+  const { fetch } = useProject()
 
-  // const { $graphqlClient } = useNuxtApp()
-  if ( !route.params.id ) navigateTo('/projects');
-  
-  const { data: { project }, loading } = await cmsClient.query({
-    query: GET_PROJECT_DETAIL,
-    variables: {
-      id: route.params.id
-    }
-  });
-
-  if ( project ) {
-     isLoading.value = loading
-     
-     useHead({
-      title: project ? project.name : ''
-    })
-  }
+  onMounted(() => {
+    if ( !route.params.id ) navigateTo('/projects');
+    fetch(route.params.id.toString())
+  })
 
   
 </script>

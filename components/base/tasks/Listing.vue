@@ -2,35 +2,31 @@
   <base-section title="Issues">
     <template #default>
       <div class="">
-        <div class="grid grid-cols-4 mb-10 mt-4 gap-4">
+        <div class="flex mb-10 mt-4">
             <!-- Search task  -->
-            <div>
-              <input
-                v-model="keyword"
-                type="text"
-                class="form-input px-6 py-3 rounded-full min-w-full bg-slate-200" 
-                placeholder="Type issue name"
-              />
+            <div class="w-4/12">
+                <input
+                  v-model="keyword"
+                  type="text"
+                  class="form-input px-6 py-3 rounded-full min-w-full bg-slate-200" 
+                  placeholder="Type issue name"
+                />
             </div>
-            <div>
-              Date time
-            </div>
-
         </div>
+
          <div class="grid">
           <!-- Listing -->
           <table class="table-auto border-collapse w-full">
               <thead>
                  <tr class="font-bold border-slate-100 bg-slate-50 text-slate-400 text-sm uppercase dark:bg-slate-900 dark:border-0">
-                  <th class="py-3 px-4 font-bold text-sm text-left w-20">ID</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left w-20">#</th>
                   <th class="py-3 px-4 font-bold text-sm text-left w-2/6 pr-6">Name</th>
                   <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Assignees</th>
                   <th class="py-3 px-4 font-bold text-sm text-left w-1/12 ">Spent</th>
                   <th class="py-3 px-4 font-bold text-sm text-left w-1/12">Priority</th>
                   <th class="py-3 px-4 font-bold text-sm text-left">Status</th>
+                  <th class="py-3 px-4 font-bold text-sm text-left">State</th>
                   <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Created at</th>
-                  
-                  
                 </tr>
               </thead>
 
@@ -40,16 +36,23 @@
                   v-for="(issue, index) in filteredListing"
                   :key="index" 
                   class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
-                  :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
+                  :class="[ index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700', issue.state === 0 ? 'line-through' : '']"
                 >
 
                   <td class="py-3 px-4 w-20">{{ issue.id }}</td>
                   <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`"><span class="font-semibold">{{ issue.name }}</span></NuxtLink></td>
                   <td class="py-3 px-4 w-2/12"><base-members :members="issue.assignees" :show-name="true" /></td>
-                  <td class="py-3 px-4 w-1/12">0</td>
+                  <td class="py-3 px-4 w-1/12">
+                    <base-hours-tracking :time-tracking="issue.time_tracking" />
+                  </td>
                   <td class="py-3 px-4 w-1/12">n/a</td>
                   <td class="py-3 px-4">n/a</td>
-                  <td class="py-3 px-4 w-2/12"><base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" /></td>
+                  <td class="py-3 px-4">
+                    <base-priority-state :code="issue.state" />
+                  </td>
+                  <td class="py-3 px-4 w-2/12">
+                    <base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" />
+                  </td>
                   
                 </tr>
               </tbody>
@@ -60,8 +63,8 @@
                       <base-iddle title="Nothing here" />
                   </td>
                 </tr>
-                
               </tbody>
+
           </table>
 
         </div>
@@ -73,7 +76,7 @@
 
        <NuxtLink
           :to='createUrl'
-          class="inline-flex cursor-pointer justify-center items-center whitespace-nowrap px-8 py-3 rounded-md ring-emerald-600 p-2 bg-emerald-600 text-white border-emerald-600 
+          class="inline-flex cursor-pointer justify-center items-center whitespace-nowrap px-6 py-3 rounded-md ring-green-500 p-2 bg-green-500 text-white border-green-500
               focus:outline-none transition-colors 
               focus:ring duration-150 border 
               hover:bg-emerald-700">
@@ -93,27 +96,16 @@
 <script setup lang="ts">
   import { ref, computed} from 'vue'
   import type { Ref } from 'vue'
-
-  interface IIssue {
-    assignees: {
-      name: string
-      image_path: string | null
-    }[]
-    author_id: number
-    created_at: string
-    id: string
-    name: string
-    state: number
-  }
+  import { IIssues } from '@/models/interfaces'
 
   interface IProps {
-    listing: IIssue[],
+    listing: IIssues[],
     pname: string,
-    pid: string
+    pid: string | string []
   }
 
   const props = defineProps<IProps>()
-  // const issuesState = useState('project-issues', () => props.listing)
+
   const keyword: Ref<string> = ref('')
   // const issuesState = ref(props.listing)
   const createUrl = computed(() => {
@@ -128,8 +120,6 @@
       return props.listing.filter(p => p.name.toLowerCase().includes(keyword.value.toLowerCase()))
     }
   })
-
-
 
 
 </script>

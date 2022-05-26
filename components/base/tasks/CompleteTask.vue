@@ -1,7 +1,8 @@
 <template>
   <div>
     <button
-      class="button rounded btn bg-indigo-500 px-4 py-2 hover:bg-indigo-600 text-white flex items-center ml-2"
+      class="button rounded btn bg-indigo-500 px-4 py-2 hover:bg-indigo-600 text-white flex items-center ml-2 disabled:bg-slate-200"
+      :disabled="disabled"
       @click.prevent.stop="completeHandle"
     >
       <span class="mr-2">
@@ -19,11 +20,13 @@
 
   interface IProps {
     id: string
+    disabled: boolean
   }
 
   const props = defineProps<IProps>()
   const auth = useAuthStore()
-  
+  const nuxtApp = useNuxtApp();
+
   const completeHandle = async () => {
     const _token = auth.getAuthToken();
 
@@ -37,14 +40,24 @@
 
       const cuser = auth.getCurrentUser();
 
-      const _comment = 'Task is closed by ' + cuser.name + ' - ' + new Date() + '';
+      const _comment = 'Task is closed at ' + cuser?.name + ' - ' + new Date() + '';
 
-        await useFetch( url, {
+      const resp = await useFetch( url, {
           headers: _headers
         }).post({
           comment: _comment
         }).json()
-      
+
+
+      if ( resp.statusCode.value === 200) {
+          nuxtApp.$bus.$emit('refetch-issue')
+          nuxtApp.$notification({
+            type: 'success',
+            title: 'Success',
+            text: resp.data.value.message.message
+          })
+      }
+    
     }
     
   }

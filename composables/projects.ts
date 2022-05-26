@@ -1,4 +1,3 @@
-import { useStorage } from '@vueuse/core'
 import { useProjectStore } from '~~/store/projects';
 import { GET_ALL_PROJECTS_FULL } from '~~/graphql/queries/projectQuery'
 
@@ -7,8 +6,6 @@ export const useProjects = () => {
   const projectStore = useProjectStore()
   const { $graphqlClient} = useNuxtApp()
 
-  const state = useStorage('my-store', {})
-
   const init = () => {
     
     const _projects = localStorage.getItem('lottiProjects')
@@ -16,7 +13,6 @@ export const useProjects = () => {
     if (_projects) {
       projectStore.initProjects(JSON.parse(_projects))
     } else {
-      console.log('fetching')
       fetch()
     }
 
@@ -45,7 +41,6 @@ export const useProjects = () => {
 
   return {
     fetch,
-    init,
-    state
+    init
   }
 }
