@@ -16,7 +16,8 @@
                   <p class="text-sm">Project: <NuxtLink :to="`/projects/${issue.project.id}`">{{ issue.project.name }}</NuxtLink> </p>
                   <h2 class="text-3xl font-bold mb-3 mt-3 relative lg:text-5xl">
                     {{ issue.name }}
-                    <span v-if="issue.state === 0" 
+                    <span
+                      v-if="issue.state === 0" 
                       class="inline-flex items-center absolute ml-3 
                           last:mr-0 capitalize py-0.5 px-2 text-xs rounded-lg mr-1.5 bg-red-600 text-white border-red-700">
                           Closed
