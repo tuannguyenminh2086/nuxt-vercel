@@ -3,7 +3,7 @@
     <div
       v-for="(member, index) in members"
       :key="index"
-      class="flex flex-row items-center"
+      class="flex flex-row items-center mr-2"
     >
         <div class="border rounded-full p-1 w-8 bg-slate-200 flex items-center justify-center overflow-hidden mr-2">
           <img :src="member.image_path ? member.image_path : randowAvatar " class="object-cover w-full" />

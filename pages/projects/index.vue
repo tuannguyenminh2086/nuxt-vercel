@@ -9,7 +9,8 @@
 
     <div class="grid gap-4 mt-10">
       <div class="col-auto">
-        <projects-listing />
+        <!-- <projects-listing /> -->
+        <base-projects-listing />
       </div>
     </div>
     
@@ -17,13 +18,10 @@
 </template>
 
 <script setup lang="ts">
-  import { useProjects } from '../../composables/projects'  
-  const { init, fethAPI } = useProjects()
+  const { fetchAPI } = useProjects()
 
   onMounted(() => {
-    init()
-    fethAPI()
-
+    fetchAPI('')
   })
   
 </script>

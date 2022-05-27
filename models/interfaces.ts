@@ -31,6 +31,8 @@ export interface IProject {
   status: string
   total_active_issue: number
   total_issue: number
+  total_spent?: number
+  issues_count?: number
   updated_at: string
   leader: IUser
 }
