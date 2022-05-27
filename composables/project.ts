@@ -10,7 +10,6 @@ export const useProject = () => {
     projectStore.loading = true
     
     try {
-
       const { data: { project }, loading } = await $graphqlClient.query({
         query: GET_PROJECT_DETAIL,
         variables: {

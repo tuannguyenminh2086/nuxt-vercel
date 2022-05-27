@@ -1,47 +1,53 @@
 <template>
   <form
-    class="dark:bg-gray-900/70 bg-white"
+    class="dark:bg-gray-900/70 bg-white p-6"
   >
-        <div class="p-6">
-          <div class="mb-6 last:mb-0">
-            <label class="block font-bold mb-2">Task Name</label>
 
-            <div class="grid grid-cols-1">
-              <div class="relative">
-                <input
-                  v-model="state.name"
-                  type="text"
-                  :disabled="isFetching"
-                  class="px-3 py-2 max-w-full w-full h-12 border-slate-200 rounded border bg-white focus:ring focus:outline-none dark:placeholder-gray-400 dark:bg-gray-800"
-                />
-              </div>
-            </div>
-            <!---->
-          </div>
+          <base-form-item control-title="Task Name">
+              <input
+                v-model="state.name"
+                type="text"
+                :disabled="isLoading"
+                class="px-3 py-2 max-w-full w-full h-12 border-slate-200 rounded border bg-white outline-none  dark:placeholder-gray-400 dark:bg-gray-800"
+              />
+          </base-form-item>
 
-          <div class="mb-6 last:mb-0">
-
-            <label class="block font-bold mb-2">Description</label>
-            <div class="">
-              <div class="relative">
-                <client-only>
+          <base-form-item control-title="Description">
+              <client-only>
                   <v-md-editor 
                     v-model="state.description"
                     left-toolbar='undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image code '
                     right-toolbar='preview'
-                      :disabled-menus="[]"
+                    :disabled-menus="[]"
                     height="300px"
-                    mode="editable"
+                    mode="edit"
                     @upload-image="handleUploadImage"
                   />
-                </client-only>
-              </div>
-            </div>
+              </client-only>
+          </base-form-item>
+
+          <div class="grid lg:grid-cols-4 lg:gap-8">
+            <base-form-item control-title="Assign to">
+              <select v-model="state.assignee" class="rounded border w-full py-2 px-4 outline-none">
+                <option value="-1">Choose a user</option>
+                <option v-for="(item,index) in members" :key="index" :value="item.id">{{ item.name}}</option>
+              </select>
+            </base-form-item>
+            <!-- <base-form-item control-title="Status"></base-form-item>
+            <base-form-item control-title="Priority"></base-form-item> -->
+            <base-form-item control-title="Due Date">
+                <Datepicker
+                  v-model='state.due_date'
+                  format='yyyy-dd-MM'
+                  close-on-scroll
+                  auto-apply
+                  placeholder='Choose a day'
+                  class='relative max-w-full focus:ring focus:outline-none border-slate-100 rounded w-full dark:placeholder-gray-400 border bg-white dark:bg-gray-800'
+                />
+            </base-form-item>
           </div>
 
-          <hr
-            class="border-gray-100 my-6 -mx-6 dark:border-gray-800 border-t"
-          />
+          <hr class="border-gray-100 my-6 -mx-6 dark:border-gray-800 border-t" />
 
           <div class="flex items-center justify-start flex-wrap -mb-3">
 
@@ -105,37 +111,58 @@
             </button>
 
           </div>
-        </div>
 
-        {{ error }}
+
+
       </form>
 </template>
 
 <script setup lang="ts">
-  import { useFetch } from '@vueuse/core'
-  import { useAuthStore } from '@store/auth'
-  const auth = useAuthStore();
-  const _token = auth.getAuthToken();
-  const nuxtApp = useNuxtApp();
-  const route = useRoute()
-  const isLoading = ref(false)
-
-  if (route.params.id ==='' || typeof route.params.id === 'undefined') navigateTo('/projects')
+  import type { Ref } from 'vue'
+  import Datepicker from '@vuepic/vue-datepicker'
+  import '@vuepic/vue-datepicker/dist/main.css'
 
   type TCreateIssue = {
+    project_id: number,
     name: string
-    description: string
+    description: string,
+    assignee: number,
+    status: number,
+    priority: number,
+    due_date: string
   }
 
   const state = reactive<TCreateIssue>({
+    project_id: 0,
     description: '',
     name: '',
+    assignee: 0,
+    status: 6,
+    priority: 1,
+    due_date: ""
   })
 
+
+  const route = useRoute()
+  const isLoading = ref(false)
+  const { createTask, uploadImageForTask } = useTask()
+  const nuxtApp = useNuxtApp()
+
+  if (route.params.id ==='' || typeof route.params.id === 'undefined') {
+    navigateTo('/projects')
+  } else {
+    state.project_id = parseInt(route.params.id.toString())
+  }
+  
+  const members: Ref<any> = ref([])
+
+  members.value = (await useMembers()).value
 
   const reset = () => {
     state.description = ''
     state.name = ''
+    state.assignee = 0
+    state.due_date = ""
   }
 
   const handleUploadImage = async (event:any, insertImage:any, files:any) => {
@@ -143,19 +170,8 @@
      event.preventDefault();
 
      const formData = new FormData();
-         formData.append("image[]", files[0], files[0].name);
-        const config = useRuntimeConfig()
-        const { data }:any = await useFetch(
-          `${config.API_URL}/uploads/image`,
-          {
-            headers: {
-              Authorization: `Bearer ${_token}`,
-              Accept: 'application/json',
-            },
-          }
-        )
-        .post(formData)
-        .json();
+        formData.append("image[]", files[0], files[0].name);
+        const data = await uploadImageForTask(formData)
 
         if (data) {
           const _content: any = { ...data.value.data }
@@ -166,58 +182,39 @@
         }
   }
 
-
   const submitIssue = async () => {
 
       isLoading.value = true
-      const config = useRuntimeConfig()
+      const payload = {...state}
+      const resp = await createTask(payload)
 
-      const resp = await useFetch(
-            `${config.API_URL}/issues`,
-            {
-              headers: {
-                Authorization: `Bearer ${_token}`,
-                Accept: 'application/json',
-              },
-            }
-          )
-          .post({
-            project_id: route.params.id,
-            description: state.description,
-            name: state.name,
-            status: 6,
-            priority: 1
-          })
-          .json();
-
-        
-
-      switch (resp.statusCode.value) {
-        case 422:
-           nuxtApp.$notification({
-              type: 'warn',
-              title: 'Error',
-              text: resp.data.value.message
-            })
-          break;
-      
-        default:
+      if (resp) {
+         switch (resp.statusCode.value) {
+          case 422:
             nuxtApp.$notification({
-              type: 'success',
-              title: 'Success',
-              text: resp.data.value.message ?  resp.data.value.message.message : ''
-            })
-          break;
+                type: 'warn',
+                title: 'Error',
+                text: resp.data.value.message
+              })
+            break;
+        
+          default:
+              nuxtApp.$notification({
+                type: 'success',
+                title: 'Success',
+                text: resp.data.value.message ?  resp.data.value.message.message : ''
+              })
+            break;
+        }
+
+        setTimeout(() => {
+          isLoading.value = false
+          reset()
+        }, 2000);
       }
-
-
-      setTimeout(() => {
-        isLoading.value = false
-        reset()
-      }, 2000);
-     
     
   }
+
 </script>
 
 

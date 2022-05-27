@@ -17,12 +17,13 @@
 </template>
 
 <script setup lang="ts">
-  import { useProjects } from '../../composables/projects'
-  
-  const { init } = useProjects()
+  import { useProjects } from '../../composables/projects'  
+  const { init, fethAPI } = useProjects()
 
   onMounted(() => {
     init()
+    fethAPI()
+
   })
   
 </script>
