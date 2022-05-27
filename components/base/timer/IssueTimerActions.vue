@@ -45,6 +45,7 @@
   const { task, isRunning } = storeToRefs(timerStore)
   const nuxtApp = useNuxtApp();
 
+
   const isDisabled = computed(() => {
     return task.value.issue_id.toString() === props.taskId.toString()
   })
@@ -54,7 +55,7 @@
     
     if (!isRunning.value) {
       timerStore.startTimer(props.taskId, props.taskName)
-      localStorage.setItem('lottiTimer',JSON.stringify({id: props.taskId, name: props.taskName}) )
+      localStorage.setItem('lottiTimer', JSON.stringify({id: props.taskId, name: props.taskName }) )
       
       const { data }:any = await useFetch(`${config.API_URL}/issues/${props.taskId}/status`,
         {
@@ -80,3 +81,4 @@
   }
 
 </script>
+

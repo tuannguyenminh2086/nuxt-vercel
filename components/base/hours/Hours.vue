@@ -7,6 +7,12 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import dayjs from 'dayjs';
+  import duration from 'dayjs/plugin/duration'
+  import relativeTime from 'dayjs/plugin/relativeTime'
+
+  dayjs.extend(duration)
+  dayjs.extend(relativeTime)
+
 
   interface IProps {
     hours?: number,
@@ -20,8 +26,6 @@
     variant: 'duration'
   });
 
-  // const display: Ref<string> = ref('');
-
   const renderDisplay = computed(() => {
     let result = ''
     switch (props.variant) {
@@ -29,6 +33,14 @@
           if ( props.hours > 0 ) {
             const _hours = props.hours / 3600;
             result = _hours.toFixed(2);
+          } else {
+            result = '0'
+          }
+        break;
+        
+      case 'humanize':
+          if ( props.hours > 0 ) {
+            result = dayjs.duration(props.hours, "hours").humanize(true);
           } else {
             result = '0'
           }
@@ -45,6 +57,8 @@
       case 'time':
         result = props.date;
         break;
+
+      case '':
     }
 
     return result

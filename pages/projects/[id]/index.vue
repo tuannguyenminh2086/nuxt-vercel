@@ -104,7 +104,6 @@
 <script setup lang="ts">
 
   import { storeToRefs } from 'pinia'
-  import { useProject } from '../../../composables/project'
   import { useProjectStore } from '~~/store/project'
 
   const route = useRoute()

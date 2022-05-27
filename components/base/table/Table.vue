@@ -6,12 +6,8 @@
           <slot name="thead"></slot>
         </tr>
     </thead>
-    <tbody>
-      <slot name="tbody"></slot>
-    </tbody>
-    <tfoot>
-      <slot name="tfooter"></slot>
-    </tfoot>
+    <slot name="tbody"></slot>
+    <slot name="tfooter"></slot>
   </table>
 </template>
 
