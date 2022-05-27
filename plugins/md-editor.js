@@ -11,10 +11,7 @@ import enUS from '@kangc/v-md-editor/lib/lang/en-US';
 export default defineNuxtPlugin(nuxtApp => {
 
   if ( process.client) {
-    const MarkdownEditor = VMdEditor.use(githubTheme);
-    
-    MarkdownEditor.lang.use('en-US', enUS);
-
-    nuxtApp.vueApp.use(MarkdownEditor);
+    VMdEditor.use(githubTheme).lang.use('en-US', enUS);
+    nuxtApp.vueApp.use(VMdEditor);
   }
 });
