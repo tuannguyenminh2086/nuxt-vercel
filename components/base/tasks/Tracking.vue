@@ -18,15 +18,15 @@
           
           <div class="grid grid-cols-3 mt-6">
             <div>
-              <label class="mr-2 text-sm">Tracked:</label>
-              <base-hours :hours="item.spent" variant="duration" class="text-sky-700" /><small class="pl-1">h</small>
+              <label class="mr-2 text-sm block">Tracked:</label>
+              <base-hours :hours="item.spent" variant="duration" class="text-sky-700" />
             </div>
             <div>
-              <label class="mr-2 text-sm">Start:</label>
+              <label class="mr-2 text-sm block">Start:</label>
               <span class="font-bold text-sky-700">{{ item.start_time}}</span>
             </div>
             <div>
-              <label class="mr-2 text-sm">End:</label>
+              <label class="mr-2 text-sm block">End:</label>
               <span class="font-bold text-sky-700">{{ item.end_time}}</span>
             </div>
           </div>

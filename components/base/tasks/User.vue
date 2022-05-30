@@ -14,7 +14,7 @@
                   <th class="py-3 px-4 font-bold text-left w-3/12">Project</th>
                   <th class="py-3 px-4 font-bold text-left w-1/12 ">Spent</th>
                   <th class="py-3 px-4 font-bold text-left w-2/12">Priority</th>
-                  <th class="py-3 px-4 font-bold text-left w-2/12">Created at</th>
+                  <th class="py-3 px-4 font-bold text-left w-3/12">Created at</th>
                   <th class="py-3 px-4 font-bold"></th>
                   
                 </tr>
@@ -36,7 +36,7 @@
                     <base-hours :hours="issue.current_user_spent" variant="duration" class="text-teal-500 text-xl" />
                   </td>
                   <td class="py-3 px-4 w-2/12"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
-                  <td class="py-3 px-4 w-2/12">
+                  <td class="py-3 px-4 w-3/12">
                     <base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" />
                   </td>
                   <td class="py-3 px-4 ">

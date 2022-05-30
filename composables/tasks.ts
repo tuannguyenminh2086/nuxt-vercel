@@ -19,6 +19,7 @@ export const useTask = () => {
   const auth = useAuthStore();
   const _token = auth.getAuthToken()
   const config = useRuntimeConfig()
+  
 
   const createTask = async (payload: TCreateIssue) => {
 
@@ -29,7 +30,7 @@ export const useTask = () => {
 
 
     const resp = await useFetch(
-      config.apiURL + '/issues',
+      config.public.API_URL + '/issues',
       {
         headers: {
           Authorization: `Bearer ${_token}`,
@@ -46,7 +47,7 @@ export const useTask = () => {
   const uploadImageForTask = async (formData:any) => {
 
     const { data }:any = await useFetch(
-      `${config.apiURL}/uploads/image`,
+      config.public.API_URL + '/uploads/image',
       {
         headers: {
           Authorization: `Bearer ${_token}`,
@@ -61,10 +62,27 @@ export const useTask = () => {
 
   }
 
+  const fetchTasksActivity = async () => {
+
+    const { data } = await useFetch( config.public.API_URL + '/issues/working', 
+    {
+      headers: {
+        'Authorization': `Bearer ${_token}`,
+        'Accept': 'application/json'
+      }
+    }).json()
+
+    return data
+
+  }
+
+
   return {
     error,
     createTask,
-    uploadImageForTask
+    uploadImageForTask,
+    fetchTasksActivity
   }
 
 }
+

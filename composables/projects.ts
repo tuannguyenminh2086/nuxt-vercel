@@ -1,15 +1,17 @@
 import { useFetch } from '@vueuse/core';
+
 import { useProjectStore } from '~~/store/projects';
 import { GET_ALL_PROJECTS_FULL } from '~~/graphql/queries/projectQuery'
 import { useAuthStore } from '@store/auth';
 
+
+
 export const useProjects = () => {
   const projectStore = useProjectStore()
-  const { $graphqlClient} = useNuxtApp()
-
+  const { $graphqlClient } = useNuxtApp()
   const auth = useAuthStore()
   const _token = auth.getAuthToken();
-  const runtimeConfig = useRuntimeConfig()
+  const config = useRuntimeConfig()
 
   const init = () => {
     
@@ -43,29 +45,38 @@ export const useProjects = () => {
   }
 
 
-  const fethAPI = async () => {
+  const fetchAPI = async (_url:string) => {
+    const url = _url !=='' ? _url : config.public.API_URL + '/projects'
 
     try {
-      if (_token) {
-        const url = runtimeConfig.public.API_URL + '/projects'
-        await useFetch( url, {
+        
+        projectStore.loading = true
+
+        const { data, statusCode } = await useFetch( url, {
           headers: {
             'Authorization': `Bearer ${_token}`,
             'Accept': 'application/json'
           }
         }).json()
-      }
 
+        if ( statusCode.value === 200 ) {
+          
+          projectStore.initProjects(data.value)
 
-    } catch (error) {
-      projectStore.error = error
+        }
+       
+
+    } catch (_error) {
+      projectStore.error = _error
+    } finally {
+      projectStore.loading = false
     }
   }
 
 
   return {
     fetch,
-    fethAPI,
+    fetchAPI,
     init
   }
 }
