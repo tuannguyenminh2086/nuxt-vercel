@@ -1,13 +1,14 @@
 // import { ref } from 'vue'
 // import type { Ref } from 'vue'
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import duration from 'dayjs/plugin/duration.js'
+import relativeTime from 'dayjs/plugin/relativeTime.js'
 
-dayjs.extend(duration)
-dayjs.extend(relativeTime)
+
 
 export const useUTILs = () => {
+  dayjs.extend(duration)
+  dayjs.extend(relativeTime)
 
   const toDaysMinutesSeconds = (seconds:number) => {
 
@@ -30,7 +31,10 @@ export const useUTILs = () => {
 
 
   const formatDuration = (seconds: number) => {
-    return toDaysMinutesSeconds(seconds)
+    if ( process.client) {
+      return toDaysMinutesSeconds(seconds)
+    }
+    
   }
 
 
