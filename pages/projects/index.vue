@@ -20,6 +20,10 @@
 <script setup lang="ts">
   const { fetchAPI } = useProjects()
 
+  useHead({
+    title: 'Projects'
+  })
+
   onMounted(() => {
     fetchAPI('')
   })

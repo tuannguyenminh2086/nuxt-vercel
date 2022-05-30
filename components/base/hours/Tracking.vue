@@ -1,6 +1,6 @@
 <template>
-  <div class=" text-blue-500">
-    <base-hours :hours="tracked" variant="duration" class="text-xl" />
+  <div class=" ">
+    <base-hours :hours="tracked" variant="duration" class="" />
   </div>
 </template>
 

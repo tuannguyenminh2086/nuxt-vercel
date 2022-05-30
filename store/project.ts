@@ -26,9 +26,23 @@ export const useProjectStore = defineStore({
     init ( project: IProject ) {
       this.project = {...project}
       this.filteredTasks = project.issues
-    },
-    filterBy () {
 
+      this.tracked = this.setTracked(project.issues)
+
+    },
+    filterBy () {},
+    setTracked (issues: IIssues[]) {      
+      const _tracked = issues.reduce((allIssues, issue) => {
+
+        if ( issue.time_tracking.length < 1) return allIssues;
+
+        const sum = issue.time_tracking.reduce((total:number, record:any) => {
+          return total + record.spent
+        },0)
+
+        return allIssues + sum
+      },0)
+      return _tracked
     }
   }, 
 

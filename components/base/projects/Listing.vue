@@ -28,8 +28,8 @@
                   <td class="py-3 px-4"><NuxtLink :to="`/projects/${project.id}`" class=" font-bold text-lg hover:text-blue-600">{{ project.name }}</NuxtLink></td>
                   <td class="py-3 px-4"><span class="text-blue-500 font-semibold">{{ project.leader? project.leader.name : 'n/a' }}</span></td>
                   <td class="py-3 px-4 "><base-priority v-if="project.mapped_priority" :text="project.mapped_priority.toLowerCase()" /></td>
-                  <td class="py-3 px-4 "><span class="text-xl font-semibold">{{ project.issues_count }}</span></td>
-                  <td class="py-3 px-4 "><base-hours :hours="project.total_spent" variant="duration"  class="text-xl font-semibold text-rose-700" /></td>
+                  <td class="py-3 px-4 "><span class="font-semibold">{{ project.issues_count }}</span></td>
+                  <td class="py-3 px-4 "><base-hours :hours="project.total_spent" variant="duration"  class="font-semibold " /></td>
                 </tr>
               </tbody>
             </template>

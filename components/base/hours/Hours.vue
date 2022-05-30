@@ -1,5 +1,5 @@
 <template>
-  <span class="font-bold">
+  <span class="font-semibold">
     {{ renderDisplay }}
   </span>
 </template>
@@ -9,6 +9,7 @@
   import dayjs from 'dayjs';
   import duration from 'dayjs/plugin/duration'
   import relativeTime from 'dayjs/plugin/relativeTime'
+
 
   dayjs.extend(duration)
   dayjs.extend(relativeTime)
@@ -26,16 +27,15 @@
     variant: 'duration'
   });
 
+  const { formatDuration } = useUTILs()
+
+
   const renderDisplay = computed(() => {
-    let result = ''
+    let result = 'n/a'
+
     switch (props.variant) {
       case 'duration':
-          if ( props.hours > 0 ) {
-            const _hours = props.hours / 3600;
-            result = _hours.toFixed(2);
-          } else {
-            result = '0'
-          }
+          result = props.hours > 0 ? formatDuration(props.hours) : '00:00:00'
         break;
         
       case 'humanize':
@@ -48,7 +48,7 @@
         
       case 'datetime':
           if ( props.date !== '') {
-            result = dayjs(props.date).format('DD MMM YYYY  | HH:mm:ss')
+            result = dayjs(props.date).format('DD MMM YYYY | HH:mm:ss')
           } else {
             result = '0'
           }
@@ -65,3 +65,5 @@
   })
 
 </script>
+
+
