@@ -76,7 +76,8 @@
     const _localTask = JSON.parse(localStorage.getItem('lottiTimer')!)
 
     const res = {
-      name: 'N/A'
+      name: 'N/A',
+      id: ''
     }
 
 
@@ -87,6 +88,7 @@
         res.name = _task.name
       } else {
         res.name = _localTask ? _localTask.name : ''
+        res.id = _localTask ? _localTask.id : ''
       }
 
     }

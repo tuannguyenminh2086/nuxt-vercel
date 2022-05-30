@@ -7,7 +7,7 @@
         </tr>
     </thead>
     <slot name="tbody"></slot>
-    <slot name="tfooter"></slot>
+    <slot name="tfoot"></slot>
   </table>
 </template>
 

@@ -29,25 +29,26 @@
 
                 <div class="my-6 border-y border-slate-100 py-6">
                   <div class="grid grid-cols-12 gap-4">
-                    <base-section-block title="Priority">
+
+                    <base-section-block title="Priority" class="md:col-span-2">
                       <template #content>
                         <base-priority :text="issue.mapped_priority" />
                       </template>
                     </base-section-block>
 
-                    <base-section-block title="Status">
+                    <base-section-block title="Status" class="md:col-span-2">
                       <template #content>
                           <base-priority :text="issue.mapped_status.name.toLowerCase()" />
                       </template>
                     </base-section-block>
 
-                    <base-section-block title="Tracked">
+                    <base-section-block title="Tracked" class="md:col-span-2">
                       <template #content>
                           <base-hours :hours="issue.current_user_spent" variant="duration" class="font-bold text-2xl" />
                       </template>
                     </base-section-block>
 
-                    <base-section-block title="Assignee">
+                    <base-section-block title="Assignee" class="md:col-span-2">
                       <template #content>
                           <base-members :members="issue.assignees" :show-name="true" />
                       </template>
