@@ -6,62 +6,61 @@
       </div>
       <div v-else class="">
           <div v-if="listing">
-            <table class="table-auto border-collapse w-full">
-              <thead>
-                <tr class="font-bold border-b bg-slate-50 dark:bg-slate-900 dark:border-0">
-                  <th class="py-3 px-4 font-bold text-left w-20">ID</th>
-                  <th class="py-3 px-4 font-bold text-left w-2/6 pr-6">Name</th>
-                  <th class="py-3 px-4 font-bold text-left w-3/12">Project</th>
-                  <th class="py-3 px-4 font-bold text-left w-1/12 ">Spent</th>
+
+          <base-table>
+            <template #thead>
+                  <th class="py-3 px-4 font-bold text-left w-20">#</th>
+                  <th class="py-3 px-4 font-bold text-left w-3/12 pr-6">Name</th>
+                  <th class="py-3 px-4 font-bold text-left ">Project</th>
+                  <th class="py-3 px-4 font-bold text-left w-2/12">Spent</th>
                   <th class="py-3 px-4 font-bold text-left w-2/12">Priority</th>
-                  <th class="py-3 px-4 font-bold text-left w-3/12">Created at</th>
+                  <th class="py-3 px-4 font-bold text-left ">Created at</th>
                   <th class="py-3 px-4 font-bold"></th>
+            </template>
+            <template #tbody>
+                <TransitionGroup v-if="listing.length > 0"  name="list" tag="tbody">
+
+                  <tr  
+                    v-for="(issue, index) in listing"
+                    :key="index" 
+                    class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
+                    :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
+                  >
+
+                    <td class="py-3 px-4 w-20">{{ issue.id }}</td>
+                    <td class="py-3 px-4 w-3/12 pr-6"><NuxtLink :to="`/tasks/${issue.id}`"><span class="font-semibold">{{ issue.name }}</span></NuxtLink></td>
+                    <td class="py-3 px-4"><NuxtLink :to="`/projects/${issue.project.id}`" class="text-blue-700 font-bold">{{ issue.project.name }}</NuxtLink></td>
+                    <td class="py-3 w-2/12 px-4">
+                      <base-hours :hours="issue.current_user_spent" variant="duration" class="text-teal-500" />
+                    </td>
+                    <td class="py-3 w-2/12 px-4"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
+                    <td class="py-3 px-4 ">
+                      <base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" />
+                    </td>
+                    <td class="py-3 px-4 ">
+                      <div class="flex items-center justify-center">
+                        <base-timer-issue-timer-actions
+                          :task-id="issue.id"
+                          :task-name="issue.name"
+                          :task-project-ame="issue.project.name" 
+                        />
+                      </div>
+                    </td>
+                  </tr>
+
+                </TransitionGroup>
+
+                <tbody v-else>
+                  <tr>
+                    <td colspan="6">
+                      <base-iddle title="Nothing here" />
+                    </td>
+                  </tr>
                   
-                </tr>
-              </thead>
+                </tbody>
+            </template>
+          </base-table>
 
-              <TransitionGroup v-if="listing.length > 0"  name="list" tag="tbody">
-
-                <tr  
-                  v-for="(issue, index) in listing"
-                  :key="index" 
-                  class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
-                  :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
-                >
-
-                  <td class="py-3 px-4 w-20">{{ issue.id }}</td>
-                  <td class="py-3 px-4 w-2/6 pr-6"><NuxtLink :to="`/tasks/${issue.id}`"><span class="font-semibold">{{ issue.name }}</span></NuxtLink></td>
-                  <td class="py-3 px-4 w-3/12"><NuxtLink :to="`/projects/${issue.project.id}`" class="text-blue-700 font-bold">{{ issue.project.name }}</NuxtLink></td>
-                  <td class="py-3 px-4 w-1/12">
-                    <base-hours :hours="issue.current_user_spent" variant="duration" class="text-teal-500 text-xl" />
-                  </td>
-                  <td class="py-3 px-4 w-2/12"><base-priority v-if="issue.mapped_priority" :text="issue.mapped_priority.toLowerCase()" /></td>
-                  <td class="py-3 px-4 w-3/12">
-                    <base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" />
-                  </td>
-                  <td class="py-3 px-4 ">
-                    <div class="flex items-center justify-center">
-                      <base-timer-issue-timer-actions
-                        :task-id="issue.id"
-                        :task-name="issue.name"
-                        :task-project-ame="issue.project.name" 
-                      />
-                    </div>
-                  </td>
-                </tr>
-
-              </TransitionGroup>
-
-              <tbody v-else>
-                <tr>
-                  <td colspan="6">
-                     <base-iddle title="Nothing here" />
-                  </td>
-                </tr>
-                
-              </tbody>
-
-            </table>
           </div>
       </div>
     </template>

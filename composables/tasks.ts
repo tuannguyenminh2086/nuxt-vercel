@@ -62,6 +62,24 @@ export const useTask = () => {
 
   }
 
+  const assigneeTo = async (issueID: string, assigneeID: string) => {
+    const { data }= await useFetch(
+      config.public.API_URL + '/issues/' + issueID + '/assign',
+      {
+        headers: {
+          Authorization: `Bearer ${_token}`,
+          Accept: 'application/json',
+        },
+      }
+    )
+    .post({
+      "userId": assigneeID
+    })
+    .json();
+
+    return data.value
+  }
+
   const fetchTasksActivity = async () => {
 
     const { data } = await useFetch( config.public.API_URL + '/issues/working', 
@@ -81,7 +99,8 @@ export const useTask = () => {
     error,
     createTask,
     uploadImageForTask,
-    fetchTasksActivity
+    fetchTasksActivity,
+    assigneeTo
   }
 
 }
