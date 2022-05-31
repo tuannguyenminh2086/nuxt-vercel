@@ -71,6 +71,7 @@ query {
             assignees {
                 id
                 name
+                avatar
             }
         }
   }
@@ -117,6 +118,7 @@ export const GET_PROJECT_DETAIL = gql`
                 name
                 image_path
                 id
+                avatar
               }
             }
           }

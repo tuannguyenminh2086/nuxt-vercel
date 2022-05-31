@@ -118,6 +118,7 @@
   const { formatDuration } = useUTILs()
 
   const projectTracked = computed(() => {
+    console.log(tracked.value)
     return formatDuration(tracked.value)
   })
 

@@ -2,14 +2,27 @@
   <div class="flex flex-col">
      <div class="pt-2 pb-6">
       <div class="mb-4">
-        <textarea
+        <!-- <textarea
           v-model="comment"
           class="w-full border rounded p-4 resize-none bg-slate-100 dark:text-black"
           rows="4"
           :disabled="isProgress"
           :readonly="isProgress"
         >
-        </textarea>
+        </textarea> -->
+
+         <client-only>
+                  <v-md-editor 
+                    v-model="comment"
+                    left-toolbar='undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image'
+                    right-toolbar='preview'
+                    :disabled-menus="[]"
+                    height="300px"
+                    mode="edit"
+                    @upload-image="handleUploadImage"
+                  />
+              </client-only>
+
       </div>
 
       <button 
@@ -38,7 +51,10 @@
               <base-hours :date="item.created_at.toString()" variant="datetime"/>
             </div>
             <!-- eslint-disable vue/no-v-html -->
-            <div v-html="item.content"></div>
+            <!-- <div v-html="item.content"></div> -->
+            <client-only>
+              <base-md :content="item.content" />
+            </client-only>
             <!--eslint-enable-->
           </li>
         </ul>
@@ -75,9 +91,27 @@
   const comment:Ref<string> = ref('')
   const isProgress:Ref<boolean> = ref(false)
   const listing:Ref<Comment[]> = ref([])
+    const { uploadImageForTask } = useTask()
 
   const auth = useAuthStore()
   listing.value = Object.assign([], useOrderBy(props.comments, 'created_at','desc'))
+
+  const handleUploadImage = async (event:any, insertImage:any, files:any) => {
+
+     event.preventDefault();
+
+     const formData = new FormData();
+        formData.append("image[]", files[0], files[0].name);
+        const data = await uploadImageForTask(formData)
+
+        if (data) {
+          const _content: any = { ...data.value.data }
+          insertImage({
+            url: _content[0].url,
+            desc: files[0].name
+          });
+        }
+  }
 
 
   const sendComment = async () => {

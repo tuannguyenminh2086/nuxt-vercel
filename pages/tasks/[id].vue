@@ -44,13 +44,16 @@
 
                     <base-section-block title="Tracked" class="md:col-span-2">
                       <template #content>
-                          <base-hours :hours="issue.current_user_spent" variant="duration" class="font-bold text-2xl" />
+                          <base-hours :hours="issue.current_user_spent" variant="duration" class="font-bold text-xl" />
                       </template>
                     </base-section-block>
 
-                    <base-section-block title="Assignee" class="md:col-span-2">
+                    <base-section-block title="Assignee" class="md:col-span-3">
                       <template #content>
-                          <base-members :members="issue.assignees" :show-name="true" />
+                          <div>
+                            <!-- <base-members :members="issue.assignees" :show-name="true" /> -->
+                            <base-tasks-change-assignee :members="issue.assignees" :iid="issue.id" />
+                          </div>
                       </template>
                     </base-section-block>
                   </div>

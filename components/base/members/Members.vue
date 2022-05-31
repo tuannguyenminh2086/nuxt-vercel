@@ -7,7 +7,7 @@
       class="flex flex-row items-center mr-2 mb-2"
     >
         <div class="border rounded-full p-1 w-8 bg-slate-200 flex items-center justify-center overflow-hidden mr-2">
-          <img :src="member.image_path ? member.image_path : randowAvatar " class="object-cover w-full" />
+          <img :src="member.avatar ? member.avatar : randowAvatar " class="object-cover w-full" />
         </div>
         <span v-if="showName" class="text-sm font-semibold">{{ member.name ? member.name : 'n/a'}}</span>          
      </div>
@@ -18,8 +18,8 @@
 
   interface IUser {
     name: string
-    image_path: string | null
-    username?: string
+    username?: string,
+    avatar: string
   }
 
   interface IMember {
