@@ -10,7 +10,7 @@
           :key="key"
           class="flex flex-col p-4 transition-all hover:bg-slate-100 odd:bg-white even:bg-slate-50" 
         >
-          <div class="font-bold" >User name</div>
+          <div class="font-bold" ><span v-if="item.createdByUser">{{ item.createdByUser.name}}</span></div>
           <div class="text-sm">
             <label class="mr-2 text-sm">Last updated:</label>
             <span class="mr-2 text-sm italic">{{ item.updated_at }}</span>
@@ -48,8 +48,12 @@
     spent: number
     start_time: string
     end_time: string
-    created_by: 4,
+    created_by: number,
     updated_at: string
+    createdByUser: {
+        name: string
+        email:string
+      }
   }
 
   interface IProps {

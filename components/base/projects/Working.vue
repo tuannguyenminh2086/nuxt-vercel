@@ -48,8 +48,6 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import type { Ref } from 'vue'
-  import { GET_CURRENT_PROJECT } from '~~/graphql/queries/projectQuery';
-  import cmsClient from '~~/apollo/cmsClient';
 
   interface IProject {
     name: string,
@@ -63,15 +61,13 @@
 
   const projects: Ref<IProject[] | null> = ref(null)
   const isLoading: Ref<boolean> = ref(true)
+  const { fetchProjectWorking } = useProjects()
 
   const fetch = async () => {
-    const { data, loading } = await cmsClient.query({
-      query: GET_CURRENT_PROJECT
-    });
-
-    if ( data && data.tracking_projects ) {
-      projects.value = data.tracking_projects
-      isLoading.value = loading
+    const res = await fetchProjectWorking()
+    if(res) {
+      projects.value = res
+      isLoading.value = false
     }
   }
 

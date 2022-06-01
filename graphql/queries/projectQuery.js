@@ -23,6 +23,7 @@ query {
       leader {
         name
         image_path
+        avatar
       }
     }
 }
@@ -65,6 +66,7 @@ query {
         leader {
           name
           image_path
+          avatar
         }
         issues {
             name

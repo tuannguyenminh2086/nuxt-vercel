@@ -2,6 +2,7 @@
   <div>
     <base-section title="Activities" class="">
       <template #default>
+
         <div class="">
           <div v-if="loading">
             <base-loader />
@@ -34,7 +35,7 @@
                             </NuxtLink>
                         </td>
                         <td class="py-3 px-4 w-3/12"><span class="font-bold text-sm">{{ item.issue.project.name }}</span></td>
-                        <td class="py-3 px-4 w-2/12">{{ item.issue.priority }}</td>
+                        <td class="py-3 px-4 w-2/12"><base-priority v-if="item.issue.mapped_priority" :text="item.issue.mapped_priority.toLowerCase()" /> </td>
                         <td class="py-3 px-4 w-2/12"><base-hours variant="datetime" :date="item.created_at" class="font-normal text-sm" /></td>
                       </tr>
                     </tbody>
@@ -64,7 +65,6 @@
   const listing:Ref<any[]> = ref([])
   const loading:Ref<boolean> = ref(false)
   const { $echoClient, $notification } = useNuxtApp();
-
   const { fetchTasksActivity } = useTask()
 
 

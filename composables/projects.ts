@@ -1,7 +1,7 @@
 import { useFetch } from '@vueuse/core';
 
 import { useProjectStore } from '~~/store/projects';
-import { GET_ALL_PROJECTS_FULL } from '~~/graphql/queries/projectQuery'
+import { GET_ALL_PROJECTS_FULL, GET_CURRENT_PROJECT } from '~~/graphql/queries/projectQuery'
 import { useAuthStore } from '@store/auth';
 
 
@@ -73,10 +73,33 @@ export const useProjects = () => {
     }
   }
 
+  const fetchProjectWorking = async () => {
+    projectStore.loading = true
+    let res:any = []
+    
+    try {
+      const data = await $graphqlClient.query({
+        query: GET_CURRENT_PROJECT
+      });
+
+      if (data && data.data.tracking_projects) {
+        res = data.data.tracking_projects
+      }
+
+    } catch (_error) {
+      // projectStore.error = _error
+    } finally {
+      // projectStore.loading = false
+    }
+
+    return res
+  }
+
 
   return {
     fetch,
     fetchAPI,
-    init
+    init,
+    fetchProjectWorking
   }
 }
