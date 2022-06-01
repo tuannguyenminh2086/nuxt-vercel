@@ -21,6 +21,7 @@
       id: string
       image_path: string
       name: string
+      is_main: number
     }[],
     iid: string
   }
@@ -49,7 +50,8 @@
 
   onMounted (() => {
     if (props.members.length > 0) {
-      assignee.value = props.members[0].id
+      const res = props.members.filter( item => item.is_main )
+      assignee.value = res[0].id
     }
   })
 

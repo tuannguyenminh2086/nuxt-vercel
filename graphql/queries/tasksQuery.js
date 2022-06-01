@@ -42,6 +42,8 @@ export const GET_TASK_BY_ID = gql`
             name
             id
             image_path
+            avatar
+            is_main
           }
           name
           description
@@ -60,11 +62,20 @@ export const GET_TASK_BY_ID = gql`
             end_time
             created_by
             updated_at
+            createdByUser {
+              name
+              email
+            }
           }
           comments {
             id
             content
             created_at
+            created_by {
+              id
+              avatar
+              name
+            }
           }
           project {
             name

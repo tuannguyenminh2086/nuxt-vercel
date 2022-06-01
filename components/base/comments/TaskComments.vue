@@ -2,15 +2,6 @@
   <div class="flex flex-col">
      <div class="pt-2 pb-6">
       <div class="mb-4">
-        <!-- <textarea
-          v-model="comment"
-          class="w-full border rounded p-4 resize-none bg-slate-100 dark:text-black"
-          rows="4"
-          :disabled="isProgress"
-          :readonly="isProgress"
-        >
-        </textarea> -->
-
          <client-only>
                   <v-md-editor 
                     v-model="comment"
@@ -48,7 +39,7 @@
           
           >
             <div class="text-sm font-semibold">
-              <base-hours :date="item.created_at.toString()" variant="datetime"/>
+              <span class="font-bold">{{item.created_by.name }}</span> -  <base-hours :date="item.created_at.toString()" variant="datetime"/>
             </div>
             <!-- eslint-disable vue/no-v-html -->
             <!-- <div v-html="item.content"></div> -->
@@ -79,6 +70,11 @@
   type Comment = {
     content: string
     created_at: string
+    created_by: { 
+      id: string
+      avatar: string
+      name: string 
+    } 
   }
 
   interface ICommmentProps {

@@ -40,7 +40,7 @@
 
       const cuser = auth.getCurrentUser();
 
-      const _comment = 'Task is closed at ' + cuser?.name + ' - ' + new Date() + '';
+      const _comment = 'Task is closed by ' + cuser?.name + ' - ' + new Date() + '';
 
       const resp = await useFetch( url, {
           headers: _headers
