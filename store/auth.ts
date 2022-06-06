@@ -22,11 +22,10 @@ interface IAuth {
   me: IUser | null,
 }
 
-
 export const useAuthStore = defineStore({
   id: 'auth',
 
-  state: ():IAuth => ({
+  state: (): IAuth => ({
     isAuthenticated: false,
     token: '',
     roles: [],
@@ -36,8 +35,8 @@ export const useAuthStore = defineStore({
   }),
 
   actions: {
-    setAuth ( login:any ) {
-      if ( login.user ) {
+    setAuth(login: any) {
+      if (login.user) {
         this.isAuthenticated = true
         this.token = login.token
         this.roles = login.roles
@@ -47,7 +46,7 @@ export const useAuthStore = defineStore({
           localStorage.setItem('lottiAuthToken', login.token)
         }
 
-        return  {
+        return {
           isAuthenticated: true
         }
 
@@ -60,26 +59,26 @@ export const useAuthStore = defineStore({
 
     },
 
-    logoutHandle () {
-      this.removeAuthToken();
+    logoutHandle() {
+      this.removeAuthToken()
     },
 
-    setAuthToken () {
+    setAuthToken() {
       if (process.client) {
         this.token = localStorage.getItem('lottiAuthToken')
         this.isAuthenticated = true
       }
     },
 
-    removeAuthToken () {
-        localStorage.removeItem('lottiAuthToken');
-        localStorage.removeItem('lottiProjects');
-        localStorage.removeItem('lottiTimer');
+    removeAuthToken() {
+      localStorage.removeItem('lottiAuthToken')
+      localStorage.removeItem('lottiProjects')
+      localStorage.removeItem('lottiTimer')
 
-        this.isAuthenticated = false
-        this.token = ''
-        this.roles = []
-        this.me = null
+      this.isAuthenticated = false
+      this.token = ''
+      this.roles = []
+      this.me = null
     },
 
     async setCurrentUser () {
@@ -101,14 +100,14 @@ export const useAuthStore = defineStore({
 
     },
 
-    getAuthToken () {
+    getAuthToken() {
       if (process.client) {
         const value = localStorage.getItem('lottiAuthToken')
-        return value;
+        return value
       }
     },
 
-    getCurrentUser () {
+    getCurrentUser() {
       return this.me
     }
 
@@ -120,7 +119,7 @@ export const useAuthStore = defineStore({
     isAdmin: (state) => {
       return state.roles.includes('admin')
     }
-  },
+  }
 
 })
 

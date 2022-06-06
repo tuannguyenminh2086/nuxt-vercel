@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   ],
   build: {
     transpile: [
-      '@apollo/client',
+      // '@apollo/client',
       'ts-invariant/process'
     ],
   },
@@ -46,7 +46,8 @@ export default defineNuxtConfig({
     middleware: [ 'auth' ]
   },
   alias: {
-    '@store': resolve(__dirname,'./store')
+    '@store': resolve(__dirname,'./store'),
+    '@graphql': resolve(__dirname,'./apollo')
   },
   runtimeConfig: {
     cmsURL: process.env.NUXT_API_CMS_URL,

@@ -1,23 +1,29 @@
 
 import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
-import { useAuthStore } from "~~/store/auth";
+import { useAuthStore } from "@store/auth";
 
 const authLink = setContext((_, {headers}) => {
     const store = useAuthStore();
     const token = store.getAuthToken();
-
+    if(token !== ''){
+        return {
+            headers: {
+                ...headers,
+                Authorization: `Bearer ${token}`
+            }
+        }
+    }
     return {
         headers: {
-            ...headers,
-            Authorization: `Bearer ${token}`
+            ...headers
         }
     }
 })
 
-const httpLink = createHttpLink({
-    uri: 'http://lottie.max26292.tk'
-  });
+export const httpLink = createHttpLink({
+    uri: `${process.env.NUXT_API_GRAPHQL_URL}`
+});
 
 // Cache implementation
 const cache = new InMemoryCache({
@@ -25,7 +31,7 @@ const cache = new InMemoryCache({
   })
 
 // Create the apollo client
-const cmsClient = new ApolloClient({
+const graphqlClient = new ApolloClient({
     link: ApolloLink.from([ authLink, httpLink ]),
     cache,
     defaultOptions: {
@@ -43,4 +49,4 @@ const cmsClient = new ApolloClient({
 })
 
 
-export default cmsClient
+export default graphqlClient
