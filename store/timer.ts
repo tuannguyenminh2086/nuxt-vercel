@@ -104,14 +104,14 @@ export const useTimerStore = defineStore({
           }
 
           try {
-            const { data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/${tid}/tracking`, {
+            await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/${tid}/tracking`, {
               headers
             }).post(requestBody).json()
 
-            if (data.value) {
-              const { message } = data.value
-              alert (message[0])
-            }
+            // if (data.value) {
+            //   const { message } = data.value
+            //   alert (message[0])
+            // }
 
           } catch (_error) {
            
