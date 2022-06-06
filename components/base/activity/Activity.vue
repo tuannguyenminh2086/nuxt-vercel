@@ -80,30 +80,33 @@
 
   }
 
-
   onMounted(() => {
-
     fetch();
-    $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
 
-        const { data: { action, message } } = _e;
 
-        if ( action) {
-          switch (action) {
-            case "reload":
-              $notification({
+      $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
+          const { data: { action, message } } = _e;
+          const id = Date.now()
+
+          if ( action) {
+            switch (action) {
+              case "reload":
+              
+                $notification({
+                  id,
                   type: 'warning',
                   title: 'Activity Tracking',
                   text: message
-              })
+                })
+                
+                fetch();
 
-              fetch();
-            break;
+              break;
+            }
           }
-        }
+      
+      })
     
-    })
-  
   })
 
 

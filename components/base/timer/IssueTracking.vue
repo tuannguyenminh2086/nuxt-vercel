@@ -8,7 +8,7 @@
         <p class="text-sm">You're working on:</p>
 
         <h3 class="font-bold mb-2 text-lg mt-2 lg:text-2xl">
-          {{ currentTracking.name ? currentTracking.name : '' }}
+          <NuxtLink :to="`/tasks/${currentTracking.id}`" class="font-bold mb-2 text-lg mt-2 lg:text-2xl">{{ currentTracking.name ? currentTracking.name : '' }}</NuxtLink>
         </h3>
         <!-- <div class="font-bold text-4xl mt-6">{{counter}}</div> -->
       </div>
@@ -44,7 +44,7 @@
   const timerStore = useTimerStore()
   const { stopTimer, fetchTimer } = useTask()
   const { isRunning, task } = storeToRefs(timerStore)
-  
+
   const stopTimerHandle = () => {
     stopTimer(task.value.issue_id)
   }

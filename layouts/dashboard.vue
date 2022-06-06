@@ -19,7 +19,7 @@
 
     <client-only>
        <base-timer-issue-tracking />
-       <notifications position="top center" :duration="4000"  width="40%" />
+       <notifications position="top center" :duration="4000"  width="40%"  />
     </client-only>
 
 
