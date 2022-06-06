@@ -38,38 +38,15 @@
 </template>
 
 <script setup lang="ts">
-  import { useFetch } from '@vueuse/core';
   import { storeToRefs } from 'pinia'
-  import { useAuthStore } from '@/store/auth';
   import { useTimerStore } from '@/store/timer'
 
   const timerStore = useTimerStore()
+  const { stopTimer, fetchTimer } = useTask()
   const { isRunning, task } = storeToRefs(timerStore)
-  const auth = useAuthStore();
-  const _token = auth.getAuthToken()
-
+  
   const stopTimerHandle = () => {
-    timerStore.stopTimer(task.value.issue_id);
-    timerStore.$reset();
-  }
-
-  const fetchCurrentTracking = async () => {
-     
-    	const _headers = {
-        Authorization: `Bearer ${_token}`,
-        Accept: 'application/json'
-      };
-      const runtimeConfig = useRuntimeConfig()
-
-      const url = runtimeConfig.public.API_URL + '/activity/current-tracking'
-      const resp = await useFetch( url, {
-        headers: _headers
-      }).json()
-
-      if ( resp.data.value && resp.data.value.data ) {
-          const _received = resp.data.value.data
-          timerStore.setCurrentTracking(_received)
-      }
+    stopTimer(task.value.issue_id)
   }
 
   const currentTracking = computed(() => {
@@ -79,7 +56,6 @@
       name: 'N/A',
       id: ''
     }
-
 
     if (task.value) {
       const _task:any = {...task.value}   
@@ -96,8 +72,11 @@
     return res
   })
 
+
+
+
   onMounted(() => {
-    fetchCurrentTracking()
+    fetchTimer()
   })
 
 
