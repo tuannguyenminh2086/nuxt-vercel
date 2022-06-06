@@ -84,7 +84,6 @@
   onMounted(() => {
 
     fetch();
-
     $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
 
         const { data: { action, message } } = _e;
@@ -104,8 +103,7 @@
         }
     
     })
-    
-
+  
   })
 
 

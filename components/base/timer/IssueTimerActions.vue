@@ -3,7 +3,7 @@
       class="button border-1  p-2 rounded dark:border-0"
       type="button"
       :disabled=" isDisabled ? true : false"
-      title="Start Timer"
+      title="Start/Stop Timer"
       @click.stop="toggleTimer"
     >
         <svg 
@@ -43,6 +43,7 @@
   const props = defineProps<IProps>()
   const timerStore = useTimerStore()
   const { task, isRunning } = storeToRefs(timerStore)
+  const isProgress = ref(false)
   const nuxtApp = useNuxtApp();
 
 
@@ -54,6 +55,7 @@
     if (isDisabled.value) return
     
     if (!isRunning.value) {
+      isProgress.value = true
       timerStore.startTimer(props.taskId, props.taskName)
       localStorage.setItem('lottiTimer', JSON.stringify({id: props.taskId, name: props.taskName }) )
       
