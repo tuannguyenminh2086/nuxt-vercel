@@ -77,35 +77,34 @@
       listing.value = data.value.data
       loading.value = false
     }
-
   }
 
   onMounted(() => {
     fetch();
+    
+    $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
+        const { data: { action, message } } = _e;
+        const id = Date.now()
 
-
-      $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
-          const { data: { action, message } } = _e;
-          const id = Date.now()
-
-          if ( action) {
-            switch (action) {
-              case "reload":
+        if ( action) {
+          switch (action) {
+            case "reload":
+            
+              $notification({
+                id,
+                type: 'warning',
+                title: 'Activity Tracking',
+                text: message
+              })
               
-                $notification({
-                  id,
-                  type: 'warning',
-                  title: 'Activity Tracking',
-                  text: message
-                })
-                
-                fetch();
+              fetch();
 
-              break;
-            }
+            break;
           }
-      
-      })
+        }
+    
+    })
+    
     
   })
 

@@ -19,14 +19,15 @@ export default defineNuxtPlugin(nuxtApp => {
         broadcaster: 'pusher',
         key: config.public.PUSHER_APP_KEY,
         cluster: config.public.PUSHER_APP_CLUSTER,
-        forceTLS: false,
+        forceTLS: true,
         authEndpoint: config.public.CMS_URL + '/broadcasting/auth',
+        encrypted: true,
         auth: {
           headers: {
             Authorization: `Bearer ${token}`,
             'Accept': 'application/json'
           }
-        },
+        }
       };
   
       const pusher = new Pusher(config.public.PUSHER_APP_KEY, 

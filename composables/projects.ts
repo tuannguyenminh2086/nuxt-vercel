@@ -75,7 +75,7 @@ export const useProjects = () => {
 
   const fetchProjectWorking = async () => {
     projectStore.loading = true
-    let res:any = []
+    const res:any = []
     
     try {
       const data = await $graphqlClient.query({
@@ -83,16 +83,18 @@ export const useProjects = () => {
       });
 
       if (data && data.data.tracking_projects) {
-        res = data.data.tracking_projects
+        return data.data.tracking_projects
       }
 
+    
     } catch (_error) {
       // projectStore.error = _error
     } finally {
-      // projectStore.loading = false
+      projectStore.loading = false
     }
 
-    return res
+    return res;
+    
   }
 
 
