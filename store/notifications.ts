@@ -1,10 +1,21 @@
 import { defineStore } from "pinia";
 
+interface INotification {
+  message: any[]
+}
+
+
 export const useNotificationsStore = defineStore("Notifications", {
-  state: () => ({
-    message: null,
-    category: null,
-    fields: { input: {} },
+  state: ():INotification => ({
+    message: []
   }),
+
+  actions: {
+    setMessages (val:any) {
+      this.message.push(val)
+    },
+  }
+
+
 });
 
