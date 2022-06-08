@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import { defineNuxtConfig } from 'nuxt3';
+import { defineNuxtConfig } from 'nuxt';
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   ],
   build: {
     transpile: [
-      // '@apollo/client',
+      '@apollo/client',
       'ts-invariant/process'
     ],
   },
@@ -47,7 +47,8 @@ export default defineNuxtConfig({
   },
   alias: {
     '@store': resolve(__dirname,'./store'),
-    '@graphql': resolve(__dirname,'./apollo')
+    '@graphql': resolve(__dirname,'./apollo'),
+    '@helper': resolve(__dirname,'./helper'),
   },
   runtimeConfig: {
     cmsURL: process.env.NUXT_API_CMS_URL,

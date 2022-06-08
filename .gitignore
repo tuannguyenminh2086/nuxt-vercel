@@ -11,3 +11,4 @@ sw.*
 .eslintcache
 .vercel
 .idea
+.file

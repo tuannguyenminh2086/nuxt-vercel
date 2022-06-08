@@ -9,8 +9,6 @@ export default defineNuxtPlugin(() => {
           result = await $fetch(`${target}`, {
             method: `${method.toUpperCase()}`
           })
-
-
         } else if (data) {
           result = await $fetch(`${target}`, {
             method: `${method.toUpperCase()}`,

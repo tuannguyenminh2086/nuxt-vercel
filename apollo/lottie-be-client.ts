@@ -1,26 +1,14 @@
 
 import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from "@apollo/client/core";
-import { setContext } from "@apollo/client/link/context";
-import { useAuthStore } from "@store/auth";
 
-const authLink = setContext((_, {headers}) => {
-    const store = useAuthStore();
-    const token = store.getAuthToken();
-    if(token !== ''){
-        return {
-            headers: {
-                ...headers,
-                Authorization: `Bearer ${token}`
-            }
-        }
-    }
-    return {
-        headers: {
-            ...headers
-        }
-    }
-})
+const logLink = new ApolloLink((operation, forward) => {
+    // console.log(operation.getContext());
 
+    return forward(operation).map((data)=>{
+        console.log(data)
+        return data;
+    });
+});
 export const httpLink = createHttpLink({
     uri: `${process.env.NUXT_API_GRAPHQL_URL}`
 });
@@ -29,10 +17,10 @@ export const httpLink = createHttpLink({
 const cache = new InMemoryCache({
     addTypename: false,
   })
-
+const linkFinal = logLink.concat(httpLink);
 // Create the apollo client
 const graphqlClient = new ApolloClient({
-    link: ApolloLink.from([ authLink, httpLink ]),
+    link: linkFinal,
     cache,
     defaultOptions: {
         watchQuery: {
