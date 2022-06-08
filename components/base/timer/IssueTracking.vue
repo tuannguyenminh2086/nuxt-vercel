@@ -10,7 +10,7 @@
         <h3 class="font-bold mb-2 text-lg mt-2 lg:text-2xl">
           <NuxtLink :to="`/tasks/${currentTracking.id}`" class="font-bold mb-2 text-lg mt-2 lg:text-2xl">{{ currentTracking.name ? currentTracking.name : '' }}</NuxtLink>
         </h3>
-        <div class="font-bold text-4xl mt-6">{{counter}}</div>
+        <div class="font-bold text-2xl mt-2 text-red-500">{{counter}}</div>
       </div>
 
       <div class="ml-auto">
