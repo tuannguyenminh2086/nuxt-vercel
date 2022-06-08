@@ -5,7 +5,7 @@ const logLink = new ApolloLink((operation, forward) => {
     // console.log(operation.getContext());
 
     return forward(operation).map((data)=>{
-        console.log(data)
+        // console.log(data)
         return data;
     });
 });
