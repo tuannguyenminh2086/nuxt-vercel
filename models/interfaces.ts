@@ -1,7 +1,9 @@
 
 export interface IUser {
   name: string,
-  image_path: string | null
+  image_path: string | null,
+  avatar?: string,
+  pivot?: any
 }
 
 

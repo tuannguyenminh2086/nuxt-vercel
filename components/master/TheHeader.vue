@@ -9,6 +9,7 @@
         </div>
         <div class="flex">
           <base-events-marquee />
+          <base-projects-create-button />
           <base-theme-switcher />
           <base-avatar />
         </div>

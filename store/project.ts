@@ -25,8 +25,7 @@ export const useProjectStore = defineStore({
   actions: {
     init ( project: IProject ) {
       this.project = {...project}
-      this.filteredTasks = useOrderBy(project.issues, 'id','desc'); 
-
+      this.filteredTasks = useOrderBy(project.issues, 'created_at','desc'); 
       this.tracked = this.setTracked(project.issues)
 
     },
