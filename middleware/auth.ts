@@ -4,8 +4,8 @@ export default function() {
 
   if (process.client) {
   const authStore = useAuthStore()
-  const _token = authStore.getAuthToken()
 
+  const _token = authStore.getAuthToken()
     if (!_token) {
       return navigateTo('/login')
     }

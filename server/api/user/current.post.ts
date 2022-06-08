@@ -1,32 +1,25 @@
-// import { useBody } from 'h3';
-// import cmsClient from '~/apollo/cmsClient'
-// import { GET_CURRENT_USER } from '~/graphql/queries/userQuery'
+import { CompatibilityEvent, useCookie } from 'h3'
+import { GET_CURRENT_USER } from '~/graphql/queries/userQuery'
+import graphqlClient from '~/apollo/lottie-be-client'
+import { responseError, responseSuccess } from '~/helpers/apiProcess'
 //
-// export default defineEventHandler(async (event) => {
-//   const { data: { me } } = await cmsClient.query({
-//     query: GET_CURRENT_USER,
-//     context:{
-//       headers:{
-//         token:'xx'
-//       }
-//     }
-//   });
-//
-//   if (me) {
-//     const { dob, email, enabled, id, name, roles, username, permissions } = me
-//     // this.me = Object.assign({}, { dob, email, enabled, id, imagePath: me.image_path, name, username })
-//     // this.roles = roles
-//     // this.permissions = permissions
-//   }
-//   if (login.token) {
-//     return {
-//       status: true,
-//       // loginData: login,
-//       // message: login.message
-//     }
-//   }
-//   return {
-//     status: false,
-//     // message: login.message
-//   }
-// })
+export default defineEventHandler(async (event: CompatibilityEvent) => {
+  const token = useCookie(event, 'authorize');
+  if (token === undefined) {
+    await responseError(event,'Not Authorized',401);
+  }
+  const {
+    data: { me },
+  } = await graphqlClient.mutate({
+    mutation: GET_CURRENT_USER,
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+  if(me){
+    await responseSuccess(event, { status: true,me });
+  }
+  await responseError(event,'Not Authorized',401);
+});

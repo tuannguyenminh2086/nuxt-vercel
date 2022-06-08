@@ -12,7 +12,10 @@ const loginApi = async (event: CompatibilityEvent) => {
     })
   ).data;
   if (login.token) {
-    setCookie(event, 'authorize', login.token);
+    setCookie(event, 'authorize', login.token, {
+      httpOnly: true,
+      path: '/',
+    });
     await responseSuccess(event, {
       status: true,
       loginData: login,
