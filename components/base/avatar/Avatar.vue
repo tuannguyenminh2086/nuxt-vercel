@@ -28,7 +28,7 @@ import { onMounted } from '#imports'
 const authStore = useAuthStore()
 const { $makeRequest } = useNuxtApp()
 onMounted(() => {
-  $makeRequest('post', 'api/user/current').then((res: TCurrentUserResponse) => {
+  $makeRequest('post', '/api/user/current').then((res: TCurrentUserResponse) => {
     authStore.setCurrentUser(res.me)
   })
 })
