@@ -18,6 +18,6 @@ import { useProjects } from '#imports'
 const keyword: Ref<string> = ref('');
   const { fetchAPI } = useProjects();
   const filterProjects = () => {
-    fetchAPI(keyword.value);
+    fetchAPI('',keyword.value);
   };
 </script>

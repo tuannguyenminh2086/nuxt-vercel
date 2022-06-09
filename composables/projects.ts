@@ -1,11 +1,14 @@
 import { useNuxtApp } from '#app';
+import { parseUrl } from 'query-string';
 import { useProjectStore } from '~~/store/projects';
+
 import {
   GET_ALL_PROJECTS_FULL,
   GET_CURRENT_PROJECT,
 } from '~~/graphql/queries/projectQuery';
 
 type TProjectRequestParams = {
+  page?: string;
   keyword?: string;
   status?: number;
   priority?: number;
@@ -47,6 +50,7 @@ export const useProjects = () => {
   };
 
   const fetchAPI = async (
+    _page: string,
     _keyword?: string,
     _status?: number,
     _priority?: number
@@ -57,6 +61,10 @@ export const useProjects = () => {
 
     try {
       const params: TProjectRequestParams = {};
+      if (_page && _page !== '') {
+        const url = parseUrl(_page);
+        params.page = url.query.page as string;
+      }
       if (_keyword) {
         params.keyword = _keyword;
       }

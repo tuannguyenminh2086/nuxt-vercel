@@ -27,16 +27,15 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import type { Ref } from 'vue'
-  import { useFetch } from '@vueuse/core';
-  import { GET_TASK_STATUS } from '~~/graphql/queries/tasksQuery';
-  import cmsClient from '~~/apollo/cmsClient';
+import type { Ref } from 'vue'
+import { ref } from 'vue'
+import { useFetch } from '@vueuse/core'
 
-  import { useAuthStore } from '@/store/auth'
+import { useNuxtApp } from '#app'
+import { useAuthStore } from '@/store/auth'
 
 
-  interface IStatus {
+interface IStatus {
     name: string,
     key: string
   }
@@ -52,15 +51,15 @@
   const selected: Ref<string> = ref('')
   const auth = useAuthStore()
   const isProgress: Ref<boolean> = ref(false)
-
+  const {$makeRequest} = useNuxtApp()
 
   const fetch = async () => {
-    const { data } = await cmsClient.query({
-      query: GET_TASK_STATUS
-    });
+    const { status,issueStatus } = await $makeRequest('get',
+      '/api/tasks/status'
+     );
 
-    if (data) {
-      listing.value = data.issueStatus
+    if (status) {
+      listing.value = issueStatus
       init()
     }
   }
