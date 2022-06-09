@@ -108,7 +108,7 @@ export const useProjects = () => {
     } catch (_error) {
       // projectStore.error = _error
     } finally {
-      // projectStore.loading = false
+      projectStore.loading = false
     }
 
     return res;

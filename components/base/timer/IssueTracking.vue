@@ -8,9 +8,9 @@
         <p class="text-sm">You're working on:</p>
 
         <h3 class="font-bold mb-2 text-lg mt-2 lg:text-2xl">
-          {{ currentTracking.name ? currentTracking.name : '' }}
+          <NuxtLink :to="`/tasks/${currentTracking.id}`" class="font-bold mb-2 text-lg mt-2 lg:text-2xl">{{ currentTracking.name ? currentTracking.name : '' }}</NuxtLink>
         </h3>
-        <!-- <div class="font-bold text-4xl mt-6">{{counter}}</div> -->
+        <div class="font-bold text-2xl mt-2 text-red-500">{{counter}}</div>
       </div>
 
       <div class="ml-auto">
@@ -38,38 +38,40 @@
 </template>
 
 <script setup lang="ts">
-  import { useFetch } from '@vueuse/core';
+  import dayjs from 'dayjs';
   import { storeToRefs } from 'pinia'
-  import { useAuthStore } from '@/store/auth';
   import { useTimerStore } from '@/store/timer'
 
-  const timerStore = useTimerStore()
-  const { isRunning, task } = storeToRefs(timerStore)
-  const auth = useAuthStore();
-  const _token = auth.getAuthToken()
 
-  const stopTimerHandle = () => {
-    timerStore.stopTimer(task.value.issue_id);
-    timerStore.$reset();
+  const timerStore = useTimerStore()
+  const { stopTimer, fetchTimer } = useTask()
+  const { isRunning, task, startedAt } = storeToRefs(timerStore)
+  const { $timer } = useNuxtApp()
+
+  const counter = ref('00:00:00')
+  const Timer = new $timer()
+
+  const setTimer = (start:string) => {
+
+    if (start) {
+      const now = dayjs()
+      const date2 = dayjs(start)
+      const diffMins = now.diff(date2, 'seconds', true)
+
+      Timer.start({ precision: 'seconds', startValues: {seconds: diffMins} })
+
+      Timer.addEventListener('secondsUpdated', () => {
+        counter.value = Timer.getTimeValues().toString();
+      })
+      
+    }
   }
 
-  const fetchCurrentTracking = async () => {
-     
-    	const _headers = {
-        Authorization: `Bearer ${_token}`,
-        Accept: 'application/json'
-      };
-      const runtimeConfig = useRuntimeConfig()
-
-      const url = runtimeConfig.public.API_URL + '/activity/current-tracking'
-      const resp = await useFetch( url, {
-        headers: _headers
-      }).json()
-
-      if ( resp.data.value && resp.data.value.data ) {
-          const _received = resp.data.value.data
-          timerStore.setCurrentTracking(_received)
-      }
+  const stopTimerHandle = () => {
+    stopTimer(task.value.issue_id)
+    Timer.stop();
+    Timer.reset()
+    counter.value = ''
   }
 
   const currentTracking = computed(() => {
@@ -80,10 +82,11 @@
       id: ''
     }
 
-
     if (task.value) {
       const _task:any = {...task.value}   
 
+      setTimer(_task.created_at)
+      
       if (_task.name) {
         res.name = _task.name
       } else {
@@ -96,8 +99,18 @@
     return res
   })
 
+
+  watch(startedAt, (start) => {
+    setTimer(start)
+  })
+
   onMounted(() => {
-    fetchCurrentTracking()
+    fetchTimer()
+  })
+
+  onUnmounted(()=>{
+    counter.value = ''
+    Timer.removeEventListener('secondsUpdated')
   })
 
 

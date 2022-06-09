@@ -3,7 +3,7 @@
       class="button border-1  p-2 rounded dark:border-0"
       type="button"
       :disabled=" isDisabled ? true : false"
-      title="Start Timer"
+      title="Start/Stop Timer"
       @click.stop="toggleTimer"
     >
         <svg 
@@ -26,15 +26,8 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia'
-  import { useFetch } from '@vueuse/core';
   import { useTimerStore } from '@/store/timer'
-  import { useAuthStore } from '@store/auth'
-
-
-  const auth = useAuthStore();
-  const _token = auth.getAuthToken();
-  const config = useRuntimeConfig()
-
+  
   interface IProps {
     taskId: string
     taskName: string
@@ -43,41 +36,34 @@
   const props = defineProps<IProps>()
   const timerStore = useTimerStore()
   const { task, isRunning } = storeToRefs(timerStore)
-  const nuxtApp = useNuxtApp();
-
+  const { startTimer } = useTask()
+  const isProgress = ref(false)
+  const { $bus } = useNuxtApp()
 
   const isDisabled = computed(() => {
     return task.value.issue_id.toString() === props.taskId.toString()
   })
 
   const toggleTimer = async () => {
-    if (isDisabled.value) return
-    
-    if (!isRunning.value) {
-      timerStore.startTimer(props.taskId, props.taskName)
-      localStorage.setItem('lottiTimer', JSON.stringify({id: props.taskId, name: props.taskName }) )
-      
-      const { data }:any = await useFetch(`${config.API_URL}/issues/${props.taskId}/status`,
-        {
-          headers: {
-            Authorization: `Bearer ${_token}`,
-            Accept: 'application/json',
-          },
-        }
-      )
-      .put({
-        status: 2
-      })
-      .json();
 
-      if (data) {
-        nuxtApp.$bus.$emit('refetch-issues')
-      }
-
-    } else {
+    if ( isProgress.value || isRunning.value ) {
       alert('You need to stop other task!')
+      return
+    } 
+    
+    isProgress.value = true
+    const startAt = new Date()
+    const result = await startTimer(props.taskId, props.taskName, startAt.toString())
+
+    if (result.value.status) {
+      
+      setTimeout(()=>{
+        isProgress.value = false
+        $bus.$emit('refetch-issues')
+      }, 3000)
+
     }
-     
+
   }
 
 </script>

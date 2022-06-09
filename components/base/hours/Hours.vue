@@ -44,7 +44,9 @@
         result = props.date;
         break;
 
-      case '':
+      case 'from-now':
+        result = dayjs(props.date.toString()).fromNow().toString()
+        break;
     }
 
     return result

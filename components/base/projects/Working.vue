@@ -41,6 +41,14 @@
 
           </div>
        </template>
+       <template #actions>
+          <nuxt-link
+            href="/projects" 
+            class="inline-flex cursor-pointer justify-center items-center whitespace-nowrap px-4 focus:outline-none transition-colors duration-150 border rounded p-1 bg-blue-500 text-white border-blue-500 hover:bg-blue-700 mr-3 last:mr-0">
+            View All
+          </nuxt-link>
+
+       </template>
     </base-section>
   </div>
 </template>

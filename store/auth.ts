@@ -99,8 +99,8 @@ export const useAuthStore = defineStore({
 
     getAuthToken() {
       if (process.client) {
-        const value = localStorage.getItem('lottiAuthToken')
-        return value
+        const value = this.token ? this.token : localStorage.getItem('lottiAuthToken')
+        return value;
       }
     },
 

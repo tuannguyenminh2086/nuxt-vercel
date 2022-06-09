@@ -7,13 +7,18 @@ interface ITask {
   id?: string,
   issue_id: string
   created_by: number,
-  spent: number
+  created_at: string,
+  spent: number,
+  issue?: {
+    id: string,
+    name: string
+  }
 }
 
 interface ITimer {
   isRunning: boolean
   seconds: number
-  startedAt: any
+  startedAt: string
   task: ITask
 }
 
@@ -25,7 +30,11 @@ export const useTimerStore = defineStore({
         name: '',
         issue_id: '',
         created_by: 0,
-        spent: 0
+        spent: 0,
+        issue: {
+          id: '',
+          name: ''
+        }
       },
       isRunning: false,
       seconds: 0,
@@ -35,21 +44,24 @@ export const useTimerStore = defineStore({
   actions: {
    
     setCurrentTracking (payload: any) {
-      
       if ( payload ) {
         this.task = { ...payload }
         this.isRunning = true
         this.startedAt = payload.start_time;
+        localStorage.setItem('lottiTimer', JSON.stringify({id: payload.issue.id, name: payload.issue.name }) )
       }
      
     },
 
-    async startTimer( tid:string, name: string ) {
+    async startTimer( id:string, name: string, startAt: string ) {
       this.task.name = name
-      this.task.issue_id = tid
+      this.task.issue_id = id
       this.isRunning = true
+      this.startedAt = startAt
 
-      await this.submitTrackingActivity(tid, 'start');
+      localStorage.setItem('lottiTimer', JSON.stringify({id, name }) )
+      await this.submitTrackingActivity(id, 'start');
+      
     },
 
     async stopTimer (tid: string) {
@@ -94,14 +106,14 @@ export const useTimerStore = defineStore({
           }
 
           try {
-            const { data } = await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/${tid}/tracking`, {
+            await useFetch(`${this.$nuxt.$config.public.API_URL}/issues/${tid}/tracking`, {
               headers
             }).post(requestBody).json()
 
-            if (data.value) {
-              const { message } = data.value
-              alert (message[0])
-            }
+            // if (data.value) {
+            //   const { message } = data.value
+            //   alert (message[0])
+            // }
 
           } catch (_error) {
            

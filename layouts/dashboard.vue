@@ -15,20 +15,17 @@
           </div>
         </main>
       </div>
+      <div id="modal-area"></div>
 
-
-    <client-only>
-       <base-timer-issue-tracking />
-       <notifications position="top center" :duration="4000"  width="40%" />
-    </client-only>
-
-
+      <client-only>
+        <base-timer-issue-tracking />
+        <notifications position="top right" :duration="2000"  width="30%"  />
+      </client-only>
   </div>
 </template>
 
 <script setup lang="ts">
 import TheSidebar from '../components/master/TheSidebar.vue'
 import TheHeader from '~~/components/master/TheHeader.vue'
-
 
 </script>
