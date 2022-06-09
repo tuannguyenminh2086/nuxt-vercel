@@ -54,6 +54,9 @@ export default defineNuxtConfig({
     cmsURL: process.env.NUXT_API_CMS_URL,
     graphqlURL: process.env.NUXT_API_GRAPHQL_URL,
     apiURL: process.env.NUXT_API_URL,
+    CMS_URL: process.env.NUXT_API_CMS_URL,
+    GRAPHQL_URL: process.env.NUXT_API_GRAPHQL_URL,
+    API_URL: process.env.NUXT_API_URL,
   },
   publicRuntimeConfig: {
     CMS_URL: process.env.NUXT_API_CMS_URL,
@@ -61,5 +64,8 @@ export default defineNuxtConfig({
     API_URL: process.env.NUXT_API_URL,
     PUSHER_APP_KEY: process.env.NUXT_API_PUSHER_APP_KEY,
     PUSHER_APP_CLUSTER: process.env.NUXT_API_PUSHER_APP_CLUSTER
+  },
+  nitro:{
+
   }
 })

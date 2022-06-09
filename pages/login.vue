@@ -135,7 +135,7 @@ const onSubmit = async () => {
     email: email.value,
     password: password.value
   }
-  const result = await $makeRequest<LoginRequest, ResponseResult>('post', 'api/authorize/login', requestData);
+  const result = await $makeRequest<LoginRequest, ResponseResult>('post', '/api/authorize/login', requestData);
   if (result && result.status) {
     state.errorMessage = '';
     store.setAuth(result.loginData)

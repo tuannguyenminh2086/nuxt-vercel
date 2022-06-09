@@ -1,4 +1,3 @@
-
 import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from "@apollo/client/core";
 
 const logLink = new ApolloLink((operation, forward) => {

@@ -84,7 +84,7 @@ export default defineNuxtPlugin(() => {
           config = {
             url: target,
             method: method.toLowerCase(),
-            params: data,
+            data,
           };
         } else {
           config = {

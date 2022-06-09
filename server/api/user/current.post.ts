@@ -8,18 +8,23 @@ export default defineEventHandler(async (event: CompatibilityEvent) => {
   if (token === undefined) {
     await responseError(event,'Not Authorized',401);
   }
-  const {
-    data: { me },
-  } = await graphqlClient.mutate({
-    mutation: GET_CURRENT_USER,
-    context: {
-      headers: {
-        Authorization: `Bearer ${token}`,
+  try{
+    const {
+      data: { me },
+    } = await graphqlClient.mutate({
+      mutation: GET_CURRENT_USER,
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    },
-  });
-  if(me){
-    await responseSuccess(event, { status: true,me });
+    });
+    if(me){
+      await responseSuccess(event, { status: true,me });
+    }
+  }catch (e) {
+    await responseError(event,'Not Authorized',401);
   }
-  await responseError(event,'Not Authorized',401);
+
+
 });

@@ -59,6 +59,7 @@
     "axios": "^0.27.2",
     "dayjs": "^1.11.2",
     "easytimer.js": "^4.5.3",
+    "h3": "^0.7.8",
     "highlight.js": "^11.5.1",
     "laravel-echo": "^1.11.7",
     "markdown-it": "^12.3.2",
