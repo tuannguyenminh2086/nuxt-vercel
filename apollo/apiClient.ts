@@ -12,12 +12,11 @@ export const apiClient = async <T = any, R = any>(data: T, token?: string) => {
     put: { 'Content-Type': 'application/json' },
     patch: { 'Content-Type': 'application/json' },
   };
-  console.log(process.env.NUXT_API_GRAPHQL_URL);
   axiosInstance.defaults.baseURL = `${process.env.NUXT_API_GRAPHQL_URL}`;
   axiosInstance.defaults.headers = commonHeaders;
   let config: AxiosRequestConfig = {};
   let headers = null;
-  if (token !== undefined || !token) {
+  if (token !== undefined && token!=='') {
     headers = {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',

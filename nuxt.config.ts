@@ -64,8 +64,5 @@ export default defineNuxtConfig({
     API_URL: process.env.NUXT_API_URL,
     PUSHER_APP_KEY: process.env.NUXT_API_PUSHER_APP_KEY,
     PUSHER_APP_CLUSTER: process.env.NUXT_API_PUSHER_APP_CLUSTER
-  },
-  nitro:{
-
   }
 })
