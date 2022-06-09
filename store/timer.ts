@@ -7,6 +7,7 @@ interface ITask {
   id?: string,
   issue_id: string
   created_by: number,
+  created_at: string,
   spent: number,
   issue?: {
     id: string,
@@ -17,7 +18,7 @@ interface ITask {
 interface ITimer {
   isRunning: boolean
   seconds: number
-  startedAt: any
+  startedAt: string
   task: ITask
 }
 
@@ -52,10 +53,11 @@ export const useTimerStore = defineStore({
      
     },
 
-    async startTimer( id:string, name: string ) {
+    async startTimer( id:string, name: string, startAt: string ) {
       this.task.name = name
       this.task.issue_id = id
       this.isRunning = true
+      this.startedAt = startAt
 
       localStorage.setItem('lottiTimer', JSON.stringify({id, name }) )
       await this.submitTrackingActivity(id, 'start');

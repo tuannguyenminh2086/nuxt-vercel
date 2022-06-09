@@ -83,11 +83,6 @@ export const useAuthStore = defineStore({
     },
 
     async setCurrentUser () {
-      // const { $graphqlClient } = this.$nuxt.config.globalProperties;
-      // const { data: { me } } = await $graphqlClient.query({
-      //   query: GET_CURRENT_USER,
-      // });
-
       const { data: { me } } = await cmsClient.query({
         query: GET_CURRENT_USER,
       });
@@ -103,7 +98,7 @@ export const useAuthStore = defineStore({
 
     getAuthToken () {
       if (process.client) {
-        const value = localStorage.getItem('lottiAuthToken')
+        const value = this.token ? this.token : localStorage.getItem('lottiAuthToken')
         return value;
       }
     },
