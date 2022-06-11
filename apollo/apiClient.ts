@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, HeadersDefaults } from 'axios';
 import { DocumentNode } from 'graphql';
 
 const axiosInstance = axios.create();
+
 export const apiClient = async <T = any, R = any>(data: T, token?: string) => {
   const commonHeaders: HeadersDefaults = {
     common: { 'Content-Type': 'application/json' },

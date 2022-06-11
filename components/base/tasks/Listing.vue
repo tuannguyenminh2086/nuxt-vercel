@@ -25,7 +25,7 @@
                   <th class="py-3 px-4 font-bold text-sm text-left w-1/12 ">Spent</th>
                   <th class="py-3 px-4 font-bold text-sm text-left w-1/12">Priority</th>
                   <th class="py-3 px-4 font-bold text-sm text-left">Status</th>
-                  <th class="py-3 px-4 font-bold text-sm text-left">State</th>
+                  <!-- <th class="py-3 px-4 font-bold text-sm text-left">State</th> -->
                   <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Created at</th>
                 </tr>
               </thead>
@@ -47,9 +47,9 @@
                   </td>
                   <td class="py-3 px-4 w-1/12">n/a</td>
                   <td class="py-3 px-4">n/a</td>
-                  <td class="py-3 px-4">
+                  <!-- <td class="py-3 px-4">
                     <base-priority-state :code="issue.state" />
-                  </td>
+                  </td> -->
                   <td class="py-3 px-4 w-2/12">
                     <base-hours :date="issue.created_at" variant="datetime" class="font-semibold text-blue-500" />
                   </td>

@@ -1,10 +1,9 @@
-import { useNuxtApp } from '#app';
 import { parseUrl } from 'query-string';
+import { useNuxtApp } from '#app';
 import { useProjectStore } from '~~/store/projects';
 
 import {
   GET_ALL_PROJECTS_FULL,
-  GET_CURRENT_PROJECT,
 } from '~~/graphql/queries/projectQuery';
 
 type TProjectRequestParams = {
@@ -16,7 +15,7 @@ type TProjectRequestParams = {
 
 export const useProjects = () => {
   const projectStore = useProjectStore();
-  const { $graphqlClient } = useNuxtApp();
+  // const { $graphqlClient } = useNuxtApp();
 
   const init = () => {
     const _projects = localStorage.getItem('lottiProjects');
@@ -74,8 +73,11 @@ export const useProjects = () => {
       if (_priority) {
         params.priority = _priority;
       }
+
       projectStore.loading = true;
+
       let result;
+
       if (Object.keys(params).length > 0) {
         result = await $apiClient('get', '/projects', params);
       } else {
@@ -93,31 +95,30 @@ export const useProjects = () => {
     }
   };
 
-  const fetchProjectWorking = async () => {
-    projectStore.loading = true;
-    let res: any = [];
+  const fetchTrackingProjects = async () => {
+    
+    const { $makeRequest } = useNuxtApp();
 
     try {
-      const data = await $graphqlClient.query({
-        query: GET_CURRENT_PROJECT,
-      });
+      projectStore.loading = true;
+      const result = await $makeRequest( 'get', '/api/projects/tracking')
 
-      if (data && data.data.tracking_projects) {
-        res = data.data.tracking_projects;
-      }
-    } catch (_error) {
-      // projectStore.error = _error
+      if (result.status) {
+        return result.tracking_projects
+      } 
+
+    } catch (error) {
+      
     } finally {
-      projectStore.loading = false
+      projectStore.loading = false;
     }
-
-    return res;
+   
   };
 
   return {
     fetch,
     fetchAPI,
     init,
-    fetchProjectWorking,
+    fetchTrackingProjects
   };
 };

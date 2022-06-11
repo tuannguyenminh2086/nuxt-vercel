@@ -38,7 +38,7 @@ query {
 }
 `
 
-export const GET_CURRENT_PROJECT = gql`
+export const GET_TRACKING_PROJECTS = gql`
 query {
     tracking_projects {
         id

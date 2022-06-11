@@ -16,7 +16,7 @@
               <p class='text-sm'>Project:
                 <NuxtLink :to='`/projects/${issue.project.id}`'>{{ issue.project.name }}</NuxtLink>
               </p>
-              <h2 class='text-3xl font-bold mb-3 mt-3 relative lg:text-5xl'>
+              <h3 class='text-xl font-bold mb-3 mt-3 relative lg:text-3xl lg:w-7/12'>
                 {{ issue.name }}
                 <span
                   v-if='issue.state === 0'
@@ -24,7 +24,7 @@
                           last:mr-0 capitalize py-0.5 px-2 text-xs rounded-lg mr-1.5 bg-red-600 text-white border-red-700'>
                           Closed
                     </span>
-              </h2>
+              </h3>
               <h6 class='mb-2 text-lg font-semibold text-rose-500'>#{{ issue.id }}</h6>
               <p><label class='text-sm pr-2'>Created at: </label> <span class='text-sm'>{{ issue.created_at }}</span>
               </p>

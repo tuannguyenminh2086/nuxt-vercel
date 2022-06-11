@@ -9,7 +9,7 @@
       <div class="grid gap-4 lg:grid-cols-12">
         <div class="col-span-12 mt-10">
           <base-activity />
-          <base-projects-working class="mt-10" />
+          <projects-tracking class="mt-10"/>
         </div>
 
         <!-- <div class="col-auto mt-10 lg:col-span-4">
