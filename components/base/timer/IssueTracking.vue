@@ -1,16 +1,32 @@
 <template>
   <div
-    class="bg-slate-50 rounded-md p-4 shadow-xl transition-all w-96 lg:w-1/4 lg:px-6 dark:bg-slate-800"
+    class="bg-slate-50 rounded-md p-4 shadow-xl transition-all w-96 lg:w-2/6 lg:px-6 dark:bg-slate-800"
     :class="isRunning ? 'block fixed bottom-0 right-0 ': 'hidden translate-y-full'"
   >
     <div class="flex items-center">
       <div class="mr-10 flex-1 flex-grow">
         <p class="text-sm">You're working on:</p>
 
-        <h3 class="font-bold mb-2 text-lg mt-2 lg:text-2xl">
-          <NuxtLink :to="`/tasks/${currentTracking.id}`" class="font-bold mb-2 text-lg mt-2 lg:text-2xl">{{ currentTracking.name ? currentTracking.name : '' }}</NuxtLink>
+        <h3 class="font-bold mb-2 text-lg mt-2 lg:text-xl">
+          <NuxtLink :to="`/tasks/${currentTracking.id}`" class="font-bold mb-2 text-lg mt-2 lg:text-xl">{{ currentTracking.name ? currentTracking.name : '' }}</NuxtLink>
         </h3>
-        <div class="font-bold text-2xl mt-2 text-red-500">{{counter}}</div>
+        <div class=" mt-2 text-red-500 flex items-center">
+         <svg 
+          aria-hidden="true"
+          role="img" 
+          class="stroke-red-400 block"
+          width="24" 
+          height="24" 
+          preserveAspectRatio="xMidYMid meet" 
+          viewBox="0 0 48 48"
+        >
+          <g fill="none" fill-rule="evenodd" stroke-linejoin="round" stroke-width="4" transform="translate(7 3)">
+            <circle cx="17" cy="24" r="17"></circle>
+            <path stroke-linecap="round" d="M11 1h12m-6 15v8m8 0h-8m0-23v4"></path>
+          </g>
+        </svg>
+        <span class="pl-4 font-bold text-2xl block pt-1">{{counter}}</span>
+        </div>
       </div>
 
       <div class="ml-auto">

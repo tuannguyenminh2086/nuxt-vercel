@@ -20,10 +20,18 @@ export default defineNuxtPlugin(() => {
         data?: T
       ) => {
         let result: R;
-        if (method === 'get') {
+        if (method === 'get' ) {
+         if(data){
           result = await $fetch(`${target}`, {
             method: `${method.toUpperCase()}`,
+            params: data
           });
+         }else{
+          result = await $fetch(`${target}`, {
+            method: `${method.toUpperCase()}`
+          });
+         }
+
         } else if (data) {
           result = await $fetch(`${target}`, {
             method: `${method.toUpperCase()}`,

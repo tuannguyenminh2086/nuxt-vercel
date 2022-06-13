@@ -81,8 +81,8 @@ query {
 `
 
 export const GET_PROJECT_DETAIL = gql`
-    query ProjectByID($id: ID!)  {
-        project (id: $id) {
+    query ProjectByID($id: ID!, $page: Int, $filter: ProjectIssueFilter )  {
+        project (id: $id, pageNumber: $page, filter: $filter) {
             name
             projectType{
               name
@@ -91,6 +91,11 @@ export const GET_PROJECT_DETAIL = gql`
               name
             }
             mapped_priority
+            mapped_status {
+              name
+              key
+            }
+            has_repo
             members {
               name
               image_path
@@ -105,8 +110,7 @@ export const GET_PROJECT_DETAIL = gql`
             leader {
               name
             }
-            total_issue
-            total_active_issue
+            
             issues {
               id,
               name,
@@ -116,12 +120,22 @@ export const GET_PROJECT_DETAIL = gql`
               time_tracking {
                 spent
               }
+              mapped_status {
+                name
+              }
+              mapped_priority
               assignees {
                 name
                 image_path
                 id
                 avatar
               }
+            }
+            total_issue
+            total_active_issue
+            issue_paging {
+              current_page
+              last_page
             }
           }
   }

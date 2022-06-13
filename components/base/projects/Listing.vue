@@ -54,7 +54,6 @@
                               :disabled="!link.url ? true: false"
                               @click.stop="paginationHandle(link.url)"
                             >
-                              // eslint-disable-next-line vue/no-v-html
                               <span class="px-2" :class="link.active ? 'text-white hover:text-white': '' " v-html="link.label"></span>
                             </button>
 

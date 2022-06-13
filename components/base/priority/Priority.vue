@@ -49,7 +49,7 @@
       break;
   
     default:
-      styleRender.value = 'bg-slate-100 text-sky-400'
+      styleRender.value = 'bg-slate-200 text-sky-400'
       break;
   }
 
