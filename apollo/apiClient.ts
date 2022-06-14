@@ -27,8 +27,6 @@ export const apiClient = async <T = any, R = any>(data: T, token?: string) => {
     };
   }
 
-  console.log(data.variables)
-
   config = {
     method: 'post',
     data,

@@ -60,10 +60,14 @@ export const useProjects = () => {
 
     try {
       const params: TProjectRequestParams = {};
+
       if (_page && _page !== '') {
+        console.log(_page)
         const url = parseUrl(_page);
+        console.log(url)
         params.page = url.query.page as string;
       }
+
       if (_keyword) {
         params.keyword = _keyword;
       }
@@ -75,6 +79,8 @@ export const useProjects = () => {
       }
 
       projectStore.loading = true;
+
+      console.log(params)
 
       let result;
 

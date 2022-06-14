@@ -1,5 +1,5 @@
 <template>
-  <base-section title="List">
+  <base-section>
     <template #default>
 
         <div v-if="loading">
@@ -53,7 +53,7 @@
                               type="button"
                               :disabled="!link.url ? true: false"
                               @click.stop="paginationHandle(link.url)"
-                            >
+                            > 
                               <span class="px-2" :class="link.active ? 'text-white hover:text-white': '' " v-html="link.label"></span>
                             </button>
 
