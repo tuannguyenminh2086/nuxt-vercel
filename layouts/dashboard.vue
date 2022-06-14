@@ -20,7 +20,7 @@
 
       <client-only>
         <base-timer-issue-tracking />
-        <notifications position="top right" :duration="2000"  width="30%"  />
+        <notifications position="top right" width="30%"  />
       </client-only>
   </div>
 </template>
@@ -42,15 +42,25 @@ const { $echoClient, $notification, $bus } = useNuxtApp();
                   type: 'warning',
                   title: 'Activity Tracking',
                   text: message
-                })
+                });
 
-                 $bus.$emit('refetch-activity')
+                setTimeout(() => {
+                  $notification.close(id);
+                }, 2000)
+                
+
+                $bus.$emit('refetch-activity');
                 
               break;
             }
           }
       
       })
+  })
+
+
+  onUnmounted(() => {
+
   })
 
 </script>
