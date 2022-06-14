@@ -3,6 +3,12 @@ import { GET_PROJECT_DETAIL } from '~~/graphql/queries/projectQuery'
 import { responseError, responseSuccess } from '~/helpers/apiProcess'
 import { apiClient, parseGraphQL } from '~/apollo/apiClient'
 //
+
+interface VariablesObject {
+  [key: string]: any
+}
+
+
 export default defineEventHandler( async (event: CompatibilityEvent ) => {
   const token = useCookie(event, 'authorize');
 
@@ -10,10 +16,23 @@ export default defineEventHandler( async (event: CompatibilityEvent ) => {
     context: { params: { id } },
   } = event;
   
-  const payload = useQuery(event)
-
-  const page:number = parseInt(payload.pageNumber as string)
+  const content = useQuery(event)
+  const page:number = parseInt(content.pageNumber as string)
   const query = parseGraphQL(GET_PROJECT_DETAIL);
+  const { filter } = content
+
+  const payload: VariablesObject = {
+    id
+  }
+
+
+  if (page) {
+    payload.page = page
+  }
+
+  if (filter) {
+    payload.filter = JSON.parse(filter.toString());
+  }
 
   const {
     data: {
@@ -22,13 +41,7 @@ export default defineEventHandler( async (event: CompatibilityEvent ) => {
   } = await apiClient(
     {
       query,
-      variables: {
-        id,
-        pageNumber: page,
-        filter: {
-          status: 1
-        }
-      }
+      variables: payload
     },
     token
   );

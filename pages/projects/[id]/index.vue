@@ -130,15 +130,9 @@
             :pid="route.params.id" 
             :pname="project.name" 
             :total="project.total_issue"
-            :current="project.issue_paging.current_page"
-            :last="project.issue_paging.last_page"
           />
         </div>
 
-
-
-
-       
       </div>
   </div>
 </template>
@@ -160,7 +154,7 @@
 
   onMounted(() => {
     if ( !route.params.id ) navigateTo('/projects');
-    fetch(route.params.id.toString(), 1)
+    fetch(route.params.id.toString())
   })
 
   

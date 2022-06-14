@@ -5,7 +5,7 @@ export const useProject = () => {
   const projectStore = useProjectStore();
   const { $makeRequest } = useNuxtApp();
 
-  const fetch = async (pid: string, page:number = 1) => {
+  const fetch = async (pid: string) => {
     projectStore.loading = true;
 
     try {
@@ -13,8 +13,7 @@ export const useProject = () => {
           'get', 
           `/api/projects/${pid}`,
           {
-            pageNumber: page,
-            filter: {}
+            pageNumber: 1
           }
         );
 
@@ -29,7 +28,49 @@ export const useProject = () => {
     }
   };
 
+  const gotoPage = async (pid: string, page:number) => {
+    try {
+      const { project } = await $makeRequest(
+          'get', 
+          `/api/projects/${pid}`,
+          {
+            pageNumber: page
+          }
+        );
+
+      if (project) {
+        projectStore.setPaginationView(project.issues, project.issue_paging)
+      }
+    } catch (_error) {
+      projectStore.error = _error;
+    } finally {
+      projectStore.loading = false;
+    }
+  }
+
+  const filterIssues = async (pid: string, _filter:any) => {
+    try {
+      const { project } = await $makeRequest(
+          'get', 
+          `/api/projects/${pid}`,
+          {
+            filter: JSON.stringify(_filter)
+          }
+        );
+
+      if (project) {
+        projectStore.setPaginationView(project.issues, project.issue_paging)
+      }
+    } catch (_error) {
+      projectStore.error = _error;
+    } finally {
+      projectStore.loading = false;
+    }
+  }
+
   return {
     fetch,
+    gotoPage,
+    filterIssues
   };
 };

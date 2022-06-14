@@ -35,30 +35,39 @@
               </td>
             </tr>
           </tbody>
+
+          <tbody v-if="listing.length < 1">
+            <tr class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500">
+              <td colspan="7">
+                <base-iddle title="No Issues Found!" class="my-6" />
+              </td>
+            </tr>
+          </tbody>
         </template>
 
          <template #tfoot>
               <tfoot class="border-gray-100 p-3 lg:px-6 border-t dark:border-gray-800">
                 <tr>
-                  <td colspan="6">
+                  <td colspan="7">
                        <div class="flex w-full box-border pt-4 items-center">
 
-                          <div class="flex">
+                          <div class="flex grow flex-1 w-9/12">
                           
-                            <!-- <button
-                              v-for="(link, index) in links"
+                            <button
+                              v-for="index in pagination.last"
                               :key="index"
                               class="inline-flex cursor-pointer justify-center items-center whitespace-nowrap outline-none transition-colors 
                                 duration-150 border rounded p-1 bg-white text-black border-gray-300 mr-3 
                                 hover:bg-blue-700 hover:text-white hover:border-blue-700 
                                 disabled:border-gray-200 disabled:text-gray-400 disabled:hover:bg-white disabled:cursor-default
                                 last:mr-0 mb-3"
-                              :class="link.active ? 'border-blue-600 bg-blue-600 text-white': '' "
+                              :class="pagination.current === index ? 'border-blue-600 bg-blue-600 text-white': '' "
                               type="button"
-                              :disabled="!link.url ? true: false"
+                              @click.stop.prevent="onPaginationHandle(index)"
                             >
-                              <span class="px-2" :class="link.active ? 'text-white hover:text-white': '' " v-html="link.label"></span>
-                            </button> -->
+                             
+                              <span class="block px-2" :class="pagination.current === index ? 'text-white hover:text-white': '' " >{{ index}}</span>
+                            </button>
 
                           </div>
 
@@ -76,27 +85,31 @@
             </template>
             
       </base-table>
-      
-
 
     </template>
   </base-section>
 </template>
 
 <script setup lang="ts">
+ 
+  import { storeToRefs } from 'pinia'
   import { IIssues } from '@/models/interfaces'
+  import { useProjectStore } from '~~/store/project'
 
   interface IProps {
     listing: IIssues[],
     pname: string,
     pid: string | string [],
-    total: number,
-    current: number
-    last: number
+    total: number
   }
 
-  defineProps<IProps>()
+  const props = defineProps<IProps>()
+  const projectStore = useProjectStore()
+  const { pagination } = storeToRefs(projectStore)
+  const { gotoPage } = useProject()
 
-
+  const onPaginationHandle = (index:number) => {
+    gotoPage(props.pid.toString(), index)
+  }
 
 </script>

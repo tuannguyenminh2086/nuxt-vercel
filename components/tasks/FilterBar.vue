@@ -36,11 +36,32 @@
                     dark:bg-gray-800'
               />
           </div>
+          <div class="mx-4 ml-10">
+            <FormKit
+              v-model="status"
+              label="Status"
+              type="select"
+              name="status"
+              :options="{
+                0: 'All',
+                1: 'Open',
+                2: 'Doing',
+                6: 'To Do',
+                4: 'Review',
+                5: 'Done'
+              }"
+              wrapper-class="flex items-center"
+              label-class="mr-4 font-bold"
+              input-inner="max-w-md border border-gray-400 rounded-lg mb-1 overflow-hidden formkit-invalid:border-red-500 focus-within:border-blue-500"
+              input-class="w-full h-10 px-4 border border-gray-300 rounded-lg text-base text-gray-700 placeholder-gray-400"
+            />
+          </div>
           
            <div class="ml-4 relative">
               <FormKit 
                 type="button"
                 input-class="bg-blue-500  text-white font-normal py-2 px-6 rounded hover:bg-blue-700 focus:bg-blue-700"
+                @click.prevent.stop="filterHandle"
               >
                 Filter
               </FormKit>
@@ -57,8 +78,13 @@
   import { ref } from 'vue'
   import type { Ref } from 'vue'
   import Datepicker from '@vuepic/vue-datepicker'
+  import dayjs from 'dayjs'
   import '@vuepic/vue-datepicker/dist/main.css'
+  
 
+  interface VariablesObject {
+    [key: string]: any
+  }
 
   interface IProps {
     pid: string | string []
@@ -66,15 +92,36 @@
 
   const props = defineProps<IProps>()
   const date: Ref<string | string []>= ref('')
+  const status: Ref<number> = ref(0)
+  const { filterIssues } = useProject()
 
   const createUrl = computed(() => {
     return `/projects/${props.pid}/create`
   })
 
+  const filterHandle = () => {
+    const payload:VariablesObject = {}
+    
+    if ( date.value.length > 0) {
+
+      const _start = dayjs(date.value[0]).format('YYYY-MM-DD');
+      const _end = dayjs(date.value[1]).format('YYYY-MM-DD');
+
+      const _datetime = { start_time: _start, end_time: _end }
+      payload.create_time = {..._datetime}
+    }
+
+    if (status.value.toString() !== '0') {
+      payload.status = parseInt(status.value.toString())
+    } 
+    filterIssues(props.pid.toString(), payload)
+
+  }
+
   onMounted(() => {
-    const startDate = new Date();
-    const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
-    date.value = [startDate.toString(), endDate.toString()];
+    // const startDate = new Date();
+    // const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+    // date.value = [startDate.toString(), endDate.toString()];
   })
   
 
