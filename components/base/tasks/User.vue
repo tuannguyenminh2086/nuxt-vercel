@@ -68,12 +68,11 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import type { Ref } from 'vue'
-  import cmsClient from '~~/apollo/cmsClient';
-  import { GET_ISSUES_BY_STATUS } from '~~/graphql/queries/tasksQuery';
+import type { Ref } from 'vue'
+import { ref } from 'vue'
+import { useNuxtApp } from '#app'
 
-  interface Props {
+interface Props {
     title?: string
     issueType: number
   }
@@ -110,18 +109,16 @@
 
 
   const fetchIssues = async () => {
-     const { data, loading } = await cmsClient.query({
-        query: GET_ISSUES_BY_STATUS,
-        variables: {
-          status: props.issueType
-        }
+    const {$makeRequest} = useNuxtApp()
+     const { status,listTodo } = await $makeRequest(
+       'post',
+       '/api/tasks/todo',
+       {
+         status: props.issueType
       })
-
-      
-
-      if ( data.list_todo ) {
-        isLoading.value = loading
-        listing.value =  useOrderBy(data.list_todo, 'id','desc');
+      if ( status ) {
+        isLoading.value = false
+        listing.value =  useOrderBy(listTodo, 'id','desc');
       }
   }
 

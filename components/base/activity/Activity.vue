@@ -16,7 +16,7 @@
                     <th class="py-3 px-4 font-bold text-sm text-left w-2/6 pr-6">Name</th>
                     <th class="py-3 px-4 font-bold text-sm text-left w-3/12">Project</th>
                     <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Priority</th>
-                    <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Created at</th>   
+                    <th class="py-3 px-4 font-bold text-sm text-left w-2/12"></th>   
                 </template>
                 <template #tbody>
                     <tbody v-if="listing && listing.length > 0">
@@ -36,7 +36,7 @@
                         </td>
                         <td class="py-3 px-4 w-3/12"><span class="font-bold text-sm">{{ item.issue.project.name }}</span></td>
                         <td class="py-3 px-4 w-2/12"><base-priority v-if="item.issue.mapped_priority" :text="item.issue.mapped_priority.toLowerCase()" /> </td>
-                        <td class="py-3 px-4 w-2/12"><base-hours variant="datetime" :date="item.created_at" class="font-normal text-sm" /></td>
+                        <td class="py-3 px-4 w-2/12"><base-hours variant="from-now" :date="item.created_at" class="font-normal text-sm" /></td>
                       </tr>
                     </tbody>
 
@@ -64,48 +64,26 @@
 
   const listing:Ref<any[]> = ref([])
   const loading:Ref<boolean> = ref(false)
-  const { $echoClient, $notification } = useNuxtApp();
   const { fetchTasksActivity } = useTask()
+  const { $bus } = useNuxtApp()
 
 
   const fetch = async () => {
     loading.value = true
-    
     const data = await fetchTasksActivity()
 
     if (data) {
       listing.value = data.value.data
       loading.value = false
     }
-
   }
 
   onMounted(() => {
     fetch();
 
-
-      $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
-          const { data: { action, message } } = _e;
-          const id = Date.now()
-
-          if ( action) {
-            switch (action) {
-              case "reload":
-              
-                $notification({
-                  id,
-                  type: 'warning',
-                  title: 'Activity Tracking',
-                  text: message
-                })
-                
-                fetch();
-
-              break;
-            }
-          }
-      
-      })
+    $bus.$on('refetch-activity', () => {
+      fetch()
+    })
     
   })
 

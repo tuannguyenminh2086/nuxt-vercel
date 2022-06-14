@@ -1,36 +1,76 @@
+
 import { useProjectStore } from '~~/store/project';
-import { GET_PROJECT_DETAIL } from '~~/graphql/queries/projectQuery';
 
 export const useProject = () => {
+  const projectStore = useProjectStore();
+  const { $makeRequest } = useNuxtApp();
 
-  const projectStore = useProjectStore()
-  const { $graphqlClient} = useNuxtApp()
+  const fetch = async (pid: string) => {
+    projectStore.loading = true;
 
-  const fetch = async (pid:string) => {
-    projectStore.loading = true
-    
     try {
-      const { data: { project }, loading } = await $graphqlClient.query({
-        query: GET_PROJECT_DETAIL,
-        variables: {
-          id: pid
-        }
-      });
+      const { project } = await $makeRequest(
+          'get', 
+          `/api/projects/${pid}`,
+          {
+            pageNumber: 1
+          }
+        );
 
       if (project) {
-        projectStore.init(project)
-        projectStore.loading = loading
+        projectStore.init(project);
+        projectStore.loading = false;
       }
-
     } catch (_error) {
-      projectStore.error = _error
+      projectStore.error = _error;
     } finally {
-      projectStore.loading = false
+      projectStore.loading = false;
+    }
+  };
+
+  const gotoPage = async (pid: string, page:number) => {
+    try {
+      const { project } = await $makeRequest(
+          'get', 
+          `/api/projects/${pid}`,
+          {
+            pageNumber: page
+          }
+        );
+
+      if (project) {
+        projectStore.setPaginationView(project.issues, project.issue_paging)
+      }
+    } catch (_error) {
+      projectStore.error = _error;
+    } finally {
+      projectStore.loading = false;
     }
   }
 
+  const filterIssues = async (pid: string, _filter:any) => {
+    try {
+      const { project } = await $makeRequest(
+          'get', 
+          `/api/projects/${pid}`,
+          {
+            filter: JSON.stringify(_filter)
+          }
+        );
+
+      if (project) {
+        projectStore.setPaginationView(project.issues, project.issue_paging)
+      }
+    } catch (_error) {
+      projectStore.error = _error;
+    } finally {
+      projectStore.loading = false;
+    }
+  }
 
   return {
-    fetch
-  }
-}
+    fetch,
+    gotoPage,
+    filterIssues
+  };
+};

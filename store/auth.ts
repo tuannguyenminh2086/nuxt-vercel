@@ -1,16 +1,13 @@
-import { defineStore, acceptHMRUpdate } from 'pinia'
-// import { LOGIN_MUTATION } from '~~/graphql/mutations/authMutation';
-import { GET_CURRENT_USER } from "~~/graphql/queries/userQuery";
-import cmsClient from '~~/apollo/cmsClient';
+import { acceptHMRUpdate, defineStore } from 'pinia';
 
 interface IUser {
-  dob: any,
-  email: any,
-  enabled: boolean,
-  id: string,
-  imagePath: string,
-  name: string,
-  username: string
+  dob: any;
+  email: any;
+  enabled: boolean;
+  id: string;
+  imagePath: string;
+  name: string;
+  username: string;
 }
 
 interface IAuth {
@@ -22,11 +19,10 @@ interface IAuth {
   me: IUser | null,
 }
 
-
 export const useAuthStore = defineStore({
   id: 'auth',
 
-  state: ():IAuth => ({
+  state: (): IAuth => ({
     isAuthenticated: false,
     token: '',
     roles: [],
@@ -36,8 +32,8 @@ export const useAuthStore = defineStore({
   }),
 
   actions: {
-    setAuth ( login:any ) {
-      if ( login.user ) {
+    setAuth(login: any) {
+      if (login.user) {
         this.isAuthenticated = true
         this.token = login.token
         this.roles = login.roles
@@ -47,7 +43,7 @@ export const useAuthStore = defineStore({
           localStorage.setItem('lottiAuthToken', login.token)
         }
 
-        return  {
+        return {
           isAuthenticated: true
         }
 
@@ -60,37 +56,37 @@ export const useAuthStore = defineStore({
 
     },
 
-    logoutHandle () {
-      this.removeAuthToken();
+    logoutHandle() {
+      this.removeAuthToken()
     },
 
-    setAuthToken () {
+    setAuthToken() {
       if (process.client) {
         this.token = localStorage.getItem('lottiAuthToken')
         this.isAuthenticated = true
       }
     },
 
-    removeAuthToken () {
-        localStorage.removeItem('lottiAuthToken');
-        localStorage.removeItem('lottiProjects');
-        localStorage.removeItem('lottiTimer');
+    removeAuthToken() {
+      localStorage.removeItem('lottiAuthToken')
+      localStorage.removeItem('lottiProjects')
+      localStorage.removeItem('lottiTimer')
 
-        this.isAuthenticated = false
-        this.token = ''
-        this.roles = []
-        this.me = null
+      this.isAuthenticated = false
+      this.token = ''
+      this.roles = []
+      this.me = null
     },
 
-    async setCurrentUser () {
+    setCurrentUser (me: any) {
       // const { $graphqlClient } = this.$nuxt.config.globalProperties;
       // const { data: { me } } = await $graphqlClient.query({
       //   query: GET_CURRENT_USER,
       // });
 
-      const { data: { me } } = await cmsClient.query({
-        query: GET_CURRENT_USER,
-      });
+      // const { data: { me } } = await cmsClient.query({
+      //   query: GET_CURRENT_USER,
+      // });
 
       if (me) {
         const { dob, email, enabled, id, name, roles, username, permissions } = me
@@ -101,14 +97,14 @@ export const useAuthStore = defineStore({
 
     },
 
-    getAuthToken () {
+    getAuthToken() {
       if (process.client) {
-        const value = localStorage.getItem('lottiAuthToken')
+        const value = this.token ? this.token : localStorage.getItem('lottiAuthToken')
         return value;
       }
     },
 
-    getCurrentUser () {
+    getCurrentUser() {
       return this.me
     }
 
@@ -120,7 +116,7 @@ export const useAuthStore = defineStore({
     isAdmin: (state) => {
       return state.roles.includes('admin')
     }
-  },
+  }
 
 })
 

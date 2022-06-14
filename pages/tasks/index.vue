@@ -1,15 +1,14 @@
 <template>
   <div class="mt-8">
-    <h1 class="text-4xl font-bold mb-2">Tasks</h1>
-    <NuxtLink to="/" class=""> Back to Home </NuxtLink>
+    <h1 class="text-4xl font-bold mb-2">My Tasks</h1>
 
-    <div class="mt-10">
+    <!-- <div class="mt-10">
       <base-section title="Statistic">
         <template #default>
           <div class="p-4">is coming soon </div>
         </template>
       </base-section>
-    </div>
+    </div> -->
 
     <div class="grid gap-4 mt-10">
       <div class="col-auto mb-10">

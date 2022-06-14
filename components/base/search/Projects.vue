@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <input
-      type="text"
       v-model="keyword"
+      type="text"
       class="form-input px-6 py-3 rounded-full min-w-full bg-slate-200" 
       placeholder="Type project name"
       @change="filterProjects"
@@ -11,14 +11,13 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import type { Ref } from 'vue'
-  import { useProjectStore } from "@/store/projects";
+import type { Ref } from 'vue'
+import { ref } from 'vue'
+import { useProjects } from '#imports'
 
-  const keyword: Ref<string> = ref('');
-  const projectsStore = useProjectStore();
-
+const keyword: Ref<string> = ref('');
+  const { fetchAPI } = useProjects();
   const filterProjects = () => {
-    projectsStore.searchProject(keyword.value);
+    fetchAPI('',keyword.value);
   };
 </script>

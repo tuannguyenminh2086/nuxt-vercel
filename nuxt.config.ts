@@ -1,11 +1,11 @@
 import { resolve } from 'path'
-import { defineNuxtConfig } from 'nuxt3';
+import { defineNuxtConfig } from 'nuxt';
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   typescript: {
     strict: true,
-    shim: false,
+    shim: true,
   },
   modules: [
     '@pinia/nuxt',
@@ -46,12 +46,17 @@ export default defineNuxtConfig({
     middleware: [ 'auth' ]
   },
   alias: {
-    '@store': resolve(__dirname,'./store')
+    '@store': resolve(__dirname,'./store'),
+    '@graphql': resolve(__dirname,'./apollo'),
+    '@helper': resolve(__dirname,'./helper'),
   },
   runtimeConfig: {
     cmsURL: process.env.NUXT_API_CMS_URL,
     graphqlURL: process.env.NUXT_API_GRAPHQL_URL,
     apiURL: process.env.NUXT_API_URL,
+    CMS_URL: process.env.NUXT_API_CMS_URL,
+    GRAPHQL_URL: process.env.NUXT_API_GRAPHQL_URL,
+    API_URL: process.env.NUXT_API_URL,
   },
   publicRuntimeConfig: {
     CMS_URL: process.env.NUXT_API_CMS_URL,

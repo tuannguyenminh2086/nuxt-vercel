@@ -97,8 +97,8 @@ export const useTask = () => {
   }
 
   // timer
-  const startTimer = async (tid:string, name:string) => {
-    timerStore.startTimer(tid, name)
+  const startTimer = async (tid:string, name:string, startAt: string) => {
+    timerStore.startTimer(tid, name, startAt)
           
     const { data }:any = await useFetch(`${config.public.API_URL}/issues/${tid}/status`,
       {

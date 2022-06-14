@@ -4,7 +4,8 @@
       <option value="-1">Choose a user</option>
       <option v-for="(item,index) in members" :key="index" :value="item.id">{{ item.name}}</option>
     </select>
-    <button class="outline-none px-4 py-2 inline-flex cursor-pointer justify-center items-center whitespace-nowrap 
+    <button
+class="outline-none px-4 py-2 inline-flex cursor-pointer justify-center items-center whitespace-nowrap
         focus:outline-none transition-colors 
         border rounded p-2 bg-emerald-600 text-white border-emerald-700 
         hover:bg-emerald-700" @click.stop="onAssigneeHandle">
@@ -49,8 +50,11 @@
   }
 
   onMounted (() => {
+   
+
     if (props.members.length > 0) {
       const res = props.members.filter( item => item.is_main )
+
       assignee.value = res[0].id
     }
   })

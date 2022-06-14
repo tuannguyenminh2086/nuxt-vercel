@@ -52,7 +52,8 @@
     } 
     
     isProgress.value = true
-    const result = await startTimer(props.taskId, props.taskName)
+    const startAt = new Date()
+    const result = await startTimer(props.taskId, props.taskName, startAt.toString())
 
     if (result.value.status) {
       
