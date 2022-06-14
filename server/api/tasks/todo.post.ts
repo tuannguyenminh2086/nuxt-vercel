@@ -20,6 +20,7 @@ export default defineEventHandler(async (event: CompatibilityEvent) => {
   );
   try {
     const listTodo = data.list_todo;
+    
     if (listTodo) {
       await responseSuccess(event, { status: true, listTodo });
     }

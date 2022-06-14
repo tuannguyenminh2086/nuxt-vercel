@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, HeadersDefaults } from 'axios';
 import { DocumentNode } from 'graphql';
 
 const axiosInstance = axios.create();
+
 export const apiClient = async <T = any, R = any>(data: T, token?: string) => {
   const commonHeaders: HeadersDefaults = {
     common: { 'Content-Type': 'application/json' },
@@ -16,6 +17,9 @@ export const apiClient = async <T = any, R = any>(data: T, token?: string) => {
   axiosInstance.defaults.headers = commonHeaders;
   let config: AxiosRequestConfig = {};
   let headers = null;
+
+
+
   if (token !== undefined && token!=='') {
     headers = {
       Authorization: 'Bearer ' + token,
@@ -23,10 +27,14 @@ export const apiClient = async <T = any, R = any>(data: T, token?: string) => {
     };
   }
 
+  console.log(data.variables)
+
   config = {
     method: 'post',
     data,
   };
+
+
   if (headers) {
     config.headers = headers;
   }

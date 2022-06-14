@@ -1,6 +1,6 @@
-import { defineNuxtPlugin } from '#app';
 import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
+import { defineNuxtPlugin } from '#app';
 import { useAuthStore } from '~~/store/auth';
 
 

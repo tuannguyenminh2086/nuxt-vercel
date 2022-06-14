@@ -7,7 +7,11 @@ interface IProjectState {
   loading: boolean
   error: any
   sort: '',
-  tracked: number
+  tracked: number,
+  pagination: {
+    current: number
+    last: number
+  }
 }
 
 export const useProjectStore = defineStore({
@@ -19,7 +23,11 @@ export const useProjectStore = defineStore({
       loading: false,
       error: '',
       tracked: 0,
-      sort: ''
+      sort: '',
+      pagination: {
+        current: 1,
+        last: 1
+      }
     }
   },
   actions: {
@@ -27,10 +35,11 @@ export const useProjectStore = defineStore({
       this.project = {...project}
       this.filteredTasks = useOrderBy(project.issues, 'created_at','desc'); 
       this.tracked = this.setTracked(project.issues)
-
+      this.pagination.current = project.issue_paging.current_page
+      this.pagination.last =  project.issue_paging.last_page
     },
-    filterBy () {},
     setTracked (issues: IIssues[]) {      
+      // currently it's wrong for now. due to pagination
       const _tracked = issues.reduce((allIssues, issue) => {
 
         if ( issue.time_tracking.length < 1) return allIssues;
@@ -42,7 +51,14 @@ export const useProjectStore = defineStore({
         return allIssues + sum
       },0)
       return _tracked
+    },
+    setPaginationView (issues: IIssues[], issuePaging: any) {
+      this.filteredTasks = useOrderBy(issues, 'created_at','desc'); 
+      this.pagination.current = issuePaging.current_page
+      this.pagination.last = issuePaging.last_page
     }
+
+
   }, 
 
   getters: {}

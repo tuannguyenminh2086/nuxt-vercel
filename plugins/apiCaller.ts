@@ -1,5 +1,5 @@
-import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 import axios, { AxiosRequestConfig, HeadersDefaults } from 'axios';
+import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 import { useAuthStore } from '@store/auth';
 
 export default defineNuxtPlugin(() => {
@@ -11,6 +11,7 @@ export default defineNuxtPlugin(() => {
    *   }
    */
   const apiClient = axios.create();
+  
   return {
     provide: {
       makeRequest: async <T = any, R = Awaited<any>>(
@@ -19,10 +20,18 @@ export default defineNuxtPlugin(() => {
         data?: T
       ) => {
         let result: R;
-        if (method === 'get') {
+        if (method === 'get' ) {
+         if(data){
           result = await $fetch(`${target}`, {
             method: `${method.toUpperCase()}`,
+            params: data
           });
+         }else{
+          result = await $fetch(`${target}`, {
+            method: `${method.toUpperCase()}`
+          });
+         }
+
         } else if (data) {
           result = await $fetch(`${target}`, {
             method: `${method.toUpperCase()}`,
@@ -53,13 +62,18 @@ export default defineNuxtPlugin(() => {
           put: { 'Content-Type': 'application/json' },
           patch: { 'Content-Type': 'application/json' },
         };
+
         apiClient.defaults.baseURL = configApp.public.API_URL;
         apiClient.defaults.headers = commonHeaders;
+
+
         let config: AxiosRequestConfig = {};
 
         const store = useAuthStore();
         const token = store.getAuthToken();
         let headers = null;
+
+
         if (token !== undefined) {
           headers = {
             Authorization: 'Bearer ' + token,
@@ -92,14 +106,20 @@ export default defineNuxtPlugin(() => {
             method: method.toLowerCase(),
           };
         }
+
+
         if (headers) {
           config.headers = headers;
         }
+
         const result: R = await apiClient.request(config);
+
         await Promise.resolve();
+
         if (result) {
           return result;
         }
+        
         return null;
       },
     },

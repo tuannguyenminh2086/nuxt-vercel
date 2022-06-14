@@ -6,6 +6,14 @@ export interface IUser {
   pivot?: any
 }
 
+export interface IStatus {
+  name: string
+}
+
+export type Paging = {
+  current_page: number
+  last_page: number
+}
 
 export interface IIssues {
   id: string,
@@ -14,16 +22,15 @@ export interface IIssues {
   assignees: IUser[]
   created_at: string
   time_tracking?: any
-}
-
-export interface IStatus {
-  name: string
+  mapped_status?: IStatus
+  mapped_priority?: string
 }
 
 
 export interface IProject {
   client?: string | null
   created_at?: string | null
+  description?: string
   id: string
   issues: IIssues[]
   mapped_priority: string
@@ -36,6 +43,11 @@ export interface IProject {
   total_spent?: number
   issues_count?: number
   updated_at: string
+  has_repo?: number
   leader: IUser
+  projectType?: {
+    name: string
+  }
+  issue_paging: Paging
 }
 

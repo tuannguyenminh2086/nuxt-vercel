@@ -64,13 +64,12 @@
 
   const listing:Ref<any[]> = ref([])
   const loading:Ref<boolean> = ref(false)
-  const { $echoClient, $notification } = useNuxtApp();
   const { fetchTasksActivity } = useTask()
+  const { $bus } = useNuxtApp()
 
 
   const fetch = async () => {
     loading.value = true
-    
     const data = await fetchTasksActivity()
 
     if (data) {
@@ -81,30 +80,10 @@
 
   onMounted(() => {
     fetch();
-    
-    $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
-        const { data: { action, message } } = _e;
-        const id = Date.now()
 
-        if ( action) {
-          switch (action) {
-            case "reload":
-            
-              $notification({
-                id,
-                type: 'warning',
-                title: 'Activity Tracking',
-                text: message
-              })
-              
-              fetch();
-
-            break;
-          }
-        }
-    
+    $bus.$on('refetch-activity', () => {
+      fetch()
     })
-    
     
   })
 

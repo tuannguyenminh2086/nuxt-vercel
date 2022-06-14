@@ -26,7 +26,7 @@
       </ul>
     </div>
 
-    <div class="mt-6" v-if="auth.isAdmin">
+    <div v-if="auth.isAdmin" class="mt-6" >
       <p class="px-4 pb-1 text-xs uppercase text-gray-400 hidden 2xl:block">Administrator</p>
       <ul class="">
         <base-nav-item
@@ -57,16 +57,17 @@ const navGroup = {
       slug: '/',
       icon: ICON.HOME,
     },
+     {
+      name: 'My Tasks',
+      slug: '/tasks',
+      icon: ICON.MYTASKS,
+    },
     {
       name: 'Projects',
       slug: '/projects',
       icon: ICON.PROJECTS,
     },
-    {
-      name: 'Tasks',
-      slug: '/tasks',
-      icon: ICON.MYTASKS,
-    },
+   
   ],
   admin: [
     {
