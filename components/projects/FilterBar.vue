@@ -22,13 +22,7 @@
 
         <div class="ml-auto flex justify-end">
           <div class="w-80">
-            <!-- <input
-                v-model="keyword"
-                type="text"
-                class="form-input px-6 py-3 rounded-md min-w-full bg-slate-200" 
-                placeholder="Type project name"
-              /> -->
-
+       
               <FormKit
                   v-model="keyword"
                   type="search"
@@ -37,7 +31,7 @@
                   inner-class="rounded-md bg-slate-50 overflow-hidden border outline-none focus-within:border-blue-500 formkit-invalid:border-red-500"
                   input-class="w-full px-4 bg-transparent py-3 text-base text-gray-700 placeholder-gray-400 outline-none"
                   message-class="text-red-500 mb-1 mt-3 text-xs"
-                  validation="alpha|length:3"             
+                  validation="length:3"             
                 />
             </div>
       

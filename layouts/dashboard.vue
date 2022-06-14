@@ -26,9 +26,6 @@
 </template>
 
 <script setup lang="ts">
-// import TheSidebar from '../components/master/TheSidebar.vue'
-// import TheHeader from '~~/components/master/TheHeader.vue'
-
 const { $echoClient, $notification, $bus } = useNuxtApp();
 
   onMounted(() => {

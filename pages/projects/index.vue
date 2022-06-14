@@ -2,11 +2,11 @@
   <div>
     <h1 class="text-4xl font-bold mb-10">Projects</h1>
     <div class="mt-6">
-        <projects-filter-bar />
+      <projects-filter-bar />
     </div>
 
     <div class=" mt-6">
-      <base-projects-listing />
+      <projects-listing />
     </div>
     
   </div>
