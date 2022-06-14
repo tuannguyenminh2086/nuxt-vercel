@@ -1,8 +1,9 @@
 <template>
   <div v-if="members" class="flex flex-wrap">
+
     <div v-if="!pivot">
       <div
-        v-for="(member, index) in members"
+        v-for="(member, index) in assigness"
         :key="index"
         class="flex flex-row items-center mr-2 mb-2"
       >
@@ -12,9 +13,10 @@
           <span v-if="showName" class="text-sm font-semibold">{{ member.name ? member.name : 'n/a'}}</span>          
       </div>
     </div>
+
     <div v-else>
       <div
-        v-for="(member, index) in members"
+        v-for="(member, index) in assigness"
         :key="index"
         class="flex flex-row items-center mr-2 mb-2"
       >
@@ -42,7 +44,7 @@
   
   const props = defineProps<IMember>();
   const randowAvatar = computed(() => useRandomAvatar() )
-  const members = props.members
+  const assigness = computed(() => props.members.length > 0 ? props.members : [])
 
   const pivot = computed(() => {
      if ( props.members.length > 0) {

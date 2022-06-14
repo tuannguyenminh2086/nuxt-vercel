@@ -70,25 +70,57 @@
                   </template>
                 </base-section-block>
 
-                <base-section-block title='Time tracking' class='mt-10'>
-                  <template #content>
-                    <base-tasks-tracking :time-tracking='issue.time_tracking' />
-                  </template>
-                </base-section-block>
+                
 
               </div>
 
               <div class='flex flex-col col-span-full  py-6 sm:col-span-6 lg:pl-4'>
 
-                <base-section-block title='Comment'>
-                  <template #content>
-                    <base-comments-task-comments
-                      :comments='issue.comments'
-                      :related-id='issue.id'
-                      type='issue'
-                    />
-                  </template>
-                </base-section-block>
+                  <TabGroup>
+                    <TabList class="flex">
+                      <Tab v-slot="{ selected }" as="template">
+                        <button
+                         class="px-3 font-semibold rounded text-slate-900 uppercase outline-none"
+                         :class="[selected ? 'text-xl' : '']"
+                        >Comments</button>
+                      </Tab>
+                      <Tab v-slot="{ selected }" as="template" >
+                         <button
+                          class="px-3 font-semibold rounded text-slate-900 uppercase outline-none"
+                          :class="[selected ? 'text-xl' : '']"
+                        >Time Tracking</button>
+
+                      </Tab>
+                    </TabList>
+                    <TabPanels class="mt-2">
+                     
+                      <TabPanel>
+                      
+                         <base-section-block>
+                            <template #content>
+                              <base-comments-task-comments
+                                :comments='issue.comments'
+                                :related-id='issue.id'
+                                type='issue'
+                              />
+                            </template>
+                          </base-section-block>
+                      </TabPanel>
+
+                       <TabPanel>
+                          <base-section-block>
+                            <template #content>
+                              <base-tasks-tracking :time-tracking='issue.time_tracking' />
+                            </template>
+                          </base-section-block>
+                      </TabPanel>
+
+                    </TabPanels>
+                  </TabGroup>
+
+
+
+               
 
               </div>
 
@@ -115,6 +147,7 @@
 <script setup lang='ts'>
 import type { Ref } from 'vue'
 import { ref } from 'vue'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 
 const route = useRoute()
 if (!route.params.id) navigateTo('/projects')
