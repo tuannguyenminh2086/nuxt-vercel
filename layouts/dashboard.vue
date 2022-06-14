@@ -26,31 +26,33 @@
 </template>
 
 <script setup lang="ts">
-const { $echoClient, $notification, $bus } = useNuxtApp();
+  const { $echoClient, $notification, $bus } = useNuxtApp();
+
+  const updateActive = (message:any) => {
+      const id = Date.now()
+
+      $notification({
+        id,
+        type: 'warning',
+        title: 'Activity Tracking',
+        text: message
+      });
+
+      setTimeout(() => {
+        $notification.close(id);
+      }, 2000)
+      
+      $bus.$emit('refetch-activity');          
+  }
 
   onMounted(() => {
       $echoClient.private("TaskInProcess").listen(".task-in-process", (_e:any) => {
           const { data: { action, message } } = _e;
-          const id = Date.now()
-
+        
           if ( action) {
             switch (action) {
               case "reload":
-              
-                $notification({
-                  id,
-                  type: 'warning',
-                  title: 'Activity Tracking',
-                  text: message
-                });
-
-                setTimeout(() => {
-                  $notification.close(id);
-                }, 2000)
-                
-
-                $bus.$emit('refetch-activity');
-                
+                 updateActive(message)
               break;
             }
           }
@@ -59,8 +61,6 @@ const { $echoClient, $notification, $bus } = useNuxtApp();
   })
 
 
-  onUnmounted(() => {
 
-  })
 
 </script>
