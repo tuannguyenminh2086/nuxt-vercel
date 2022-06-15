@@ -12,11 +12,12 @@ export default defineEventHandler(async (event: CompatibilityEvent) => {
     query,
     variables: body,
   },token);
-  try{
-    if(me){
+
+  try {
+    if (me) {
       await responseSuccess(event, { status: true,me });
     }
-  }catch (e) {
+  } catch (e) {
     await responseError(event,'Not Authorized',401);
   }
 

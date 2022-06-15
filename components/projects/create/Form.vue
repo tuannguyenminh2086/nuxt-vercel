@@ -2,16 +2,16 @@
   <div class="">
     <FormKit
       id="projectNewForm"
-      v-model="formData"
       type="form" 
       :actions="false"
       :disabled="isProgress"
     >
         <FormKit
+          v-model="name"
           type="text"
           label="Project Name"
           name="project_name"
-          validation="required|alpha|length:2"
+          validation="required|length:2"
           outer-class="mb-6"
           label-class="block mb-2 font-bold text-sm"
           inner-class="rounded-lg mb-1 overflow-hidden outline-none focus-within:border-blue-500
@@ -21,6 +21,7 @@
         />
         
         <FormKit
+          v-model="desc"
           type="textarea"
           label="Project description (optional)"
           outer-class="mb-6"
@@ -29,17 +30,6 @@
           label-class="block mb-2 font-bold text-sm"
           inner-class="rounded-lg overflow-hidden outline-none"
           input-class="w-full p-4 border-none text-base text-gray-700 placeholder-gray-400 outline-none py-4"
-        />
-
-        <FormKit 
-          type="checkbox"
-          label="Has a Repo? (option)"
-          help="If you want to store your codes, you need to check it."
-          name="has-repo"
-          wrapper-class="flex items-center mb-1 cursor-pointer"
-          input-class="form-check-input appearance-none h-5 w-5 mr-2 border border-gray-200 rounded-sm bg-white checked:bg-blue-500 focus:outline-none focus:ring-0 transition duration-200"
-          label-class="text-sm text-gray-700"
-          help-class="text-xs text-gray-500 px-7"
         />
 
         <FormKit
@@ -58,16 +48,21 @@
   import { ref } from 'vue'
   import { reset } from '@formkit/core'
 
-  const formData = ref({})
+  const name = ref('')
+  const desc = ref('')
   const isProgress = ref(false)
+  const { newProject } = useProjects()
 
-  const createProjectHandle = () => {
+  const createProjectHandle = async () => {
     isProgress.value = true
-    setTimeout(() => {
+    const payload = Object.assign({},{'name': name.value, 'description': desc.value})
+    const res = await newProject(payload)
+
+    if (res.status === 201) {
       reset('projectNewForm')
       isProgress.value = false
-    }, 2000)
-    
+      navigateTo('/projects/' + res.data.id)
+    }    
   }
 </script>
 

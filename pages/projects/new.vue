@@ -6,7 +6,7 @@
     />
     <div class="grid mt-10 gap-4 lg:grid-cols-4 ">
       <div class="lg:col-span-2">
-          <base-projects-create-form />
+        <projects-create-form />
       </div>
     </div>
   </div>
