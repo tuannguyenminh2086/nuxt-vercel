@@ -108,8 +108,8 @@
 </template>
 
 <script setup lang='ts'>
-import { useNuxtApp } from '#app'
 import { ref, reactive } from 'vue'
+import { useNuxtApp } from '#app'
 import { useAuthStore } from '~~/store/auth'
 
 type LoginRequest = {

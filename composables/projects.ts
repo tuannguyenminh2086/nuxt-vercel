@@ -2,9 +2,6 @@ import { parseUrl } from 'query-string';
 import { useNuxtApp } from '#app';
 import { useProjectsStore } from '~~/store/projects';
 
-import {
-  GET_ALL_PROJECTS_FULL,
-} from '~~/graphql/queries/projectQuery';
 
 type TProjectRequestParams = {
   page?: string;
@@ -27,26 +24,26 @@ export const useProjects = () => {
     }
   };
 
-  const fetch = async () => {
-    projectStore.loading = true;
+  // const fetch = async () => {
+  //   projectStore.loading = true;
 
-    try {
-      const { projects } = (
-        await $graphqlClient.query({
-          query: GET_ALL_PROJECTS_FULL,
-        })
-      ).data;
+  //   try {
+  //     const { projects } = (
+  //       await $graphqlClient.query({
+  //         query: GET_ALL_PROJECTS_FULL,
+  //       })
+  //     ).data;
 
-      if (projects) {
-        projectStore.initProjects(projects);
-        localStorage.setItem('lottiProjects', JSON.stringify(projects));
-      }
-    } catch (_error) {
-      projectStore.error = _error;
-    } finally {
-      projectStore.loading = false;
-    }
-  };
+  //     if (projects) {
+  //       projectStore.initProjects(projects);
+  //       localStorage.setItem('lottiProjects', JSON.stringify(projects));
+  //     }
+  //   } catch (_error) {
+  //     projectStore.error = _error;
+  //   } finally {
+  //     projectStore.loading = false;
+  //   }
+  // };
 
   const fetchAPI = async (
     _page: string,
@@ -117,10 +114,21 @@ export const useProjects = () => {
    
   };
 
+  const newProject = async (payload:any) => {
+   const { $apiClient} = useNuxtApp()
+
+    try {
+      const result = await $apiClient( 'post', '/projects', payload)
+      return result
+    } catch (_error) {
+      
+    }
+  };
+
   return {
-    fetch,
     fetchAPI,
     init,
-    fetchTrackingProjects
+    fetchTrackingProjects,
+    newProject
   };
 };
