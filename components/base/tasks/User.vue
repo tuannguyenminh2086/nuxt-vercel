@@ -103,7 +103,6 @@ interface Props {
   }
 
   const props = defineProps<Props>()
-
   const isLoading: Ref<boolean> = ref(true)
   const listing: Ref<IIssue[]> = ref([])
 

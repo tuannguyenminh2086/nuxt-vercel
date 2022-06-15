@@ -32,19 +32,17 @@ class="outline-none px-4 py-2 inline-flex cursor-pointer justify-center items-ce
   const members: Ref<any> = ref([])
   const assignee: Ref<any> = ref('')
   const { assigneeTo } = useTask()
-  const { $bus, $notification } = useNuxtApp()
+  const { $bus } = useNuxtApp()
   members.value = (await useMembers()).value
 
   const onAssigneeHandle = async () => {
     const res = await assigneeTo(props.iid, assignee.value)
+    const { sendNotification } = useNotification()
 
     if ( res.status) {
+       
+        sendNotification('Successfully updated!', 'success', 'Change Assignee' )
         $bus.$emit('refetch-issue')
-        $notification({
-          type: 'success',
-          title: 'Success',
-          text: res.message ? res.message.message : ''
-        })
     }
     
   }

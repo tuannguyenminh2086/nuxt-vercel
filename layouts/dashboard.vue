@@ -20,27 +20,30 @@
 
       <client-only>
         <base-timer-issue-tracking />
-        <notifications position="top right" width="30%"  />
+        <base-notifications />
       </client-only>
   </div>
 </template>
 
 <script setup lang="ts">
-  const { $echoClient, $notification, $bus } = useNuxtApp();
+  const { $echoClient, $bus } = useNuxtApp();
+  const { sendNotification } = useNotification()
 
   const updateActive = (message:any) => {
-      const id = Date.now()
+      // const id = Date.now() + 'taskinprocess';
 
-      $notification({
-        id,
-        type: 'warning',
-        title: 'Activity Tracking',
-        text: message
-      });
+      // $notify({
+      //   id,
+      //   type: 'warning',
+      //   title: 'Activity Tracking',
+      //   text: message
+      // });
 
-      setTimeout(() => {
-        $notification.close(id);
-      }, 2000)
+      // setTimeout(() => {
+      //   $notify.close(id);
+      // }, 1000)
+
+      sendNotification(message, 'warning', 'Activity Tracking' )
       
       $bus.$emit('refetch-activity');          
   }
