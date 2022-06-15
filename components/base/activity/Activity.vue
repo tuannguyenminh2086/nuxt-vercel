@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-section title="Activities" class="">
+    <base-section title="Tasks Activity" class="">
       <template #default>
 
         <div class="">
@@ -79,7 +79,10 @@
   }
 
   onMounted(() => {
-    fetch();
+    if (listing.value.length < 1) {
+      fetch();
+    }
+    
 
     $bus.$on('refetch-activity', () => {
       fetch()

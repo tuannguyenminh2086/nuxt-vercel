@@ -1,7 +1,7 @@
 <template>
   <base-section>
     <template #default>
-    
+        
       <base-table>
         <template #thead>
           <th class="py-3 px-4 font-bold text-sm text-left w-20">#</th>

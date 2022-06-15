@@ -45,7 +45,7 @@
       break;
 
      case 'normal':
-       styleRender.value = 'bg-sky-500'
+       styleRender.value = 'bg-sky-400'
       break;
   
     default:

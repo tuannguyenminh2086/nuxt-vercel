@@ -20,9 +20,9 @@
                   </tr>
                 </thead>
 
-                <tbody v-if="projects">
+                <tbody v-if="tracking">
                   <tr
-                    v-for="(project, index) in projects"
+                    v-for="(project, index) in tracking"
                     :key="index" 
                     class="dark:border-0   lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
                     :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
@@ -56,30 +56,26 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import type { Ref } from 'vue'
+  import { storeToRefs } from 'pinia';
+  import { useProjectsStore } from '@/store/projects'
 
-  interface IProject {
-    name: string,
-    id: string,
-    total_spent: number,
-    mapped_priority: string,
-    leader?: {
-      name: string
-    }
-  }
 
-  const projects: Ref<IProject[] | null> = ref(null)
-  const isLoading: Ref<boolean> = ref(true)
+  const isLoading: Ref<boolean> = ref(false)
   const { fetchTrackingProjects } = useProjects()
+  const projectsStore = useProjectsStore()
+  const { tracking } = storeToRefs(projectsStore)
 
   const fetch = async () => {
-    const res = await fetchTrackingProjects()
-    if(res) {
-      projects.value = res
-      isLoading.value = false
-    }
+    isLoading.value = true
+    await fetchTrackingProjects()
+    isLoading.value = false
   }
 
   onMounted(() => {
-    fetch()
+    if (tracking.value.length < 1) {
+      fetch()
+    }
+    
   })
+
 </script>

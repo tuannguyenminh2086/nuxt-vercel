@@ -63,32 +63,64 @@
             </div>
 
             <div class='grid grid-cols-12 gap-6'>
-              <div class='flex flex-col col-span-full py-6 border-slate-200 sm:col-span-6 lg:border-r lg:pr-10'>
+              <div class='flex flex-col col-span-full py-6 desc border-slate-200 sm:col-span-6 lg:border-r lg:pr-10'>
                 <base-section-block title='Description'>
                   <template #content>
                     <base-md :content='issue.description' />
                   </template>
                 </base-section-block>
 
-                <base-section-block title='Time tracking' class='mt-10'>
-                  <template #content>
-                    <base-tasks-tracking :time-tracking='issue.time_tracking' />
-                  </template>
-                </base-section-block>
+                
 
               </div>
 
               <div class='flex flex-col col-span-full  py-6 sm:col-span-6 lg:pl-4'>
 
-                <base-section-block title='Comment'>
-                  <template #content>
-                    <base-comments-task-comments
-                      :comments='issue.comments'
-                      :related-id='issue.id'
-                      type='issue'
-                    />
-                  </template>
-                </base-section-block>
+                  <TabGroup>
+                    <TabList class="flex">
+                      <Tab v-slot="{ selected }" as="template">
+                        <button
+                         class="px-3 font-semibold rounded  uppercase outline-none"
+                         :class="[selected ? 'text-xl text-slate-900' : 'text-slate-400']"
+                        >Comments</button>
+                      </Tab>
+                      <Tab v-slot="{ selected }" as="template" >
+                         <button
+                          class="px-3 font-semibold rounded uppercase outline-none"
+                          :class="[selected ? 'text-xl text-slate-900' : 'text-slate-400']"
+                        >Time Tracking</button>
+
+                      </Tab>
+                    </TabList>
+                    <TabPanels class="mt-2">
+                     
+                      <TabPanel>
+                      
+                         <base-section-block>
+                            <template #content>
+                              <base-comments-task-comments
+                                :comments='issue.comments'
+                                :related-id='issue.id'
+                                type='issue'
+                              />
+                            </template>
+                          </base-section-block>
+                      </TabPanel>
+
+                       <TabPanel>
+                          <base-section-block>
+                            <template #content>
+                              <base-tasks-tracking :time-tracking='issue.time_tracking' />
+                            </template>
+                          </base-section-block>
+                      </TabPanel>
+
+                    </TabPanels>
+                  </TabGroup>
+
+
+
+               
 
               </div>
 
@@ -115,6 +147,7 @@
 <script setup lang='ts'>
 import type { Ref } from 'vue'
 import { ref } from 'vue'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 
 const route = useRoute()
 if (!route.params.id) navigateTo('/projects')
@@ -147,3 +180,14 @@ onMounted(() => {
 })
 
 </script>
+
+<style lang="scss">
+  .desc {
+    pre {
+      overflow: auto;
+      background-color: #fafafa;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+  }
+</style>

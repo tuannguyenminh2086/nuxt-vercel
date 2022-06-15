@@ -76,9 +76,38 @@
               "
               type="button"
               :disabled="isLoading"
-                @click="submitIssue"
+                @click="submitIssue(true)"
             >
-              <span class="px-2">Submit</span>
+              <span class="px-2">Create & Continue Create</span>
+            </button>
+            <button
+              class="
+                inline-flex
+                cursor-pointer
+                justify-center
+                items-center
+                whitespace-nowrap
+                focus:outline-none
+                transition-colors
+                focus:ring
+                duration-150
+                border
+                rounded
+                ring-blue-700
+                p-2
+                bg-blue-600
+                text-white
+                border-blue-700
+                hover:bg-blue-700
+                mr-3
+                last:mr-0
+                mb-3
+              "
+              type="button"
+              :disabled="isLoading"
+                @click="submitIssue(false)"
+            >
+              <span class="px-2">Create new Issue</span>
             </button>
 
             <button
@@ -182,12 +211,12 @@
         }
   }
 
-  const submitIssue = async () => {
+  const submitIssue = async (stay:boolean) => {
 
       isLoading.value = true
       const payload = {...state}
       const resp = await createTask(payload)
-
+      
       if (resp) {
          switch (resp.statusCode.value) {
           case 422:
@@ -204,6 +233,14 @@
                 title: 'Success',
                 text: resp.data.value.message ?  resp.data.value.message.message : ''
               })
+
+
+              if (!stay) {
+                setTimeout(()=>{
+                  navigateTo('/projects/'+ route.params.id) 
+                }, 2000)
+              }
+
             break;
         }
 

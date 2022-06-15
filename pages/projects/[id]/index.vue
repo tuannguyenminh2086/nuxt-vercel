@@ -12,12 +12,12 @@
           <div class="mb-4">
             <h2 v-if="project.name" class="text-4xl font-bold mb-4 ">{{ project.name }}</h2>
             <div class="w">
-              <div class="w-2/3">
+              <div class="w-2/3 desc">
                <base-section-block title="Description">
-                <template #content>
-                   {{ project.description }}
-                </template>
-              </base-section-block>
+                  <template #content>
+                    {{ project.description }}
+                  </template>
+                </base-section-block>
 
               </div>
             </div>
@@ -118,10 +118,6 @@
           
         </div> -->
 
-
-
-
-        
         <div v-if="project" class="mt-10">
           <tasks-filter-bar :pid="route.params.id"  />
 
@@ -157,10 +153,19 @@
     fetch(route.params.id.toString())
   })
 
+  onUnmounted(() => {
+    projectStore.$reset()
+  })
   
 </script>
 <style lang="scss" scoped>
   .loadingState {
     display: none;
+  }
+
+  .desc {
+    pre {
+      overflow: auto;
+    }
   }
 </style>

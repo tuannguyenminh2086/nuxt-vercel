@@ -1,6 +1,6 @@
 import { parseUrl } from 'query-string';
 import { useNuxtApp } from '#app';
-import { useProjectStore } from '~~/store/projects';
+import { useProjectsStore } from '~~/store/projects';
 
 import {
   GET_ALL_PROJECTS_FULL,
@@ -14,7 +14,7 @@ type TProjectRequestParams = {
 };
 
 export const useProjects = () => {
-  const projectStore = useProjectStore();
+  const projectStore = useProjectsStore();
   // const { $graphqlClient } = useNuxtApp();
 
   const init = () => {
@@ -60,10 +60,12 @@ export const useProjects = () => {
 
     try {
       const params: TProjectRequestParams = {};
+
       if (_page && _page !== '') {
         const url = parseUrl(_page);
         params.page = url.query.page as string;
       }
+
       if (_keyword) {
         params.keyword = _keyword;
       }
@@ -104,7 +106,7 @@ export const useProjects = () => {
       const result = await $makeRequest( 'get', '/api/projects/tracking')
 
       if (result.status) {
-        return result.tracking_projects
+        projectStore.setTrackingProjects(result.tracking_projects)
       } 
 
     } catch (error) {

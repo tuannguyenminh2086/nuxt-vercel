@@ -1,5 +1,5 @@
 <template>
-  <base-section title="List">
+  <base-section>
     <template #default>
 
         <div v-if="loading">
@@ -16,7 +16,7 @@
                 <th class="py-3 px-4 font-bold text-sm text-left">Tracked</th>
             </template>
             <template #tbody>
-              <tbody>
+              <tbody v-if="filtered.length > 0">
                 <tr
                   v-for="(project, index) in filtered"
                   :key="index" 
@@ -32,6 +32,15 @@
                   <td class="py-3 px-4 "><base-hours :hours="project.total_spent" variant="duration"  class="font-semibold " /></td>
                 </tr>
               </tbody>
+
+               <tbody v-if="filtered.length < 1">
+                <tr class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500">
+                  <td colspan="6">
+                    <base-iddle title="Not Found!" class="my-6" />
+                  </td>
+                </tr>
+              </tbody>
+
             </template>
             <template #tfoot>
               <tfoot class="border-gray-100 p-3 lg:px-6 border-t dark:border-gray-800">
@@ -53,7 +62,7 @@
                               type="button"
                               :disabled="!link.url ? true: false"
                               @click.stop="paginationHandle(link.url)"
-                            >
+                            > 
                               <span class="px-2" :class="link.active ? 'text-white hover:text-white': '' " v-html="link.label"></span>
                             </button>
 
@@ -82,8 +91,8 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { useProjectStore } from '@/store/projects'
-  const projects = useProjectStore()
+  import { useProjectsStore } from '@/store/projects'
+  const projects = useProjectsStore()
   const { loading, filtered, links, total } = storeToRefs(projects)
   const { fetchAPI } = useProjects()
 

@@ -87,6 +87,7 @@ export const GET_PROJECT_DETAIL = gql`
             projectType{
               name
             }
+            description
             mapped_status {
               name
             }

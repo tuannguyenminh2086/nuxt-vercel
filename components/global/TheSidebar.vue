@@ -26,6 +26,20 @@
       </ul>
     </div>
 
+     <div v-if="auth.isAdmin" class="mt-6" >
+      <p class="px-4 pb-1 text-xs uppercase text-gray-400 hidden 2xl:block">Personal</p>
+      <ul class="">
+        <base-nav-item
+          v-for="(item, key) in navGroup.personal"
+          v-once
+          :key="key"
+          :prop-name="item.name"
+          :prop-slug="item.slug"
+          :prop-icon="item.icon"
+        />
+      </ul>
+    </div>
+
     <div v-if="auth.isAdmin" class="mt-6" >
       <p class="px-4 pb-1 text-xs uppercase text-gray-400 hidden 2xl:block">Administrator</p>
       <ul class="">
@@ -57,11 +71,6 @@ const navGroup = {
       slug: '/',
       icon: ICON.HOME,
     },
-     {
-      name: 'My Tasks',
-      slug: '/tasks',
-      icon: ICON.MYTASKS,
-    },
     {
       name: 'Projects',
       slug: '/projects',
@@ -69,6 +78,14 @@ const navGroup = {
     },
    
   ],
+  personal: [
+    {
+      name: 'My Tasks',
+      slug: '/tasks',
+      icon: ICON.MYTASKS,
+    },
+  ],
+
   admin: [
     {
       name: 'Report',

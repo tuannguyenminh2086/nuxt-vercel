@@ -3,32 +3,40 @@
     <div
       class="h-96 overflow-hidden overflow-y-auto border-y border-slate-100 py-4 mt-6 pr-4"
     >
-      <ul v-if="timeTracking.length > 0" role="list" class="divide-y divide-slate-100 ">
+      <ul v-if="listing.length > 0" role="list" class="divide-y divide-slate-100 ">
 
         <li
-          v-for="(item, key) in timeTracking"
+          v-for="(item, key) in listing"
           :key="key"
           class="flex flex-col p-4 transition-all hover:bg-slate-100 odd:bg-white even:bg-slate-50" 
         >
-          <div class="font-bold" ><span v-if="item.createdByUser">{{ item.createdByUser.name}}</span></div>
-          <div class="text-sm">
-            <label class="mr-2 text-sm">Last updated:</label>
-            <span class="mr-2 text-sm italic">{{ item.updated_at }}</span>
-          </div>
-          
-          <div class="grid grid-cols-3 mt-6">
-            <div>
-              <label class="mr-2 text-sm block">Tracked:</label>
-              <base-hours :hours="item.spent" variant="duration" class="text-sky-700" />
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-1" >
+              <svg 
+                aria-hidden="true"
+                role="img" 
+                class="stroke-slate-500" 
+                width="20" 
+                height="20" 
+                preserveAspectRatio="xMidYMid meet" 
+                viewBox="0 0 48 48"
+              >
+                <g fill="none" fill-rule="evenodd" stroke-linejoin="round" stroke-width="4" transform="translate(7 3)">
+                  <circle cx="17" cy="24" r="17"></circle>
+                  <path stroke-linecap="round" d="M11 1h12m-6 15v8m8 0h-8m0-23v4"></path>
+                </g>
+              </svg>
             </div>
-            <div>
-              <label class="mr-2 text-sm block">Start:</label>
-              <span class="font-bold text-sky-700">{{ item.start_time}}</span>
+            <div class="font-bold col-span-2" >
+              <span v-if="item.createdByUser">{{ item.createdByUser.name}}</span>
             </div>
-            <div>
-              <label class="mr-2 text-sm block">End:</label>
-              <span class="font-bold text-sky-700">{{ item.end_time}}</span>
+            <div class="col-span-4">
+                <span class="mr-2 text-sm italic">{{ item.updated_at }}</span>
             </div>
+            <div class="col-span-4">
+              Tracked:&nbsp;&nbsp; <base-hours :hours="item.spent" variant="duration" class="text-sky-700" />
+            </div>
+
           </div>
         </li>
 
@@ -60,6 +68,10 @@
     timeTracking: ITracking[]
   }
 
-  defineProps<IProps>()
+  const props = defineProps<IProps>()
+
+  const listing = computed(() => {
+    return props.timeTracking.filter((item) =>  item.spent > 0)
+  })
 
 </script>

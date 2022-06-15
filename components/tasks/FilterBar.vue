@@ -122,6 +122,11 @@
     // const startDate = new Date();
     // const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
     // date.value = [startDate.toString(), endDate.toString()];
+
+    // const now = dayjs();
+    // console.log(now.month())
+
+
   })
   
 

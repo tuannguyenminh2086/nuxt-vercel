@@ -16,12 +16,13 @@ interface IProjectsState {
     label: string
     url?: string | null
   }[] | [],
+  tracking: IProject[]
   error?: any
 }
 
 
 
-export const useProjectStore = defineStore({
+export const useProjectsStore = defineStore({
   id: 'projects',
   state: (): IProjectsState => {
     return {
@@ -34,7 +35,8 @@ export const useProjectStore = defineStore({
       links: [],
       from: 1,
       last_page: 5,
-      error: null
+      error: null,
+      tracking: []
     }
   },
   actions: {
@@ -57,6 +59,10 @@ export const useProjectStore = defineStore({
         this.filtered = this.listing.filter(p => p.name.toLowerCase().includes(keyword.toLowerCase()))
       }
     },
+
+    setTrackingProjects (payload:IProject[]) {
+      this.tracking = payload
+    }
 
   },
 
