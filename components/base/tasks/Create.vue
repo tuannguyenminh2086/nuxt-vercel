@@ -216,10 +216,7 @@
       isLoading.value = true
       const payload = {...state}
       const resp = await createTask(payload)
-      console.log(stay)
-
-      console.log(resp)
-
+      
       if (resp) {
          switch (resp.statusCode.value) {
           case 422:

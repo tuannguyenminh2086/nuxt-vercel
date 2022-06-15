@@ -1,10 +1,10 @@
 <template>
   <ClientOnly>
-    <Menu as='div' class='relative' v-once>
+    <Menu v-once as='div' class='relative'>
       <MenuButton class='flex items-center justify-center grow-0 shrink-0 px-4 h-full'>
         <div v-if='me' class='rounded-full border bg-slate-500 cursor-pointer w-8 h-8 overflow-hidden'>
           <img
-            :src="me.imagePath ? me.imagePath : 'https://avatars.dicebear.com/api/avataaars/Hope-Howe.svg' "
+            :src="me.imagePath ? me.imagePath : randowAvatar "
             :alt='me?.name' />
         </div>
       </MenuButton>
@@ -34,6 +34,7 @@ onMounted(() => {
 })
 
 const { me } = storeToRefs(authStore)
+const randowAvatar = computed(() => useRandomAvatar() )
 
 const SignOutHandle = () => {
   authStore.logoutHandle()

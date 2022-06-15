@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-section title="Activities" class="">
+    <base-section title="Tasks Activity" class="">
       <template #default>
 
         <div class="">

@@ -63,7 +63,7 @@
             </div>
 
             <div class='grid grid-cols-12 gap-6'>
-              <div class='flex flex-col col-span-full py-6 border-slate-200 sm:col-span-6 lg:border-r lg:pr-10'>
+              <div class='flex flex-col col-span-full py-6 desc border-slate-200 sm:col-span-6 lg:border-r lg:pr-10'>
                 <base-section-block title='Description'>
                   <template #content>
                     <base-md :content='issue.description' />
@@ -80,14 +80,14 @@
                     <TabList class="flex">
                       <Tab v-slot="{ selected }" as="template">
                         <button
-                         class="px-3 font-semibold rounded text-slate-900 uppercase outline-none"
-                         :class="[selected ? 'text-xl' : '']"
+                         class="px-3 font-semibold rounded  uppercase outline-none"
+                         :class="[selected ? 'text-xl text-slate-900' : 'text-slate-400']"
                         >Comments</button>
                       </Tab>
                       <Tab v-slot="{ selected }" as="template" >
                          <button
-                          class="px-3 font-semibold rounded text-slate-900 uppercase outline-none"
-                          :class="[selected ? 'text-xl' : '']"
+                          class="px-3 font-semibold rounded uppercase outline-none"
+                          :class="[selected ? 'text-xl text-slate-900' : 'text-slate-400']"
                         >Time Tracking</button>
 
                       </Tab>
@@ -180,3 +180,14 @@ onMounted(() => {
 })
 
 </script>
+
+<style lang="scss">
+  .desc {
+    pre {
+      overflow: auto;
+      background-color: #fafafa;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+  }
+</style>

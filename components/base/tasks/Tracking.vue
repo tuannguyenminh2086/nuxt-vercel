@@ -3,10 +3,10 @@
     <div
       class="h-96 overflow-hidden overflow-y-auto border-y border-slate-100 py-4 mt-6 pr-4"
     >
-      <ul v-if="timeTracking.length > 0" role="list" class="divide-y divide-slate-100 ">
+      <ul v-if="listing.length > 0" role="list" class="divide-y divide-slate-100 ">
 
         <li
-          v-for="(item, key) in timeTracking"
+          v-for="(item, key) in listing"
           :key="key"
           class="flex flex-col p-4 transition-all hover:bg-slate-100 odd:bg-white even:bg-slate-50" 
         >
@@ -68,6 +68,10 @@
     timeTracking: ITracking[]
   }
 
-  defineProps<IProps>()
+  const props = defineProps<IProps>()
+
+  const listing = computed(() => {
+    return props.timeTracking.filter((item) =>  item.spent > 0)
+  })
 
 </script>
