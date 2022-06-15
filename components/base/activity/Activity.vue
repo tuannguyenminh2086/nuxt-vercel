@@ -79,7 +79,10 @@
   }
 
   onMounted(() => {
-    fetch();
+    if (listing.value.length < 1) {
+      fetch();
+    }
+    
 
     $bus.$on('refetch-activity', () => {
       fetch()

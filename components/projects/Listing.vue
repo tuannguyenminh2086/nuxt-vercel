@@ -91,8 +91,8 @@
 
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { useProjectStore } from '@/store/projects'
-  const projects = useProjectStore()
+  import { useProjectsStore } from '@/store/projects'
+  const projects = useProjectsStore()
   const { loading, filtered, links, total } = storeToRefs(projects)
   const { fetchAPI } = useProjects()
 

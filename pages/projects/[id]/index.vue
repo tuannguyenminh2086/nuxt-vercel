@@ -118,10 +118,6 @@
           
         </div> -->
 
-
-
-
-        
         <div v-if="project" class="mt-10">
           <tasks-filter-bar :pid="route.params.id"  />
 
@@ -155,6 +151,10 @@
   onMounted(() => {
     if ( !route.params.id ) navigateTo('/projects');
     fetch(route.params.id.toString())
+  })
+
+  onUnmounted(() => {
+    projectStore.$reset()
   })
   
 </script>

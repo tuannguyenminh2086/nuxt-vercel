@@ -83,7 +83,6 @@ export const useTask = () => {
   }
 
   const fetchTasksActivity = async () => {
-
     const { data } = await useFetch( config.public.API_URL + '/issues/working', 
     {
       headers: {

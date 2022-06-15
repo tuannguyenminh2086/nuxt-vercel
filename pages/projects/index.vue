@@ -13,14 +13,19 @@
 </template>
 
 <script setup lang="ts">
+  import { storeToRefs } from 'pinia'
+  import { useProjectsStore } from '~~/store/projects'
   const { fetchAPI } = useProjects()
-
+  
   useHead({
     title: 'Projects'
   })
 
-  onMounted(() => {
+  const projectsStore = useProjectsStore()
+  const { listing } = storeToRefs(projectsStore)
+
+  if (listing.value.length < 1) {
     fetchAPI('')
-  })
-  
+  } 
+
 </script>
