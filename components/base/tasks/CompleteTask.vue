@@ -39,7 +39,7 @@
       };
 
       const cuser = auth.getCurrentUser();
-
+      const { sendNotification } = useNotification()
       const _comment = 'Task is closed by ' + cuser?.name + ' - ' + new Date() + '';
 
       const resp = await useFetch( url, {
@@ -51,11 +51,7 @@
 
       if ( resp.statusCode.value === 200) {
           nuxtApp.$bus.$emit('refetch-issue')
-          nuxtApp.$notification({
-            type: 'success',
-            title: 'Success',
-            text: resp.data.value.message.message
-          })
+          sendNotification('Successfully updated!', 'success', 'Task Update' )
       }
     
     }

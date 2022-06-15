@@ -12,11 +12,11 @@
 
               <base-table>
                 <template #thead>
-                    <th class="py-3 px-4 font-bold text-sm text-left w-20">Assignee</th>
-                    <th class="py-3 px-4 font-bold text-sm text-left w-2/6 pr-6">Name</th>
-                    <th class="py-3 px-4 font-bold text-sm text-left w-3/12">Project</th>
-                    <th class="py-3 px-4 font-bold text-sm text-left w-2/12">Priority</th>
-                    <th class="py-3 px-4 font-bold text-sm text-left w-2/12"></th>   
+                    <th class="py-3 px-4 font-bold text-sm text-left">Assignee</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left pr-6">Name</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left ">Project</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left ">Priority</th>
+                    <th class="py-3 px-4 font-bold text-sm text-left "></th>   
                 </template>
                 <template #tbody>
                     <tbody v-if="listing && listing.length > 0">
@@ -28,15 +28,15 @@
                         :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
                       >
 
-                        <td class="py-3 px-4 w-20"><base-members :members="item.issue.assignees" :show-name="true" /></td>
-                        <td class="py-3 px-4 w-2/6 pr-6">
+                        <td class="py-3 px-4 "><base-members :members="item.issue.assignees" :show-name="true" /></td>
+                        <td class="py-3 px-4 pr-6">
                           <NuxtLink :to="`/tasks/${item.issue_id}`">
                             <span class="font-semibold text-cyan-700">{{ item.issue.name }}</span>
                             </NuxtLink>
                         </td>
-                        <td class="py-3 px-4 w-3/12"><span class="font-bold text-sm">{{ item.issue.project.name }}</span></td>
-                        <td class="py-3 px-4 w-2/12"><base-priority v-if="item.issue.mapped_priority" :text="item.issue.mapped_priority.toLowerCase()" /> </td>
-                        <td class="py-3 px-4 w-2/12"><base-hours variant="from-now" :date="item.created_at" class="font-normal text-sm" /></td>
+                        <td class="py-3 px-4 "><span class="font-bold text-sm">{{ item.issue.project.name }}</span></td>
+                        <td class="py-3 px-4 "><base-priority v-if="item.issue.mapped_priority" :text="item.issue.mapped_priority.toLowerCase()" /> </td>
+                        <td class="py-3 px-4 "><base-hours variant="from-now" :date="item.created_at" class="font-normal text-sm" /></td>
                       </tr>
                     </tbody>
 
@@ -83,7 +83,6 @@
       fetch();
     }
     
-
     $bus.$on('refetch-activity', () => {
       fetch()
     })

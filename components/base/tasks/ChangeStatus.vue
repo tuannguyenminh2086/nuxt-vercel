@@ -52,6 +52,7 @@ interface IStatus {
   const auth = useAuthStore()
   const isProgress: Ref<boolean> = ref(false)
   const {$makeRequest} = useNuxtApp()
+  const { sendNotification } = useNotification()
 
   const fetch = async () => {
     const { status,issueStatus } = await $makeRequest('get',
@@ -95,15 +96,11 @@ interface IStatus {
 
         if (resp) {
          
-          const { statusCode, data } = resp
+          const { statusCode } = resp
           if (statusCode.value === 200) {
             if (process.client) {
                 nuxtApp.$bus.$emit('refetch-issue')
-                nuxtApp.$notification({
-                  type: 'success',
-                  title: 'Success',
-                  text: data.value.message ?  data.value.message.message : ''
-                })
+                sendNotification('Successfully updated!', 'success', 'Update Status' )
             }
             
           }

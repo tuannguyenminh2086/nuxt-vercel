@@ -6,7 +6,7 @@ export default defineNuxtPlugin(nuxtApp => {
 
     return {
       provide: {
-        notification: notify
+        notify
       }
     }
 });

@@ -175,7 +175,6 @@
   const route = useRoute()
   const isLoading = ref(false)
   const { createTask, uploadImageForTask } = useTask()
-  const nuxtApp = useNuxtApp()
 
   if (route.params.id ==='' || typeof route.params.id === 'undefined') {
     navigateTo('/projects')
@@ -216,25 +215,17 @@
       isLoading.value = true
       const payload = {...state}
       const resp = await createTask(payload)
-      
+      const { sendNotification } = useNotification()
+
       if (resp) {
          switch (resp.statusCode.value) {
           case 422:
-            nuxtApp.$notification({
-                type: 'warn',
-                title: 'Error',
-                text: resp.data.value.message
-              })
+              sendNotification(resp.data.value.message, 'warn', 'Task Create' );
             break;
         
           default:
-              nuxtApp.$notification({
-                type: 'success',
-                title: 'Success',
-                text: resp.data.value.message ?  resp.data.value.message.message : ''
-              })
-
-
+              sendNotification('Successfully updated!', 'success', 'Task Create' )
+              
               if (!stay) {
                 setTimeout(()=>{
                   navigateTo('/projects/'+ route.params.id) 
