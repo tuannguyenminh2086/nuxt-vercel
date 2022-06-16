@@ -62,6 +62,7 @@
   import type { Ref } from 'vue'
   import { ref } from 'vue'
   import { useNuxtApp } from '#app'
+  import { IIssues } from '@/models/interfaces'
   const { changeTaskStatus } = useTask()
 
   interface Props {
@@ -71,34 +72,16 @@
     }
   }
 
-  interface ITimeTracking {
-    end_time?: string
-    spent: number
-    start_time: string
-  }
-
-  interface IIssue {
-    created_at: string
-    current_user_spent: number
-    id: string
-    mapped_priority: string
-    mapped_status: {
-      key: string
-      name: string
-    }
-    name: string
+  interface ITaskIssue extends IIssues {
     project: {
       id: string
       name: string
     }
-    state: number
-    status: number
-    time_tracking?: ITimeTracking[]
   }
 
   const props = defineProps<Props>()
   const isLoading: Ref<boolean> = ref(true)
-  const listing: Ref<IIssue[]> = ref([])
+  const listing: Ref<ITaskIssue[]> = ref([])
 
   const fetchIssues = async () => {
     const {$makeRequest} = useNuxtApp()
