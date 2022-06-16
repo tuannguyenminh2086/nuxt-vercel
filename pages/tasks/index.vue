@@ -26,7 +26,12 @@
        <div class="col-auto">
         <base-tasks-user :issue-type="5"  title="Done"  />
       </div>
+
     </div>
+
+
+
+    
   </div>
 </template>
 
