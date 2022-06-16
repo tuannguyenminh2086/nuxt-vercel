@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+import { useNuxtApp } from '#app'
 import { useFetch } from '@vueuse/core'
 import { useAuthStore } from '@store/auth'
 import { useTimerStore } from '@/store/timer'
@@ -21,7 +22,7 @@ export const useTask = () => {
   const timerStore = useTimerStore();
   const _token = auth.getAuthToken()
   const config = useRuntimeConfig()
-  
+
 
   const createTask = async (payload: TCreateIssue) => {
 
@@ -83,7 +84,7 @@ export const useTask = () => {
   }
 
   const fetchTasksActivity = async () => {
-    const { data } = await useFetch( config.public.API_URL + '/issues/working', 
+    const { data } = await useFetch( config.public.API_URL + '/issues/working',
     {
       headers: {
         'Authorization': `Bearer ${_token}`,
@@ -98,7 +99,7 @@ export const useTask = () => {
   // timer
   const startTimer = async (tid:string, name:string, startAt: string) => {
     timerStore.startTimer(tid, name, startAt)
-          
+
     const { data }:any = await useFetch(`${config.public.API_URL}/issues/${tid}/status`,
       {
         headers: {
@@ -134,6 +135,41 @@ export const useTask = () => {
       }
   }
 
+  const changeTaskStatus = async (taskID: string, taskStatus: number) => {
+    const auth = useAuthStore()
+    const _token = auth.getAuthToken();
+    const nuxtApp = useNuxtApp();
+
+    if (_token) {
+      const _headers = {
+        Authorization: `Bearer ${_token}`,
+        Accept: 'application/json'
+      };
+
+      const runtimeConfig = useRuntimeConfig()
+      const url = runtimeConfig.public.API_URL + '/issues/' + taskID + '/status'
+
+      const resp = await useFetch( url, {
+        headers: _headers
+      } ).put({
+        status: taskStatus
+      }).json()
+
+      if (resp) {
+        const { statusCode, data } = resp
+        if (statusCode.value === 200) {
+          if (process.client) {
+              nuxtApp.$bus.$emit('refetch-issue')
+              nuxtApp.$notification({
+                type: 'success',
+                title: 'Success',
+                text: data.value.message ?  data.value.message.message : ''
+              })
+          }
+        }
+      }
+    }
+  }
 
   return {
     error,
@@ -143,8 +179,8 @@ export const useTask = () => {
     assigneeTo,
     startTimer,
     stopTimer,
-    fetchTimer
+    fetchTimer,
+    changeTaskStatus
   }
 
 }
-
