@@ -4,6 +4,7 @@ import { useNuxtApp } from '#app'
 import { useFetch } from '@vueuse/core'
 import { useAuthStore } from '@store/auth'
 import { useTimerStore } from '@/store/timer'
+const { sendNotification } = useNotification()
 
 type TCreateIssue = {
   project_id: number,
@@ -51,7 +52,7 @@ export const useTask = () => {
 
     return resp
   }
-  
+
 
   const updateTask = async (issueId: number, payload: TUpdateIssue) => {
 
@@ -179,15 +180,11 @@ export const useTask = () => {
       }).json()
 
       if (resp) {
-        const { statusCode, data } = resp
+        const { statusCode } = resp
         if (statusCode.value === 200) {
           if (process.client) {
-              nuxtApp.$bus.$emit('refetch-issue')
-              nuxtApp.$notification({
-                type: 'success',
-                title: 'Success',
-                text: data.value.message ?  data.value.message.message : ''
-              })
+            nuxtApp.$bus.$emit('refetch-issue')
+            sendNotification('Successfully updated!', 'success', 'Update Status' )
           }
         }
       }
