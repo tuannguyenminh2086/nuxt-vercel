@@ -14,6 +14,11 @@ type TCreateIssue = {
   due_date: string
 }
 
+type TUpdateIssue = {
+  name: string,
+  description: string,
+}
+
 export const useTask = () => {
   const error: Ref<any> = ref(null)
 
@@ -41,6 +46,24 @@ export const useTask = () => {
       }
     )
     .post({...payload})
+    .json();
+
+    return resp
+  }
+  
+
+  const updateTask = async (issueId: number, payload: TUpdateIssue) => {
+
+    const resp = await useFetch(
+      config.public.API_URL + '/issues/' + issueId,
+      {
+        headers: {
+          Authorization: `Bearer ${_token}`,
+          Accept: 'application/json',
+        },
+      }
+    )
+    .put({...payload})
     .json();
 
     return resp
@@ -138,6 +161,7 @@ export const useTask = () => {
   return {
     error,
     createTask,
+    updateTask,
     uploadImageForTask,
     fetchTasksActivity,
     assigneeTo,
