@@ -19,6 +19,7 @@ export interface IIssues {
   id: string,
   name: string
   state: number
+  description: string
   assignees: IUser[]
   created_at: string
   time_tracking?: any
