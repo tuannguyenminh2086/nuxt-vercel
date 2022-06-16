@@ -26,7 +26,7 @@
       </ul>
     </div>
 
-     <div v-if="auth.isAdmin" class="mt-6" >
+     <div class="mt-6" >
       <p class="px-4 pb-1 text-xs uppercase text-gray-400 hidden 2xl:block">Personal</p>
       <ul class="">
         <base-nav-item
