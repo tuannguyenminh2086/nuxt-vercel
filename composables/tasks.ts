@@ -1,8 +1,10 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+import { useNuxtApp } from '#app'
 import { useFetch } from '@vueuse/core'
 import { useAuthStore } from '@store/auth'
 import { useTimerStore } from '@/store/timer'
+const { sendNotification } = useNotification()
 
 type TCreateIssue = {
   project_id: number,
@@ -26,7 +28,7 @@ export const useTask = () => {
   const timerStore = useTimerStore();
   const _token = auth.getAuthToken()
   const config = useRuntimeConfig()
-  
+
 
   const createTask = async (payload: TCreateIssue) => {
 
@@ -50,7 +52,7 @@ export const useTask = () => {
 
     return resp
   }
-  
+
 
   const updateTask = async (issueId: number, payload: TUpdateIssue) => {
 
@@ -106,7 +108,7 @@ export const useTask = () => {
   }
 
   const fetchTasksActivity = async () => {
-    const { data } = await useFetch( config.public.API_URL + '/issues/working', 
+    const { data } = await useFetch( config.public.API_URL + '/issues/working',
     {
       headers: {
         'Authorization': `Bearer ${_token}`,
@@ -121,7 +123,7 @@ export const useTask = () => {
   // timer
   const startTimer = async (tid:string, name:string, startAt: string) => {
     timerStore.startTimer(tid, name, startAt)
-          
+
     const { data }:any = await useFetch(`${config.public.API_URL}/issues/${tid}/status`,
       {
         headers: {
@@ -157,6 +159,37 @@ export const useTask = () => {
       }
   }
 
+  const changeTaskStatus = async (taskID: string, taskStatus: number) => {
+    const auth = useAuthStore()
+    const _token = auth.getAuthToken();
+    const nuxtApp = useNuxtApp();
+
+    if (_token) {
+      const _headers = {
+        Authorization: `Bearer ${_token}`,
+        Accept: 'application/json'
+      };
+
+      const runtimeConfig = useRuntimeConfig()
+      const url = runtimeConfig.public.API_URL + '/issues/' + taskID + '/status'
+
+      const resp = await useFetch( url, {
+        headers: _headers
+      } ).put({
+        status: taskStatus
+      }).json()
+
+      if (resp) {
+        const { statusCode } = resp
+        if (statusCode.value === 200) {
+          if (process.client) {
+            nuxtApp.$bus.$emit('refetch-issue')
+            sendNotification('Successfully updated!', 'success', 'Update Status' )
+          }
+        }
+      }
+    }
+  }
 
   return {
     error,
@@ -167,8 +200,8 @@ export const useTask = () => {
     assigneeTo,
     startTimer,
     stopTimer,
-    fetchTimer
+    fetchTimer,
+    changeTaskStatus
   }
 
 }
-

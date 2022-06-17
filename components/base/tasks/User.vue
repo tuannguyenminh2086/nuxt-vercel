@@ -20,9 +20,9 @@
             <template #tbody>
                 <TransitionGroup v-if="listing.length > 0"  name="list" tag="tbody">
 
-                  <tr  
+                  <tr
                     v-for="(issue, index) in listing"
-                    :key="index" 
+                    :key="index"
                     class="dark:border-0  lg:hover:bg-gray-100 dark:lg:hover:bg-slate-500"
                     :class="[index % 2 === 0 ? '' : 'bg-slate-100 dark:bg-slate-700']"
                   >
@@ -42,7 +42,7 @@
                         <base-timer-issue-timer-actions
                           :task-id="issue.id"
                           :task-name="issue.name"
-                          :task-project-ame="issue.project.name" 
+                          :task-project-ame="issue.project.name"
                         />
                       </div>
                     </td>
@@ -56,7 +56,7 @@
                       <base-iddle title="Nothing here" />
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </template>
           </base-table>
@@ -88,7 +88,7 @@ interface Props {
     current_user_spent: number
     id: string
     mapped_priority: string
-    mapped_status: { 
+    mapped_status: {
       key: string
       name: string
     }
@@ -128,7 +128,7 @@ interface Props {
     nuxtApp.$bus.$on("refetch-issues", () => {
       fetchIssues()
     })
-    
+
   })
 
 </script>
